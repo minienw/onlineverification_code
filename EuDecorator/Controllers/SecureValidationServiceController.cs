@@ -16,7 +16,9 @@ namespace EuDecorator.Controllers
     [ApiController]
     public class SecureValidationServiceController : ControllerBase
     {
-        [HttpGet]
+        private const string IdentityPrefix = "identity/";
+
+        [HttpGet(IdentityPrefix)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -26,7 +28,7 @@ namespace EuDecorator.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{element}")]
+        [HttpGet(IdentityPrefix+"{element}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -36,7 +38,7 @@ namespace EuDecorator.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{element}/{type}")]
+        [HttpGet(IdentityPrefix + "{element}/{type}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,7 +48,7 @@ namespace EuDecorator.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{element}/{type}#{id}")]
+        [HttpGet(IdentityPrefix + "{element}/{type}#{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

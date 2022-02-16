@@ -10,7 +10,7 @@ namespace EuDecorator.Controllers.Dtos;
 public class ValidationAccessTokenPayload
 {
     /// <summary>
-    /// 
+    /// TODO From????
     /// </summary>
     [JsonPropertyName("jti")]
     public string TokenIdentifier { get; set; }
@@ -34,7 +34,7 @@ public class ValidationAccessTokenPayload
     /// e.g. ADEDDDDDDDDDDDDDDD
     /// </summary>
     [JsonPropertyName("sub")]
-    public int Subject { get; set; }
+    public string Subject { get; set; }
 
     /// <summary>
     /// Value of the Initialisation (must match to service endpoint “ValidationService”)

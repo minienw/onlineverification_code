@@ -12,3 +12,11 @@ public class ResultToken
     public ResultTokenHeader Header { get; set; }
     public ResultTokenPayload Payload { get; set; }
 }
+
+
+
+public class AirlineResultToken
+{
+    public ResultTokenPayloadConfirmation ConfirmationToken { get; set; }
+    public DisclosedPersonalData DisclosedPersonalData { get; set; }
+}

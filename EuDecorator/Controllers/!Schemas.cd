@@ -4,13 +4,13 @@
     <Position X="7.604" Y="4.472" Height="0.75" Width="1.7" />
   </Comment>
   <Comment CommentText="3. Validation Initialise&#xD;&#xA;">
-    <Position X="14.346" Y="10.589" Height="0.75" Width="1.7" />
+    <Position X="14.889" Y="18.082" Height="0.75" Width="1.7" />
   </Comment>
   <Comment CommentText="x, Validate (Secure ValidationServiceContrller.Status)">
-    <Position X="1.278" Y="11.842" Height="0.75" Width="3.981" />
+    <Position X="0.686" Y="17.65" Height="0.75" Width="3.248" />
   </Comment>
   <Comment CommentText="2. Validation Session Start&#xD;&#xA;">
-    <Position X="3.677" Y="7.55" Height="0.75" Width="1.7" />
+    <Position X="4.11" Y="7.594" Height="0.75" Width="1.7" />
   </Comment>
   <Comment CommentText="Last. Callback">
     <Position X="12.755" Y="2.33" Height="0.75" Width="1.7" />
@@ -18,46 +18,130 @@
   <Comment CommentText="Start. Airline Provides Subject">
     <Position X="0.736" Y="4.503" Height="0.75" Width="1.7" />
   </Comment>
-  <Class Name="EuDecorator.Controllers.ValidationDecoratorController">
+  <Comment CommentText="Earlier version of protocol - identifying information to be extracted from DCC NOT given by the airlines.">
+    <Position X="11.208" Y="13.626" Height="1.076" Width="1.7" />
+  </Comment>
+  <Class Name="EuDecorator.Controllers.AirlineDecoratorController">
     <Position X="0.75" Y="2" Width="11.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAQAAAAAAAEAAAAAAAAAAAAAAAAAAQIA=</HashCode>
-      <FileName>Controllers\ValidationDecoratorController.cs</FileName>
+      <HashCode>AAAAAAAEAAAAAQAAAAAAAABAAAAAAAAAAAAAAAAAQIA=</HashCode>
+      <FileName>Controllers\AirlineDecoratorController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EuDecorator.Controllers.SecureValidationServiceController">
-    <Position X="10.5" Y="12" Width="10.25" />
+    <Position X="11" Y="19.5" Width="10.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAQAAAAAAAAAAAAAAAABAAEAAAAAAAAA=</HashCode>
       <FileName>Controllers\SecureValidationServiceController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EuDecorator.Controllers.DtoV1.ResultToken">
-    <Position X="0.5" Y="23.75" Width="3.75" />
+  <Class Name="EuDecorator.Controllers.Dtos.InitializationQrCodeContent">
+    <Position X="2.75" Y="4.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAIAAAABAAAAAAAAAARACAAACAAg=</HashCode>
+      <FileName>Controllers\Dtos\InitializationQrCodeContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.SubjectValidationDecoratorAccessToken">
+    <Position X="6" Y="5.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAYAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\SubjectValidationDecoratorAccessToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.TokenRequestBody">
+    <Position X="1.25" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\TokenRequestBody.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenHeader">
+    <Position X="6" Y="7.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAIAAAAMAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidationAccessTokenHeader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Trip" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationInitializeRequestBody">
+    <Position X="11" Y="17.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQACAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidationInitializeRequestBody.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationInitializeResponse">
+    <Position X="16.75" Y="17.5" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQEAAAAAAAAAAAAAABCCAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidationInitializeResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ValidateRequestBody">
+    <Position X="0.5" Y="18.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAYAAAAAAAAAAAABAAAAAAAAAACEABAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidateRequestBody.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessToken" Collapsed="true">
+    <Position X="1" Y="11" Width="8.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\DtoV1\ResultToken.cs</FileName>
+      <FileName>Controllers\Dtos\ValidationAccessToken.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Header" />
       <Property Name="Payload" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="EuDecorator.Controllers.DtoV1.ResultTokenHeader">
-    <Position X="5" Y="24.5" Width="3.25" />
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenPayloadCondition">
+    <Position X="7.25" Y="12.75" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>Controllers\DtoV1\ResultTokenHeader.cs</FileName>
+      <HashCode>AAAAAAAACCACAAAIAAQAEAAAAAAUAgAgAQAgEAAACAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidationAccessTokenPayloadCondition.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EuDecorator.Controllers.DtoV1.ResultTokenPayload">
-    <Position X="9" Y="23.5" Width="4.75" />
+  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenPayload">
+    <Position X="1" Y="12.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAIBAAAAAIAAAAAAACEAAASAAQAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ValidationAccessTokenPayload.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ValidationType" />
+      <Property Name="ValidationCondition" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ResultToken" Collapsed="true">
+    <Position X="0.5" Y="21" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ResultToken.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Header" />
+      <Property Name="Payload" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ResultTokenHeader">
+    <Position X="6.5" Y="21" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\ResultTokenHeader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EuDecorator.Controllers.Dtos.ResultTokenPayload">
+    <Position X="6.5" Y="23" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAABAAAAAIAAAAQACCAAAAAAIQAAAAAACAA=</HashCode>
-      <FileName>Controllers\DtoV1\ResultTokenPayload.cs</FileName>
+      <FileName>Controllers\Dtos\ResultTokenPayload.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Confirmation" />
@@ -66,96 +150,36 @@
       <Property Name="Results" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="EuDecorator.Controllers.DtoV1.ResultTokenPayloadConfirmation">
-    <Position X="15.5" Y="23.5" Width="4" />
+  <Class Name="EuDecorator.Controllers.Dtos.ResultTokenPayloadConfirmation">
+    <Position X="11.75" Y="23" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAABAAAAAAAAAAQAACAAAAAAAAAAAAAQCAA=</HashCode>
-      <FileName>Controllers\DtoV1\ResultTokenPayloadConfirmation.cs</FileName>
+      <FileName>Controllers\Dtos\ResultTokenPayloadConfirmation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EuDecorator.Controllers.DtoV1.ResultTokenPayloadResult">
-    <Position X="9" Y="26.25" Width="4.75" />
+  <Class Name="EuDecorator.Controllers.Dtos.ResultTokenPayloadResult">
+    <Position X="6.5" Y="25.75" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAABAAAAAAAAAAQAAAAAAAAAAQAAQAAAAAA=</HashCode>
-      <FileName>Controllers\DtoV1\ResultTokenPayloadResult.cs</FileName>
+      <FileName>Controllers\Dtos\ResultTokenPayloadResult.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.InitializationQrCodeContent">
-    <Position X="2.75" Y="4.5" Width="4.25" />
+  <Class Name="EuDecorator.Controllers.Dtos.Trip">
+    <Position X="10.5" Y="7.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAAIAAAABAAAAAAAAAARACAAACAAg=</HashCode>
-      <FileName>Controllers\Dtos\InitializationQrCodeContent.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAEAAAAAAgAAAA=</HashCode>
+      <FileName>Controllers\Dtos\Trip.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.SubjectValidationDecoratorAccessToken">
-    <Position X="9.75" Y="4.5" Width="4" />
+  <Class Name="EuDecorator.Controllers.Dtos.DisclosedPersonalData">
+    <Position X="16.75" Y="23" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAYAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\SubjectValidationDecoratorAccessToken.cs</FileName>
+      <HashCode>AAAAAAAAACAAAAAAAAQAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Dtos\DisclosedPersonalData.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.TokenRequestBody">
-    <Position X="0.75" Y="7.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\TokenRequestBody.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenHeader">
-    <Position X="6.25" Y="7.5" Width="3.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationAccessTokenHeader.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationInitializeRequestBody">
-    <Position X="10.5" Y="10.25" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQACAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationInitializeRequestBody.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationInitializeResponse">
-    <Position X="16.25" Y="10" Width="4.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAQEAAAAAAAAAAAAAABCCAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationInitializeResponse.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidateRequestBody">
-    <Position X="1.25" Y="9.5" Width="4" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAYAAAAAAAAAAAABAAAAAAAAAACEABAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidateRequestBody.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessToken">
-    <Position X="1.25" Y="12.75" Width="3" />
-    <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationAccessToken.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenPayloadCondition">
-    <Position X="6.25" Y="14.5" Width="3.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACCACAAAIAAQAEAAAAAAUAgAgAQAgEAAACAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationAccessTokenPayloadCondition.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenPayload">
-    <Position X="1" Y="14.5" Width="4.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAgAIBAAAAAIAAAAAAACEAAASAAQAAAAAAAAA=</HashCode>
-      <FileName>Controllers\Dtos\ValidationAccessTokenPayload.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ValidationCondition" />
-      <Property Name="ValidationType" />
-    </ShowAsAssociation>
   </Class>
   <Enum Name="EuDecorator.Controllers.Dtos.ValidationType">
-    <Position X="2" Y="17.25" Width="1.5" />
+    <Position X="4" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAACAAgAAAAAAAAA=</HashCode>
       <FileName>Controllers\Dtos\ValidationType.cs</FileName>

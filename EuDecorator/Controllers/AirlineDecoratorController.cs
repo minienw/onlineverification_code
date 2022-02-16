@@ -6,11 +6,12 @@ namespace EuDecorator.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ValidationDecoratorController : ControllerBase
+    public class AirlineDecoratorController : ControllerBase
     {
         /// <summary>
+        /// Creates the QR Code - not seen in the outside world!!!!
         /// 3.10.1.1 QR Code delivery Endpoint
-        /// UNCHANGED - <see cref="/token response for"/>
+        /// UNCHANGED - <see cref="/token response for..."/>
         /// </summary>
         /// <param name="subject">'Case Id' Is this a JWT or JSON cos it also has </param>
         /// <returns></returns>
@@ -40,12 +41,12 @@ namespace EuDecorator.Controllers
         /// <exception cref="NotImplementedException"></exception>
         [HttpPost("Token")]
         [Consumes("application/jwt")]
-        [ProducesResponseType(typeof(ValidationAccessTokenHeader), StatusCodes.Status200OK, MediaTypeNames.Application.Json)] //Access token - not sure how this is JSON
+        [ProducesResponseType(typeof(ValidationAccessToken), StatusCodes.Status200OK, MediaTypeNames.Application.Json)] //Access token - not sure how this is JSON
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] //Mangled
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))] //Signing bad
         [ProducesResponseType(StatusCodes.Status410Gone, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public ActionResult<ValidationAccessTokenHeader> ValidationSessionStart(
+        public ActionResult<ValidationAccessToken> GetValidationAccessTokenAndTripInfo(
             [FromHeader(Name = "Authorization")] string authorizationHeaderJwt, //
             [FromHeader(Name = "Content-Type")] string contentTypeHeader, //Must be json
             [FromHeader(Name = "Accept")] string acceptHeader, //Must be json
@@ -118,7 +119,7 @@ namespace EuDecorator.Controllers
             [FromHeader(Name = "X-Version")] string xVersion,
             [FromHeader(Name = "Content-Type")] string contentTypeHeader, //Must be json
             [FromRoute] string subject, 
-            [FromBody] ResultToken body)
+            [FromBody] AirlineResultToken body)
         {
             throw new NotImplementedException();
         }

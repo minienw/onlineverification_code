@@ -7,7 +7,7 @@ namespace EuDecorator.Controllers.Dtos
     /// 3.8.3
     /// The validation initialisation response delivers a JSON with a unique subject ID, which identifies the
     /// occurrence in the validation service.Next to the unique subject, a public key and an expiration date
-    /// for the occurrence are attached.The public key must be unique for each subject for maximum data
+    /// for the occurrence are attached. The public key must be unique for each subject for maximum data
     /// privacy.
     /// </summary>
     public class ValidationInitializeResponse

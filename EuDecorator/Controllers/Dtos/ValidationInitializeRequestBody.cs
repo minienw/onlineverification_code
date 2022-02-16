@@ -23,6 +23,7 @@ public class ValidationInitializeRequestBody
 
 
     /// <summary>
+    /// TODO move to response header???!!!!
     /// TODO careful not to double encode requests/responses
     /// Random 16 bytes, Base64 encoded
     /// </summary>

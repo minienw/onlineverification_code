@@ -42,7 +42,7 @@ public class ResultTokenPayload
     /// e.g. ADEDDDDDDDDDDDDDDD
     /// </summary>
     [JsonPropertyName("sub")]
-    public int Subject { get; set; }
+    public string Subject { get; set; }
 
     /// <summary>
     /// Final result of the evaluation.

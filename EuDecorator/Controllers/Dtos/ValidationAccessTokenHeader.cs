@@ -29,4 +29,14 @@ public class ValidationAccessTokenHeader
     /// </summary>
     [JsonPropertyName("kid")]
     public string KeyId { get; set; }
+
+    /// <summary>
+    /// TODO do we agree this belongs in the access token?
+    /// </summary>
+    public Trip Trip { get; set; }
+
+    /// <summary>
+    /// With or without token?
+    /// </summary>
+    public string ResultCallBackUri { get; set; }
 }
