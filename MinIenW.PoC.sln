@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E27F8852-0B2C-4C55-9324-915C024F741B}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.V2", "Wallet\Wallet.V2.csproj", "{BE22A336-3009-48A5-80EC-C15E6DA4A74E}"
