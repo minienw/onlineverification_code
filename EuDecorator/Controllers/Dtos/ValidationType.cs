@@ -18,5 +18,8 @@ public enum ValidationType
     /// <summary>
     /// Structure Validation + Cryptographic + Business Rule Check(condition structure necessary)
     /// </summary>
-    Full = 2 
+    Full = 2,
+        
+    [Obsolete("Steffen's not in scope yet but additionally Perform ID check")]
+    FullWithIdCheck = 4
 }

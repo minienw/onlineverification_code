@@ -34,19 +34,21 @@ namespace Wallet
         private string _WalletPublicKey;
         private string _WalletPublicKeyAlgorithm; //TODO choices?
         private string _WalletPrivateKey;
-        private string _Nonce;
+        private string _Nonce; //
 
         //TODO Check sigs after each stage
         public void Main(InitializationQrCodeContent qrCode)
         {
-            var validationAccessToken = TravllerObtainsQrCodeThenTripInfo(qrCode);
+            var validationAccessToken = TravellerObtainsQrCodeThenTripInfo(qrCode);
             var validationInitializeResponse = StartValidation(validationAccessToken);
+            //e.g. sig check of above response
+            //TODO missing = get the validation nonce from the response.Header (sheesh!)
             var dccs = new string[2]; //Obtain Dccs...
             var validationResult = Validate(dccs, validationInitializeResponse, validationAccessToken);
             NotifyAirline(validationAccessToken.Header.ResultCallBackUri, dccs, validationResult);
         }
 
-        public ValidationAccessToken TravllerObtainsQrCodeThenTripInfo(InitializationQrCodeContent qrCode)
+        public ValidationAccessToken TravellerObtainsQrCodeThenTripInfo(InitializationQrCodeContent qrCode)
         {
             //TODO nothing needed from the Identity endpoints?
 
@@ -64,12 +66,18 @@ namespace Wallet
             ).Value;
         }
 
+        public class ValidationInitializeResponseWithNonce
+        {
+            public ValidationInitializeResponse Body { get; set; }
+            public string Nonce { get; set; }
+        }
+
         /// <summary>
         /// Originally intended to 
         /// </summary>
         /// <param name="validationAccessToken"></param>
         /// <returns></returns>
-        public ValidationInitializeResponse StartValidation(ValidationAccessToken validationAccessToken)
+        public ValidationInitializeResponseWithNonce StartValidation(ValidationAccessToken validationAccessToken)
         {
             GenerateRandomNonce();
 
@@ -77,30 +85,37 @@ namespace Wallet
             {
                 WalletPublicKey = _WalletPublicKey,
                 Algorithm = _WalletPublicKeyAlgorithm,
-                Nonce = _Nonce
+                Nonce = _Nonce //TODO better not be the 
             };
 
-            return new SecureValidationServiceController().Initialize(VersionHeaderValueV1,
+            var response = new SecureValidationServiceController().Initialize(VersionHeaderValueV1,
                 MediaTypeNames.Application.Json, MediaTypeNames.Application.Json, false, false,
-                validationInitializeRequestBody).Value!;
+                validationInitializeRequestBody);
+
+
+            return new ValidationInitializeResponseWithNonce
+            {
+                Body = response!.Value,
+                Nonce = "value from headers..."
+            };
         }
 
-        public ResultToken Validate(string[] dccs, ValidationInitializeResponse validationServiceSession, ValidationAccessToken validationAccessToken)
+        public ResultToken Validate(string[] dccs, ValidationInitializeResponseWithNonce validationServiceSession, ValidationAccessToken validationAccessToken)
         {
             var encodedDccs = new DccFormatterV2().Encode(dccs);
 
             var validateRequestBody = new ValidateRequestBody
             {
-                EncryptedDcc = EncryptDcc(encodedDccs, validationServiceSession.ValidationServiceEncryptionKey),
-                EncryptionKeyId = validationServiceSession.ValidationServiceEncryptionKey.KeyId,
+                EncryptedDcc = EncryptDcc(encodedDccs, validationServiceSession.Body.ValidationServiceEncryptionKey), //TODO needs the Nonce too
+                EncryptionKeyId = validationServiceSession.Body.ValidationServiceEncryptionKey.KeyId,
 
-                EncryptedDccSignature = EncryptDcc(encodedDccs, validationServiceSession.ValidationServiceSigningKey),
-                EncryptedDccSignatureAlgorithm = validationServiceSession.ValidationServiceSigningKey.Algorithm, //Where?
+                EncryptedDccSignature = EncryptDcc(encodedDccs, validationServiceSession.Body.ValidationServiceSigningKey),  //TODO needs the Nonce too?
+                EncryptedDccSignatureAlgorithm = validationServiceSession.Body.ValidationServiceSigningKey.Algorithm, //Where?
                 
                 //EncryptionKey = "Ignored for asymmetric encryption"
             };
 
-            var validationUrl = validationServiceSession.ValidationUrl; //TODO set this in httpRequest
+            var validationUrl = validationServiceSession.Body.ValidationUrl; //TODO set this in httpRequest
             //NB V2
             return new SecureValidationServiceController()
                 .Status(
@@ -112,6 +127,12 @@ namespace Wallet
                     ).Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="callbackUrl"></param>
+        /// <param name="dccs"></param>
+        /// <param name="validationResult"></param>
         private void NotifyAirline(string callbackUrl, string[] dccs, ResultToken validationResult)
         {
             //extract DisclosedPersonalData from each DCC and check they all match.
@@ -120,13 +141,13 @@ namespace Wallet
             //TODO how much of ResultTokenPayload is required by airlines?
             var body = new AirlineResultToken
             {
-                //TODO subject or it that in the URL?
+                //TODO subject *IS* in the provided URL?
                 //TODO anything else?
                 ConfirmationToken = validationResult.Payload.Confirmation,
                 DisclosedPersonalData = disclosedPersonalData
             };
 
-            //URL from callbackUrl
+            //URL from callbackUrl - Url DOES contain SubjectId
             //TODO authentication? Same as 
             //Probably should be V2?
             new AirlineDecoratorController()

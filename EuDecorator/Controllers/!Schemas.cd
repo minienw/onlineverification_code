@@ -102,7 +102,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="EuDecorator.Controllers.Dtos.ValidationAccessTokenPayloadCondition">
-    <Position X="7.25" Y="12.75" Width="3.75" />
+    <Position X="6.75" Y="12.75" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACCACAAAIAAQAEAAAAAAUAgAgAQAgEAAACAA=</HashCode>
       <FileName>Controllers\Dtos\ValidationAccessTokenPayloadCondition.cs</FileName>
@@ -119,7 +119,7 @@
       <Property Name="ValidationCondition" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="EuDecorator.Controllers.Dtos.ResultToken" Collapsed="true">
+  <Class Name="EuDecorator.Controllers.Dtos.ResultToken">
     <Position X="0.5" Y="21" Width="4" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -153,9 +153,12 @@
   <Class Name="EuDecorator.Controllers.Dtos.ResultTokenPayloadConfirmation">
     <Position X="11.75" Y="23" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAABAAAAAAAAAAQAACAAAAAAAAAAAAAQCAA=</HashCode>
+      <HashCode>AAACAAAAAAABAAAAAAAACAQAACAAAAAAAAAAAAAQCAA=</HashCode>
       <FileName>Controllers\Dtos\ResultTokenPayloadConfirmation.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DisclosedPersonalData" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="EuDecorator.Controllers.Dtos.ResultTokenPayloadResult">
     <Position X="6.5" Y="25.75" Width="3.75" />
@@ -181,7 +184,7 @@
   <Enum Name="EuDecorator.Controllers.Dtos.ValidationType">
     <Position X="4" Y="15.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAACAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAEAAAAAACAAgAAAAAAAAA=</HashCode>
       <FileName>Controllers\Dtos\ValidationType.cs</FileName>
     </TypeIdentifier>
   </Enum>

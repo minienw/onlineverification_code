@@ -13,8 +13,9 @@ public class ResultToken
     public ResultTokenPayload Payload { get; set; }
 }
 
-
-
+/// <summary>
+/// EF wants the DisclosedPersonalData in the Confirmation token.
+/// </summary>
 public class AirlineResultToken
 {
     public ResultTokenPayloadConfirmation ConfirmationToken { get; set; }

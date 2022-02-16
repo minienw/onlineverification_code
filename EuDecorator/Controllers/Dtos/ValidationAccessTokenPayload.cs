@@ -50,6 +50,7 @@ public class ValidationAccessTokenPayload
     public int WhenExpires { get; set; }
 
     /// <summary>
+    /// 
     /// </summary>
     [JsonPropertyName("t")]
     public ValidationType ValidationType { get; set; }
