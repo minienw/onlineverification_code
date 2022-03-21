@@ -1,0 +1,20 @@
+{
+  "jti": "ABCD0123ABCD0123ABCD0123ABCD0123",
+  "sub": "ABCD0123ABCD0123ABCD0123ABCD0123",
+  "iat": 1646735717,
+  "exp": 1646739317,
+  "category": [
+    "cat..."
+  ],
+  "result": "1",
+  "poa": "AMS",
+  "pod": "FRA",
+  "validfrom": "2021-01-29T12:00:00+01:00",
+  "validTo": "2021-01-29T12:00:00+01:00",
+  "validationClock": "2021-01-29T12:00:00+01:00",
+  "personalInfoDccExtract": {
+    "surnameTransliterated": "EPONYMO",
+    "givenNameTransliterated": "ONOMA",
+    "dateOfBirth": "2021-01-01"
+  }
+}

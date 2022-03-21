@@ -1,0 +1,45 @@
+{
+  "id": "http://localhost:8080/identity",
+  "verificationMethod": [
+    {
+      "id": "https://thisservice.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
+      "type": "JsonWebKey2020",
+      "controller": "https://thisservice.com/identity",
+      "publicKeyJwk": {
+        "x5c": [
+          "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArTl66RAAnSYtDm6rb2dCclaozgPSr6Oxu/whHlknTke5E28YGiIWKSiuTR530GO/Wie22FHIIUoIyaZT6mmCC3XTZiQ8V+fqFGaqr7uQooNzJT6sNXRj+iqZxueDKEClry/6Rsq8mfZw+K7UD7hdn9EWfFR5VWY+PgbWPZkSaRVldCpjZrNwECAsyBNTFSDZcMJ7hoofrp/g5+qms8OjwPuc1Jw3yg0qNVig3sSDNqbXSkGimrmWWCpGZ255zCgVJbQTwOgRqrpZAoIq2sJNdKaVQ8aCwKQeZo85jcXS1iB8meG0GFiWI8/A8+mNodiAZNLxxrbiRFkh6posVbmxo/gyvlVmyaYXg09CZrNNCmicTyQ4tC7Oz0PNrr+/ZQA7UvyPnPQs1j9YGCeG1HhHwT58d9d6/01a29YHuxa+bwr/Qey4QEOX+n1+DDTGrRN9TySr/+uP+CJk2yeXBwHbywKPfC/3mOur47jCyy3aaozWkDsSZsNePfHpPjULyawt817IQ6/b3Le0oklmlpB8I+5BeicO8oEmPoFr9QCq6IxhJ1RDNJquESX5s71HS3Y8nZ98TQrZUpigI+w06IsaQgR4VCVhbn5LvE93A+RWOldaM+WvpZwHh4UoUHOBPmxof8cb5xoCUBbgel/ASMz66H9zSiFWBr2c3lXafbfMV20CAwEAAQ=="
+        ],
+        "kid": "8s/rDoZc3G4=",
+        "alg": "RSA",
+        "use": "enc"
+      }
+    },
+    {
+      "id": "https://thisservice.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
+      "type": "JsonWebKey2020",
+      "controller": "https://thisservice.com/identity",
+      "publicKeyJwk": {
+        "kid": "NotdWikdAbpdoI=",
+        "alg": "RS256",
+        "use": "sig",
+        "x5c": [
+          "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArTl66RAAnSYtDm6rb2dCclaozgPSr6Oxu/whHlknTke5E28YGiIWKSiuTR530GO/Wie22FHIIUoIyaZT6mmCC3XTZiQ8V+fqFGaqr7uQooNzJT6sNXRj+iqZxueDKEClry/6Rsq8mfZw+K7UD7hdn9EWfFR5VWY+PgbWPZkSaRVldCpjZrNwECAsyBNTFSDZcMJ7hoofrp/g5+qms8OjwPuc1Jw3yg0qNVig3sSDNqbXSkGimrmWWCpGZ255zCgVJbQTwOgRqrpZAoIq2sJNdKaVQ8aCwKQeZo85jcXS1iB8meG0GFiWI8/A8+mNodiAZNLxxrbiRFkh6posVbmxo/gyvlVmyaYXg09CZrNNCmicTyQ4tC7Oz0PNrr+/ZQA7UvyPnPQs1j9YGCeG1HhHwT58d9d6/01a29YHuxa+bwr/Qey4QEOX+n1+DDTGrRN9TySr/+uP+CJk2yeXBwHbywKPfC/3mOur47jCyy3aaozWkDsSZsNePfHpPjULyawt817IQ6/b3Le0oklmlpB8I+5BeicO8oEmPoFr9QCq6IxhJ1RDNJquESX5s71HS3Y8nZ98TQrZUpigI+w06IsaQgR4VCVhbn5LvE93A+RWOldaM+WvpZwHh4UoUHOBPmxof8cb5xoCUBbgel/ASMz66H9zSiFWBr2c3lXafbfMV20CAwEAAQ=="
+        ]
+      }
+    }
+  ],
+  "service": [
+    {
+      "id": "http://localhost:8080/identity/service/ValidationService#InitializeService",
+      "type": "InitializeService",
+      "serviceEndpoint": "https://localhost:8080/initialise",
+      "name": "Demo Validation Service Initialise"
+    },
+    {
+      "id": "http://localhost:8080/identity/service/ValidationService#ValidationService",
+      "type": "ValidationService",
+      "serviceEndpoint": "https://localhost:8080/validate",
+      "name": "Demo Validation Service Validate"
+    }
+  ]
+}

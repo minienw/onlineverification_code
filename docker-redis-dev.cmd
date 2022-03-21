@@ -1,0 +1,1 @@
+docker run  -d -p 6379:6379 --name redis-dev redis:6.2.6-alpine

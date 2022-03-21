@@ -1,0 +1,2417 @@
+{
+    "androidMinimumVersion": 1,
+    "androidMinimumVersionMessage": "Om de app te gebruiken heb je de laatste versie uit de store nodig.",
+    "playStoreURL": "https://play.google.com/store/apps/details?id=nl.rijksoverheid.dcbs.verifier",
+    "iosMinimumVersion": "1.0.0",
+    "iosMinimumVersionMessage": "Om de app te gebruiken heb je de laatste versie uit de store nodig.",
+    "iosAppStoreURL": "https://apps.apple.com/nl/app/dcc-scanner-app/id1572642859",
+    "appDeactivated": false,
+    "configTTL": 3600,
+    "maxValidityHours": 40,
+    "informationURL": "https://www.rijksoverheid.nl/ministeries/ministerie-van-infrastructuur-en-waterstaat",
+    "domesticVerificationRules": {
+        "qrValidForSeconds": 180
+    },
+    "europeanVerificationRules": {
+        "testAllowedTypes": [
+            "LP217198-3",
+            "LP6464-4"
+        ],
+        "testValidityHours": 40,
+        "vaccineAllowedProducts": [
+            "EU/1/20/1528",
+            "EU/1/20/1507",
+            "EU/1/21/1529",
+            "EU/1/20/1525"
+        ],
+        "recoveryValidFromDays": 11,
+        "recoveryValidUntilDays": 180,
+        "vocExtraTestRule": {
+            "enabled": true,
+            "singlePCRTestHours": 24,
+            "secondDosePCRMinTestHours": 48,
+            "secondDoseAntiGenMinTestHours": 24
+        },
+        "proofIdentifierDenylist": {
+            "q5TKp3sKMWlVjmMUGdhTtw==": true,
+            "ljOsYiw6IDXfndOeyUfTNg==": true,
+            "Cd4kRRFnM23JNNHCQ9m7ag==": true,
+            "NM39YohV4lo3JapOxPqb2g==": true,
+            "pjpI2WGn+/0pyrNsZUs8Yg==": true,
+            "jWeVvZ/LPgFjFIzKffSbDQ==": true,
+            "QsuadE0oH0+H0A3I/cevWQ==": true,
+            "YZ9nsv9RR9hu19sb2mPvSA==": true,
+            "pwtNZ4y7dPb6b7lQPU3mRQ==": true,
+            "SGVlZlQFSWQbONbuH5pz4g==": true
+        }
+    },
+    "countryColors": [
+        {
+            "name_us": "EU Green",
+            "name_nl": "EU Groen",
+            "code": "code_green",
+            "color": "green",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "EU Yellow",
+            "name_nl": "EU Geel",
+            "code": "code_yellow",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "EU Orange very high risk VOC",
+            "name_nl": "EU Oranje zeer hoog risico VOC",
+            "code": "code_orange_very_high_risk",
+            "color": "orange_very_high_risk",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "Non-EU Yellow",
+            "name_nl": "Niet-EU Geel",
+            "code": "code_yellow_neu",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "Non-EU Orange high risk",
+            "name_nl": "Niet-EU Oranje hoog risico",
+            "code": "code_orange_neu",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "Non-EU Orange very high risk",
+            "name_nl": "Niet-EU Oranje zeer hoog risico",
+            "code": "code_orange_high_incidence_neu",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "Non-EU Orange very high risk VOC",
+            "name_nl": "Niet-EU Oranje zeer hoog risico VOC",
+            "code": "code_orange_very_high_risk_neu",
+            "color": "orange_very_high_risk",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "No rules",
+            "name_nl": "Geen regels",
+            "code": "code_red",
+            "color": "red",
+            "result_on_valid_code": "inconclusive",
+            "is_EU": true,
+            "is_colour_code": true
+        },
+        {
+            "name_us": "Afghanistan",
+            "name_nl": "Afghanistan",
+            "code": "AF",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Aland Islands",
+            "name_nl": "Aland",
+            "code": "AX",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Albania",
+            "name_nl": "Albanie",
+            "code": "AL",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Algeria",
+            "name_nl": "Algerije",
+            "code": "DZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "American Samoa",
+            "name_nl": "Amerikaans-Samoa",
+            "code": "AS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Andorra",
+            "name_nl": "Andorra",
+            "code": "AD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Angola",
+            "name_nl": "Angola",
+            "code": "AO",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Anguilla",
+            "name_nl": "Anguilla",
+            "code": "AI",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Antarctica",
+            "name_nl": "Antarctica",
+            "code": "AQ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Antigua and Barbuda",
+            "name_nl": "Antigua en Barbuda",
+            "code": "AG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Argentina",
+            "name_nl": "Argentinie",
+            "code": "AR",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Armenia",
+            "name_nl": "Armenie",
+            "code": "AM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Aruba",
+            "name_nl": "Aruba",
+            "code": "AW",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Australia",
+            "name_nl": "Australie",
+            "code": "AU",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Austria",
+            "name_nl": "Oostenrijk",
+            "code": "AT",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Azerbeidzjan",
+            "name_nl": "Azerbeidzjan",
+            "code": "AZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bahamas",
+            "name_nl": "Bahama's",
+            "code": "BS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bahrain",
+            "name_nl": "Bahrein",
+            "code": "BH",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bangladesh",
+            "name_nl": "Bangladesh",
+            "code": "BD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Barbados",
+            "name_nl": "Barbados",
+            "code": "BB",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Belarus",
+            "name_nl": "Wit-Rusland",
+            "code": "BY",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Belgium",
+            "name_nl": "Belgie",
+            "code": "BE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Belize",
+            "name_nl": "Belize",
+            "code": "BZ",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Benin",
+            "name_nl": "Benin",
+            "code": "BJ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bermuda",
+            "name_nl": "Bermuda",
+            "code": "BM",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bhutan",
+            "name_nl": "Bhutan",
+            "code": "BT",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bolivia (Plurinational State of)",
+            "name_nl": "Bolivia",
+            "code": "BO",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bonaire",
+            "name_nl": "Bonaire",
+            "code": "BQ-1",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bosnia and Herzegovina",
+            "name_nl": "Bosnie Herzegovina",
+            "code": "BA",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Botswana",
+            "name_nl": "Botswana",
+            "code": "BW",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bouvet Island",
+            "name_nl": "Bouvet",
+            "code": "BV",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Brazil",
+            "name_nl": "Brazilie",
+            "code": "BR",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "British Indian Ocean Territory",
+            "name_nl": "Brits Indische Oceaanterritorium",
+            "code": "IO",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Brunei Darussalam",
+            "name_nl": "Brunei",
+            "code": "BN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Bulgaria",
+            "name_nl": "Bulgarije",
+            "code": "BG",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Burkina Faso",
+            "name_nl": "Burkina Faso",
+            "code": "BF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Burundi",
+            "name_nl": "Burundi",
+            "code": "BI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cabo Verde",
+            "name_nl": "Kaapverdie",
+            "code": "CV",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cambodia",
+            "name_nl": "Cambodja",
+            "code": "KH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cameroon",
+            "name_nl": "Kameroen",
+            "code": "CM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Canada",
+            "name_nl": "Canada",
+            "code": "CA",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cayman Islands",
+            "name_nl": "Kaaimaneilanden",
+            "code": "KY",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Central African Republic",
+            "name_nl": "Centraal-Afrikaanse Republiek",
+            "code": "CF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Chad",
+            "name_nl": "Tsjaad",
+            "code": "TD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Chile",
+            "name_nl": "Chili",
+            "code": "CL",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "China",
+            "name_nl": "China",
+            "code": "CN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Christmas Island",
+            "name_nl": "Christmaseiland",
+            "code": "CX",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cocos (Keeling) Islands",
+            "name_nl": "Cocoseilanden",
+            "code": "CC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Colombia",
+            "name_nl": "Colombia",
+            "code": "CO",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Comoros",
+            "name_nl": "Comoren",
+            "code": "KM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Congo",
+            "name_nl": "Congo-Brazzaville",
+            "code": "CG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Congo,  Democratic Republic of the",
+            "name_nl": "Congo-Kinshasa",
+            "code": "CD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cook Islands",
+            "name_nl": "Cookeilanden",
+            "code": "CK",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Costa Rica",
+            "name_nl": "Costa Rica",
+            "code": "CR",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cote d'Ivoire",
+            "name_nl": "Ivoorkust",
+            "code": "CI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Croatia",
+            "name_nl": "Kroatie",
+            "code": "HR",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cuba",
+            "name_nl": "Cuba",
+            "code": "CU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Curacao",
+            "name_nl": "Curacao",
+            "code": "CW",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Cyprus",
+            "name_nl": "Cyprus",
+            "code": "CY",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Czechia",
+            "name_nl": "Tsjechie",
+            "code": "CZ",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Denmark",
+            "name_nl": "Denemarken",
+            "code": "DK",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Djibouti",
+            "name_nl": "Djibouti",
+            "code": "DJ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Dominica",
+            "name_nl": "Dominica",
+            "code": "DM",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Dominican Republic",
+            "name_nl": "Dominicaanse Republiek",
+            "code": "DO",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Ecuador",
+            "name_nl": "Ecuador",
+            "code": "EC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Egypt",
+            "name_nl": "Egypte",
+            "code": "EG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "El Salvador",
+            "name_nl": "El Salvador",
+            "code": "SV",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Equatorial Guinea",
+            "name_nl": "Equatoriaal-Guinea",
+            "code": "GQ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Eritrea",
+            "name_nl": "Eritrea",
+            "code": "ER",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Estonia",
+            "name_nl": "Estland",
+            "code": "EE",
+            "color": "green",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Eswatini",
+            "name_nl": "Swaziland",
+            "code": "SZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Ethiopia",
+            "name_nl": "Ethiopie",
+            "code": "ET",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Falkland Islands (Malvinas)",
+            "name_nl": "Falklandeilanden",
+            "code": "FK",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Faroe Islands",
+            "name_nl": "Faeroer",
+            "code": "FO",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Fiji",
+            "name_nl": "Fiji",
+            "code": "FJ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Finland",
+            "name_nl": "Finland",
+            "code": "FI",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "France",
+            "name_nl": "Frankrijk",
+            "code": "FR",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "French Guiana",
+            "name_nl": "Frans-Guyana",
+            "code": "GF",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "French Polynesia",
+            "name_nl": "Frans-Polynesie",
+            "code": "PF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "French Southern Territories",
+            "name_nl": "Franse Zuidelijke Gebieden",
+            "code": "TF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Gabon",
+            "name_nl": "Gabon",
+            "code": "GA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Gambia",
+            "name_nl": "Gambia",
+            "code": "GM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Georgia",
+            "name_nl": "Georgie",
+            "code": "GE",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Germany",
+            "name_nl": "Duitsland",
+            "code": "DE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Ghana",
+            "name_nl": "Ghana",
+            "code": "GH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Gibraltar",
+            "name_nl": "Gibraltar",
+            "code": "GI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Greece",
+            "name_nl": "Griekenland",
+            "code": "GR",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Greenland",
+            "name_nl": "Groenland",
+            "code": "GL",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Grenada",
+            "name_nl": "Grenada",
+            "code": "GD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guadeloupe",
+            "name_nl": "Guadeloupe",
+            "code": "GP",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guam",
+            "name_nl": "Guam",
+            "code": "GU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guatemala",
+            "name_nl": "Guatemala",
+            "code": "GT",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guernsey",
+            "name_nl": "Guernsey",
+            "code": "GG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guinea",
+            "name_nl": "Guinee",
+            "code": "GN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guinea-Bissau",
+            "name_nl": "Guinee-Bissau",
+            "code": "GW",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Guyana",
+            "name_nl": "Guyana",
+            "code": "GY",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Haiti",
+            "name_nl": "Haiti",
+            "code": "HT",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Heard Island and McDonald Islands",
+            "name_nl": "Heard en McDonaldeilanden",
+            "code": "HM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Honduras",
+            "name_nl": "Honduras",
+            "code": "HN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Hong Kong",
+            "name_nl": "Hongkong",
+            "code": "HK",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Hungary",
+            "name_nl": "Hongarije",
+            "code": "HU",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Iceland",
+            "name_nl": "IJsland",
+            "code": "IS",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "India",
+            "name_nl": "India",
+            "code": "IN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Indonesia",
+            "name_nl": "Indonesie",
+            "code": "ID",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Iran (Islamic Republic of)",
+            "name_nl": "Iran",
+            "code": "IR",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Iraq",
+            "name_nl": "Irak",
+            "code": "IQ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Ireland",
+            "name_nl": "Ierland",
+            "code": "IE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Isle of Man",
+            "name_nl": "Man",
+            "code": "IM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Israel",
+            "name_nl": "Israel",
+            "code": "IL",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Italy",
+            "name_nl": "Italie",
+            "code": "IT",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Jamaica",
+            "name_nl": "Jamaica",
+            "code": "JM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Japan",
+            "name_nl": "Japan",
+            "code": "JP",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Jersey",
+            "name_nl": "Jersey",
+            "code": "JE",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Jordan",
+            "name_nl": "Jordanie",
+            "code": "JO",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kazakhstan",
+            "name_nl": "Kazachstan",
+            "code": "KZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kenya",
+            "name_nl": "Kenia",
+            "code": "KE",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kiribati",
+            "name_nl": "Kiribati",
+            "code": "KI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Korea (Democratic People's Republic of)",
+            "name_nl": "Noord-Korea",
+            "code": "KP",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Korea,  Republic of",
+            "name_nl": "Zuid-Korea",
+            "code": "KR",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kosovo",
+            "name_nl": "Kosovo",
+            "code": "RS-KM",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kuwait",
+            "name_nl": "Koeweit",
+            "code": "KW",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Kyrgyzstan",
+            "name_nl": "Kirgizie",
+            "code": "KG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Lao People's Democratic Republic",
+            "name_nl": "Laos",
+            "code": "LA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Latvia",
+            "name_nl": "Letland",
+            "code": "LV",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Lebanon",
+            "name_nl": "Libanon",
+            "code": "LB",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Lesotho",
+            "name_nl": "Lesotho",
+            "code": "LS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Liberia",
+            "name_nl": "Liberia",
+            "code": "LR",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Libya",
+            "name_nl": "Libie",
+            "code": "LY",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Liechtenstein",
+            "name_nl": "Liechtenstein",
+            "code": "LI",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Lithuania",
+            "name_nl": "Litouwen",
+            "code": "LT",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Luxembourg",
+            "name_nl": "Luxemburg",
+            "code": "LU",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Macao",
+            "name_nl": "Macau",
+            "code": "MO",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Madagascar",
+            "name_nl": "Madagaskar",
+            "code": "MG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Malawi",
+            "name_nl": "Malawi",
+            "code": "MW",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Malaysia",
+            "name_nl": "Maleisie",
+            "code": "MY",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Maldives",
+            "name_nl": "Malediven",
+            "code": "MV",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mali",
+            "name_nl": "Mali",
+            "code": "ML",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Malta",
+            "name_nl": "Malta",
+            "code": "MT",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Marshall Islands",
+            "name_nl": "Marshalleilanden",
+            "code": "MH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Martinique",
+            "name_nl": "Martinique",
+            "code": "MQ",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mauritania",
+            "name_nl": "Mauritanie",
+            "code": "MR",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mauritius",
+            "name_nl": "Mauritius",
+            "code": "MU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mayotte",
+            "name_nl": "Mayotte",
+            "code": "YT",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mexico",
+            "name_nl": "Mexico",
+            "code": "MX",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Micronesia (Federated States of)",
+            "name_nl": "Micronesia",
+            "code": "FM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Moldova (the Republic of)",
+            "name_nl": "Moldavie",
+            "code": "MD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Monaco",
+            "name_nl": "Monaco",
+            "code": "MC",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mongolia",
+            "name_nl": "Mongolie",
+            "code": "MN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Montenegro",
+            "name_nl": "Montenegro",
+            "code": "ME",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Montserrat",
+            "name_nl": "Montserrat",
+            "code": "MS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Morocco",
+            "name_nl": "Marokko",
+            "code": "MA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Mozambique",
+            "name_nl": "Mozambique",
+            "code": "MZ",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Myanmar",
+            "name_nl": "Myanmar",
+            "code": "MM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Namibia",
+            "name_nl": "Namibie",
+            "code": "NA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Nauru",
+            "name_nl": "Nauru",
+            "code": "NR",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Nepal",
+            "name_nl": "Nepal",
+            "code": "NP",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Netherlands",
+            "name_nl": "Nederland",
+            "code": "NL",
+            "color": "yellow",
+            "result_on_valid_code": "nl_rules",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "New Caledonia",
+            "name_nl": "Nieuw-Caledonie",
+            "code": "NC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "New Zealand",
+            "name_nl": "Nieuw-Zeeland",
+            "code": "NZ",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Nicaragua",
+            "name_nl": "Nicaragua",
+            "code": "NI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Niger",
+            "name_nl": "Niger",
+            "code": "NE",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Nigeria",
+            "name_nl": "Nigeria",
+            "code": "NG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Niue",
+            "name_nl": "Niue",
+            "code": "NU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Norfolk Island",
+            "name_nl": "Norfolk",
+            "code": "NF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "North Macedonia",
+            "name_nl": "Noord-Macedonie",
+            "code": "MK",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Northern Mariana Islands",
+            "name_nl": "Noordelijke Marianen",
+            "code": "MP",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Norway",
+            "name_nl": "Noorwegen",
+            "code": "NO",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Oman",
+            "name_nl": "Oman",
+            "code": "OM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Pakistan",
+            "name_nl": "Pakistan",
+            "code": "PK",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Palau",
+            "name_nl": "Palau",
+            "code": "PW",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Palestine,  State of",
+            "name_nl": "Palestina",
+            "code": "PS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Panama",
+            "name_nl": "Panama",
+            "code": "PA",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Papua New Guinea",
+            "name_nl": "Papoea-Nieuw-Guinea",
+            "code": "PG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Paraguay",
+            "name_nl": "Paraguay",
+            "code": "PY",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Peru",
+            "name_nl": "Peru",
+            "code": "PE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Philippines",
+            "name_nl": "Filipijnen",
+            "code": "PH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Pitcairn",
+            "name_nl": "Pitcairneilanden",
+            "code": "PN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Poland",
+            "name_nl": "Polen",
+            "code": "PL",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Portugal",
+            "name_nl": "Portugal",
+            "code": "PT",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Portugal,  Azores",
+            "name_nl": "Portugal,  Azoren",
+            "code": "PT-20",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Portugal,  Madeira",
+            "name_nl": "Portugal,  Madeira",
+            "code": "PT-30",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Puerto Rico",
+            "name_nl": "Puerto Rico",
+            "code": "PR",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Qatar",
+            "name_nl": "Qatar",
+            "code": "QA",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Reunion",
+            "name_nl": "Reunion",
+            "code": "RE",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Romania",
+            "name_nl": "Roemenie",
+            "code": "RO",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Russian Federation",
+            "name_nl": "Rusland",
+            "code": "RU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Rwanda",
+            "name_nl": "Rwanda",
+            "code": "RW",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saba",
+            "name_nl": "Saba",
+            "code": "BQ-2",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Barthelemy",
+            "name_nl": "Saint-Barthelemy",
+            "code": "BL",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Helena,  Ascension and Tristan da Cunha[b]",
+            "name_nl": "Sint-Helena,  Ascension en Tristan da Cunha",
+            "code": "SH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Kitts and Nevis",
+            "name_nl": "Saint Kitts en Nevis",
+            "code": "KN",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Lucia",
+            "name_nl": "Saint Lucia",
+            "code": "LC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Martin (Dutch part)",
+            "name_nl": "Sint-Maarten (Nederlands deel)",
+            "code": "SX",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Martin (French part)",
+            "name_nl": "Sint-Maarten (Frans deel)",
+            "code": "MF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Pierre and Miquelon",
+            "name_nl": "Saint-Pierre en Miquelon",
+            "code": "PM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saint Vincent and the Grenadines",
+            "name_nl": "Saint Vincent en de Grenadines",
+            "code": "VC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Samoa",
+            "name_nl": "Samoa",
+            "code": "WS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "San Marino",
+            "name_nl": "San Marino",
+            "code": "SM",
+            "color": "green",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sao Tome and Principe",
+            "name_nl": "Sao Tome en Principe",
+            "code": "ST",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Saudi Arabia",
+            "name_nl": "Saudi Arabie",
+            "code": "SA",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Senegal",
+            "name_nl": "Senegal",
+            "code": "SN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Serbia",
+            "name_nl": "Servie",
+            "code": "RS",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Seychelles",
+            "name_nl": "Seychellen",
+            "code": "SC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sierra Leone",
+            "name_nl": "Sierra Leone",
+            "code": "SL",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Singapore",
+            "name_nl": "Singapore",
+            "code": "SG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sint Eustatius",
+            "name_nl": "Sint Eustatius",
+            "code": "BQ-3",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Slovakia",
+            "name_nl": "Slowakije",
+            "code": "SK",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Slovenia",
+            "name_nl": "Slovenie",
+            "code": "SI",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Solomon Islands",
+            "name_nl": "Salomonseilanden",
+            "code": "SB",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Somalia",
+            "name_nl": "Somalie",
+            "code": "SO",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "South Africa",
+            "name_nl": "Zuid-Afrika",
+            "code": "ZA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "South Georgia and the South Sandwich Islands",
+            "name_nl": "Zuid-Georgia en de Zuidelijke Sandwicheilanden",
+            "code": "GS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "South Sudan",
+            "name_nl": "Zuid-Soedan",
+            "code": "SS",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Spain",
+            "name_nl": "Spanje",
+            "code": "ES",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Canary Islands",
+            "name_nl": "Canarische eilanden",
+            "code": "IC",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sri Lanka",
+            "name_nl": "Sri Lanka",
+            "code": "LK",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sudan",
+            "name_nl": "Soedan",
+            "code": "SD",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Suriname",
+            "name_nl": "Suriname",
+            "code": "SR",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Svalbard and Jan Mayen[c]",
+            "name_nl": "Spitsbergen en Jan Mayen",
+            "code": "SJ",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Sweden",
+            "name_nl": "Zweden",
+            "code": "SE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Switzerland",
+            "name_nl": "Zwitserland",
+            "code": "CH",
+            "color": "green",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Syrian Arab Republic",
+            "name_nl": "Syrie",
+            "code": "SY",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Taiwan",
+            "name_nl": "Taiwan",
+            "code": "TW",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tajikistan",
+            "name_nl": "Tadzjikistan",
+            "code": "TJ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tanzania,  United Republic of",
+            "name_nl": "Tanzania",
+            "code": "TZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Thailand",
+            "name_nl": "Thailand",
+            "code": "TH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Timor-Leste",
+            "name_nl": "Oost-Timor",
+            "code": "TL",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Togo",
+            "name_nl": "Togo",
+            "code": "TG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tokelau",
+            "name_nl": "Tokelau",
+            "code": "TK",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tonga",
+            "name_nl": "Tonga",
+            "code": "TO",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Trinidad and Tobago",
+            "name_nl": "Trinidad en Tobago",
+            "code": "TT",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tunisia",
+            "name_nl": "Tunesie",
+            "code": "TN",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Turkey",
+            "name_nl": "Turkije",
+            "code": "TR",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Turkmenistan",
+            "name_nl": "Turkmenistan",
+            "code": "TM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Turks and Caicos Islands",
+            "name_nl": "Turks- en Caicoseilanden",
+            "code": "TC",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Tuvalu",
+            "name_nl": "Tuvalu",
+            "code": "TV",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Uganda",
+            "name_nl": "Oeganda",
+            "code": "UG",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Ukraine",
+            "name_nl": "Oekraine",
+            "code": "UA",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "United Arab Emirates",
+            "name_nl": "Verenigde Arabische Emiraten",
+            "code": "AE",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "United Kingdom of Great Britain and Northern Ireland",
+            "name_nl": "Verenigd Koninkrijk",
+            "code": "GB",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "United States Minor Outlying Islands[e]",
+            "name_nl": "Kleine afgelegen eilanden van de Verenigde Staten",
+            "code": "UM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "United States of America",
+            "name_nl": "Verenigde Staten",
+            "code": "US",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Uruguay",
+            "name_nl": "Uruguay",
+            "code": "UY",
+            "color": "yellow",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Uzbekistan",
+            "name_nl": "Oezbekistan",
+            "code": "UZ",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Vanuatu",
+            "name_nl": "Vanuatu",
+            "code": "VU",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Vatican City State (Holy See)",
+            "name_nl": "Vaticaanstad",
+            "code": "VA",
+            "color": "green",
+            "result_on_valid_code": "pass",
+            "is_EU": true,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Venezuela (Bolivarian Republic of)",
+            "name_nl": "Venezuela",
+            "code": "VE",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Viet Nam",
+            "name_nl": "Vietnam",
+            "code": "VN",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Virgin Islands (British)",
+            "name_nl": "Britse Maagdeneilanden",
+            "code": "VG",
+            "color": "orange_high_incidence",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Virgin Islands (U.S.)",
+            "name_nl": "Amerikaanse Maagdeneilanden",
+            "code": "VI",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Wallis and Futuna",
+            "name_nl": "Wallis en Futuna",
+            "code": "WF",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Western Sahara",
+            "name_nl": "Westelijke Sahara/SADR",
+            "code": "EH",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Yemen",
+            "name_nl": "Jemen",
+            "code": "YE",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Zambia",
+            "name_nl": "Zambia",
+            "code": "ZM",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        },
+        {
+            "name_us": "Zimbabwe",
+            "name_nl": "Zimbabwe",
+            "code": "ZW",
+            "color": "orange",
+            "result_on_valid_code": "pass",
+            "is_EU": false,
+            "is_colour_code": false
+        }
+    ]
+}

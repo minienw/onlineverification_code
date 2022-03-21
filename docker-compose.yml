@@ -1,0 +1,21 @@
+#
+version: "3.9"
+
+services:
+    rest-api:
+        build: .
+        ports:
+          - "10000:8080"
+        depends_on:
+          - redis
+        links:
+          - redis
+
+    redis:
+        image: "redis:6.2.6-alpine"
+        command: redis-server
+          #--requirepass noneShallPass
+        #docker run --name local-redis -p  -d redis
+        #docker run --name redis_cont -e  redis:latest
+        expose:
+          - "6379:6379"

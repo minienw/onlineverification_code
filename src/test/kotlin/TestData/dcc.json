@@ -1,0 +1,39 @@
+{
+  "1": "NL",
+  "4": 1637307800,
+  "6": 1621755800,
+  "-260": {
+    "1": {
+      "t": [
+        {
+          "ci": "urn:uvci:01:NL:5c3e8a8425bb4c298830b42fd113bc5b",
+          "co": "GR",
+          "is": "Ministry of Health Welfare and Sport",
+          "sc": "2021-04-25T12:45:31Z",
+          "tc": "GGD",
+          "tg": "840539006",
+          "tr": "",
+          "tt": "a test"
+        },
+        {
+          "ci": "urn:uvci:01:NL:3679b3bcb4494414853231b0aebd1e7f",
+          "co": "",
+          "is": "Ministry of Health Welfare and Sport",
+          "sc": "2021-04-25T12:45:31Z",
+          "tc": "",
+          "tg": "840539006",
+          "tr": "260415000",
+          "tt": "a test"
+        }
+      ],
+      "dob": "2021-01-01",
+      "nam": {
+        "fn": "επώνυμο",
+        "gn": "όνομα",
+        "fnt": "EPONYMO",
+        "gnt": "ONOMA"
+      },
+      "ver": "1.0.0"
+    }
+  }
+}

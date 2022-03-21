@@ -1,0 +1,14 @@
+{
+  "serviceIdentity":"http://localhost:8081/identity",
+  "subject":"0123456789ABCDEF0123456789ABCDEF",
+  "consent":"informed consent text...",
+  "token":{
+    "issuer":"http://kellair.com",
+    "iat":"10000000",
+    "sub":"0123456789ABCDEF0123456789ABCDEF",
+    "exp":"20000000"
+  },
+  "privacyUrl":"privacy policy url...",
+  "subjectToken":"token...",
+  "serviceProvider": "Kellair"
+}
