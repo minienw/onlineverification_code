@@ -2,10 +2,10 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 interface IApplicationSettings
 {
+    val rootUrl: String
     val validationResultJwsLifetimeSeconds: Long
     val validationResultJwsSigningKey: String
     val dccEncryptionRsaPrivateKey: String
-    val dccEncryptionRsaPrivateKeyKid: String
     val sessionMaxDurationSeconds: Long
     val configFileFolderPath: String
     val redisHost: String

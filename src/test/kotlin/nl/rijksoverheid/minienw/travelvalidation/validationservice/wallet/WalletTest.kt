@@ -13,6 +13,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.cryp
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.crypto.RsaEcbOaepWithSha256DecryptCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.crypto.RsaOaepWithSha256AesCbcSchemeDecryptCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.wallet.imported.InitiatingQrPayload
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.wallet.imported.PostTokenResponse
 import org.bouncycastle.util.encoders.Base64
 import org.junit.jupiter.api.Test
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -54,18 +55,14 @@ class WalletTest
 
         //get vat and iv
         val postTokenResult = postToken(tokenUrl, initiatingTokenPayload)
-        val vatJwt = postTokenResult.first
+        val vatJwt = postTokenResult.validationAccessToken
         val vat = getVatPayload(vatJwt)
-        val iv = Base64.decode(postTokenResult.second)
+        val iv = Base64.decode(postTokenResult.nonce)
+        val validationEncryptionJwk = Gson().fromJson(Base64.decode(postTokenResult.encKeyBase64).toString(Charsets.UTF_8),PublicKeyJwk::class.java)
 
         println("/token done")
 
-        val validationIdentityUrl = "http://localhost:8080/identity"   //TODO source?
-        val validationIdentity = getIdentity(validationIdentityUrl)
-        val validationEncryptionJwk = findEncryptionKey(validationIdentity)
         val validationEncryptionPublicKey = CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", validationEncryptionJwk.x5c[0])
-
-        println("can encrypt...")
 
         //get dcc
         val dcc = "HC1:NCF7X3W08$\$Q030:+HGHBFO026M6M4NHSU5S8CUHC9:R7YL8YW7.6JUVM0\$U7UQ%-B/$5X$59498\$BLQH*CT4TJ603TRTIHKK5H6%EJTEPTSIWEJFAYMPRMQ%BOPUGIL3P2CHZMZ35D:2G7JU5E0B180OZ0W7:O/C5TAVVO5X\$D+BTE\$C:EWP 1Z$29%IDM5-6Q+F56U0ZBI0*8UEADP2LBLM9QH7HWPIYMGCXA5773R7 HFOV0-VG::AP9POXD6-J/WM4*R*O7HZSJG3NYTLQFT5D51V 4C5D8M-JOYLNTC*%MG5LWI1 H7%DNGUQ%3RQ\$H4DQULL905%*1ZV6S9GIUHL103BHVUVZU9 0I%:DVF1H21LCCLCB\$W4HVN%2BN7CLK07BG/PS:W3\$M91WI5N02 QASQNY81+6BJ9OFERUK-AHWU5I7L-%2ZY9J/G:-A/UFGIIETL6 G41W00JIRP-NMJLP.W7 7BHJ0J V%%HR/HMWQG+CVX9NQABH8129 G6KD38L4I6G$6WT.73ZR80WH+582DUZ1O3G.9NGWNTZJ*.6NCVLUR0IH2SLH.SMPU 0PL:MDAOENSYUIJ9NH9OK8BZ6S:38IME6OE*QVUSR1FW+:QU0"
@@ -123,7 +120,7 @@ class WalletTest
     }
 
     private fun getCallbackUrl(airlineIdentity: IdentityResponse): String {
-        return airlineIdentity.service.find {it.type.equals("Callback", ignoreCase = true)}?.serviceEndpoint ?: throw Exception()
+        return airlineIdentity.service.find {it.type.equals("ResultTokenService", ignoreCase = true)}?.serviceEndpoint ?: throw Exception()
     }
 
     private fun findEncryptionKey(validationIdentity: IdentityResponse): PublicKeyJwk {
@@ -171,7 +168,7 @@ class WalletTest
         return response.body()
     }
 
-    private fun postToken(tokenUrl: String, initiatingToken: InitiatingQrPayload): Pair<String, String> {
+    private fun postToken(tokenUrl: String, initiatingToken: InitiatingQrPayload): PostTokenResponse {
         try
         {
             var bodyJson  = Gson().toJson(initiatingToken)
@@ -185,7 +182,12 @@ class WalletTest
 
             val a:String = response.body()
             val b:String = response.headers().firstValue("x-nonce").get()
-            return a to b
+            return PostTokenResponse(
+                response.body(),
+                response.headers().firstValue("x-nonce").get(),
+                response.headers().firstValue("x-enc").get(),
+                response.headers().firstValue("x-sig").get()
+            )
         }
         catch(e: RestClientResponseException)
         {

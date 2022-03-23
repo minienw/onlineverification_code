@@ -1,6 +1,7 @@
 ﻿package nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
 
 /**
@@ -15,27 +16,30 @@ class ValidationInitializeResponse(
      * hexadecimal-encoded value
      * Traveller or whole trip?
      */
+    @SerializedName("sub")
     @JsonProperty("sub")
     var subjectId: String,
 
     /**
      * Unix epoch time
+     * Expiry
      */
+    @SerializedName("exp")
     @JsonProperty("exp")
     var whenExpires: Long,
 
     /**
      * E.g. https://validationprovider/validate/{subject}
-     * TODO odd name
-     * Moved to Identity end point... :(
      */
-    //@JsonProperty("aud")
-    //var ValidationUrl: Int,
+    @SerializedName("aud")
+    @JsonProperty("aud")
+    var validationUrl: String,
 
     /**
      * "Optional var Key for Encryption of Validation nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.Service."
      * TODO should be using RSA not AES as an AES secret key should be exchange with DiffieHellman first.
      */
+    @SerializedName("encKey")
     @JsonProperty("encKey")
     var validationServiceEncryptionKey: PublicKeyJwk?,
 
@@ -44,6 +48,7 @@ class ValidationInitializeResponse(
      * See encKey...
      * TODO NB why bother as the wallet has already sent you a public key and GET/identity provides the one for the validationservice
      */
+    @SerializedName("signKey")
     @JsonProperty("signKey")
     var signKey: PublicKeyJwk?,
 )

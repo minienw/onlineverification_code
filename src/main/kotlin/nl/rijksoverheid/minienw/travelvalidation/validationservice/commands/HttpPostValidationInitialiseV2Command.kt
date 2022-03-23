@@ -1,12 +1,16 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.commands
 
+import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.ValidationAccessTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.IdentityResponse
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeResponse
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.io.File
 
 @Service
 class HttpPostValidationInitialiseV2Command(
@@ -33,11 +37,18 @@ class HttpPostValidationInitialiseV2Command(
             return ResponseEntity.badRequest().body(validationResult.joinToString("\n"))
         }
 
+        var f = File(appSettings.configFileFolderPath, "identity.json")
+        var content = f.readText()
+        var identityDoc = Gson().fromJson(content, IdentityResponse::class.java)
+        var encryptionKey = findEncryptionKey(identityDoc)
+        var verificationKey = findVerificationKey(identityDoc)
+
         val result = ValidationInitializeResponse(
             subjectId = subjectId,
             whenExpires = dateTimeProvider.snapshot().epochSecond + appSettings.sessionMaxDurationSeconds,
-            validationServiceEncryptionKey = null,
-            signKey = null
+            validationUrl = "${appSettings.rootUrl}/validate/${subjectId}",
+            validationServiceEncryptionKey = encryptionKey,
+            signKey = verificationKey
         )
 
         //TODO re-instate this code for V1 or if V2 starts checking signatures of encrypted DCCs
@@ -45,6 +56,14 @@ class HttpPostValidationInitialiseV2Command(
         sessionRepository.save(cacheItem)
 
         return ResponseEntity.ok(result)
+    }
+
+    private fun findEncryptionKey(validationIdentity: IdentityResponse): PublicKeyJwk {
+        return validationIdentity.verificationMethod.find{it.publicKeyJwk?.use.equals("enc")}?.publicKeyJwk ?: throw Exception()
+    }
+
+    private fun findVerificationKey(validationIdentity: IdentityResponse): PublicKeyJwk {
+        return validationIdentity.verificationMethod.find{it.publicKeyJwk?.use.equals("sig")}?.publicKeyJwk ?: throw Exception()
     }
 }
 

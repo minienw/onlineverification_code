@@ -7,6 +7,8 @@ class ActualApplicationSettings(
     private val file: ApplicationPropertiesFile
 ): IApplicationSettings
 {
+    override val rootUrl: String
+        get() = file.rootUrl;
     override val validationResultJwsLifetimeSeconds: Long
         get() = file.resultTokenLifetimeSeconds.toLong()
     override val demoModeOn: Boolean
@@ -16,13 +18,11 @@ class ActualApplicationSettings(
     override val dccVerificationServiceUri: String
         get() = file.dccVerificationServiceUri
     override val acceptedValidationTokenAlgorithms: Array<String>
-        get() = arrayOf("RS256") //TODO add the lot and wire the key resolver back in
+        get() = arrayOf("RS256", "PS256")
     override val validationResultJwsSigningKey: String
         get() = file.validationResultJwsSigningKey
     override val dccEncryptionRsaPrivateKey: String
         get() = file.dccEncryptionRsaPrivateKey
-    override val dccEncryptionRsaPrivateKeyKid: String
-        get() = TODO("Not yet implemented")
     override val sessionMaxDurationSeconds: Long
         get() = file.sessionMaxDurationSecondsString.toLong()
     override val configFileFolderPath: String
