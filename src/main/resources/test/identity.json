@@ -2,7 +2,7 @@
   "id": "http://localhost:8080/identity",
   "verificationMethod": [
     {
-      "id": "https://thisservice.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
+      "id": "http://83.84.212.40:8080/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -15,7 +15,7 @@
       }
     },
     {
-      "id": "https://thisservice.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
+      "id": "http://83.84.212.40:8080/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -30,7 +30,7 @@
   ],
   "service": [
     {
-      "id": "http://localhost:8080/identity/service/ValidationService#InitializeService",
+      "id": "http://83.84.212.40:8080/identity/service/ValidationService#InitializeService",
       "type": "InitializeService",
       "serviceEndpoint": "https://localhost:8080/initialise",
       "name": "Demo Validation Service Initialise"
@@ -38,7 +38,7 @@
     {
       "id": "http://localhost:8080/identity/service/ValidationService#ValidationService",
       "type": "ValidationService",
-      "serviceEndpoint": "https://localhost:8080/validate",
+      "serviceEndpoint": "https://83.84.212.40:8080/validate",
       "name": "Demo Validation Service Validate"
     }
   ]

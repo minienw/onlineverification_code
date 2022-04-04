@@ -9,8 +9,10 @@ interface IApplicationSettings
     val sessionMaxDurationSeconds: Long
     val configFileFolderPath: String
     val redisHost: String
-    val demoModeOn: Boolean
-    val demoModePassAllDccs: Boolean
     val dccVerificationServiceUri: String //"http://localhost:4002/verify_signature"
     val acceptedValidationTokenAlgorithms: Array<String>
+
+    //TODO remove
+    val demoModeOn: Boolean
+    val demoModePassAllDccs: Boolean
 }
