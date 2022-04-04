@@ -41,7 +41,7 @@ class HttpPostValidationInitialiseV2Command(
         var content = f.readText()
         var identityDoc = Gson().fromJson(content, IdentityResponse::class.java)
         var encryptionKey = findEncryptionKey(identityDoc)
-        var verificationKey = findVerificationKey(identityDoc)
+        var verificationKey = findVerificationKey(identityDoc) //TODO what is this one actually used for? Is this the correct key?
 
         val result = ValidationInitializeResponse(
             subjectId = subjectId,

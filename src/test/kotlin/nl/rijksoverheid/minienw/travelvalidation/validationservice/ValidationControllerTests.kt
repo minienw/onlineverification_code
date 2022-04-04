@@ -1,17 +1,24 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
 import ValidationAccessTokenConditionPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.ValidationAccessTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeResponse
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationType
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.ValidationInitializeRequestBodyValidatorV2
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.SecureRandom
+import java.security.Security
+import java.security.spec.ECGenParameterSpec
 import java.time.Instant
 import java.util.*
+
 
 class ValidationControllerTests {
     @Test
@@ -22,6 +29,8 @@ class ValidationControllerTests {
 //        Mockito.`when`(configFile.dccRsaPublicKeyBase64).thenReturn("an encryption key")
         Mockito.`when`(configFile.redisHost).thenReturn("localhost")
 
+        Mockito.`when`(configFile.configFileFolderPath).thenReturn("build\\resources\\main\\dev")
+
         val dtp =  Mockito.mock(IDateTimeProvider::class.java)
         Mockito.`when`(dtp.snapshot()).thenReturn(Instant.ofEpochSecond(1646052982))
 
@@ -31,7 +40,8 @@ class ValidationControllerTests {
             SessionRepositoryRedis(configFile),
             ValidationInitializeRequestBodyValidatorV2())
 
-        //val sessionRepo = Mockito.mock(ISessionRepository::class.java)
+        val keypair = getEcKeyPair()
+        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
 
         val validationAccessTokenPayload = ValidationAccessTokenPayload(
             whenExpires = 1645966339L,
@@ -64,7 +74,7 @@ class ValidationControllerTests {
 
         var result = subject.execute(
             validationAccessTokenPayload,
-            body = ValidationInitializeRequestBody(nonce = "MDEyMzQ1Njc4OWFiY2RlZg==", walletPublicKeyAlgorithm = null, walletPublicKey = null),
+            body = ValidationInitializeRequestBody(nonce = "MDEyMzQ1Njc4OWFiY2RlZg==", walletPublicKeyAlgorithm = "SHA256withECDSA", walletPublicKey = publicKeyString),
             subjectId = validationAccessTokenPayload.subject
         )
 
@@ -73,6 +83,14 @@ class ValidationControllerTests {
         assert(body.subjectId.length == 32)
         assert(body.whenExpires > 0L)
         //TODO assert(result.body!!.DccEncryptionKey.alg == "ROT13")
+    }
+
+    private fun getEcKeyPair(): KeyPair {
+        Security.addProvider(BouncyCastleProvider())
+        val ecSpec = ECGenParameterSpec("secp256k1")
+        val g = KeyPairGenerator.getInstance("ECDSA")
+        g.initialize(ecSpec, SecureRandom())
+        return g.generateKeyPair()
     }
 
     class FakeSessionRepository : ISessionRepository {
@@ -93,6 +111,7 @@ class ValidationControllerTests {
     fun initialize(){
 
         val configFile =  Mockito.mock(IApplicationSettings::class.java)
+        Mockito.`when`(configFile.configFileFolderPath).thenReturn("build\\resources\\main\\dev")
 //        Mockito.`when`(configFile.airlineTravellerTripTokenPublicKey).thenReturn(AirlineTokenTests.publicKeyEncoded)
 //        Mockito.`when`(configFile.dccRsaPublicKeyBase64).thenReturn("an encryption key")
 
@@ -102,6 +121,8 @@ class ValidationControllerTests {
         var testSubject = HttpPostValidationInitialiseV2Command(dtp, configFile, FakeSessionRepository(), ValidationInitializeRequestBodyValidatorV2())
 
         //val sessionRepo = Mockito.mock(ISessionRepository::class.java)
+        val keypair = getEcKeyPair()
+        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
 
         var result = testSubject.execute(
             ValidationAccessTokenPayload("id", "KLM", "1324AAAA", "uri",
@@ -125,8 +146,8 @@ class ValidationControllerTests {
             ,
             ValidationInitializeRequestBody(
                 nonce = "MDEyMzQ1Njc4OWFiY2RlZg==",
-                walletPublicKeyAlgorithm = null,
-                walletPublicKey = null
+                walletPublicKeyAlgorithm = "SHA256withECDSA",
+                walletPublicKey = publicKeyString
             ),
             subjectId = "1324AAAA"
         )
@@ -136,7 +157,7 @@ class ValidationControllerTests {
         var body = result.body as ValidationInitializeResponse
         assert(body.subjectId.length > 0)
         assert(body.whenExpires > 0L)
-        assert(body.validationServiceEncryptionKey == null)
-        assert(body.signKey == null)
+        assert(body.validationServiceEncryptionKey != null)
+        assert(body.signKey != null)
     }
 }

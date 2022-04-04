@@ -37,7 +37,6 @@ class ValidationInitializeResponse(
 
     /**
      * "Optional var Key for Encryption of Validation nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.Service."
-     * TODO should be using RSA not AES as an AES secret key should be exchange with DiffieHellman first.
      */
     @SerializedName("encKey")
     @JsonProperty("encKey")
@@ -46,7 +45,6 @@ class ValidationInitializeResponse(
     /**
      * "Optional var Key for Signing of Validation nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.Service."
      * See encKey...
-     * TODO NB why bother as the wallet has already sent you a public key and GET/identity provides the one for the validationservice
      */
     @SerializedName("signKey")
     @JsonProperty("signKey")

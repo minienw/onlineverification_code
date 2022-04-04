@@ -170,10 +170,14 @@ class CryptoKeyConverter {
 
         fun encodeAsn1DerPkcs1X509Base64(key: PublicKey): String = Base64.toBase64String(key.encoded)
         fun encodeAsn1DerPkcs1X509Pem(key: PublicKey): String = encodePem("PUBLIC KEY", key.encoded)
+
         fun decodeAsn1DerPkcs1X509PemPublicKey(value: String): PublicKey {
             var stripped = decodePem("PUBLIC KEY", value)
-
             return decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", stripped)
+        }
+
+        fun decodeAsn1DerPkcs1X509PemEllipticCurvePublicKey(value: String): PublicKey {
+            return decodeAsn1DerPkcs1X509Base64ToPublicKey("EC", value)
         }
 
 //        //For X509s in JWKs

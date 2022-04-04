@@ -180,8 +180,11 @@ class WalletTest
 
             val response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString())
 
-            val a:String = response.body()
-            val b:String = response.headers().firstValue("x-nonce").get()
+            if (response.statusCode() != HttpStatus.OK.value())
+            {
+                throw IllegalStateException()
+            }
+
             return PostTokenResponse(
                 response.body(),
                 response.headers().firstValue("x-nonce").get(),

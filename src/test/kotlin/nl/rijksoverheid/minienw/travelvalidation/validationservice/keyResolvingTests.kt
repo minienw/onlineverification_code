@@ -10,7 +10,7 @@ class keyResolvingTests {
     fun keyResolving()
     {
         val appSettings: IApplicationSettings = Mockito.mock(IApplicationSettings::class.java)
-        Mockito.`when`(appSettings.configFileFolderPath).thenReturn("src/main/resources")
+        Mockito.`when`(appSettings.configFileFolderPath).thenReturn("src/main/resources/dev")
         var stash = FileAirlineSigningKeyProvider(appSettings)
         assert(stash.get("argle", "ROT13") == null)
         assert(stash.get("SsXyRIVSy4Y=","RS256") != null)

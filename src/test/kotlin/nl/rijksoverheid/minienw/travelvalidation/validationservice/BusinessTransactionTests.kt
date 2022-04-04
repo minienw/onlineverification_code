@@ -7,12 +7,19 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.init
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationType
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.ValidationInitializeRequestBodyValidatorV2
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IDateTimeProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ISessionRepository
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.springframework.http.HttpStatus
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.SecureRandom
+import java.security.Security
+import java.security.spec.ECGenParameterSpec
 import java.time.Instant
 import java.util.*
 import javax.validation.Validation
@@ -82,9 +89,10 @@ class BusinessTransactionTests {
         val dateTimeProvider = Mockito.mock(IDateTimeProvider::class.java)
         Mockito.`when`(dateTimeProvider.snapshot()).thenReturn(Instant.ofEpochSecond(1645951914))
 
+
         val appSettings = Mockito.mock(IApplicationSettings::class.java)
         Mockito.`when`(appSettings.sessionMaxDurationSeconds).thenReturn(42)
-        //Mockito.`when`(configFile.dccRsaPublicKeyBase64).thenReturn("Here is a fake key.")
+        Mockito.`when`(appSettings.configFileFolderPath).thenReturn("build\\resources\\main\\dev")
 
         val sessionRepository  = Mockito.mock(ISessionRepository::class.java)
 
@@ -135,9 +143,13 @@ class BusinessTransactionTests {
 
         //assert(errors.isEmpty())
 
+        val keypair = getEcKeyPair()
+        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
+
+
         val requestBody = ValidationInitializeRequestBody(
-            walletPublicKey = "", //base64
-            walletPublicKeyAlgorithm = null,
+            walletPublicKey = publicKeyString,
+            walletPublicKeyAlgorithm = "SHA256withECDSA",
             nonce = "MDEyMzQ1Njc4OWFiY2RlZg=="
         )
 
@@ -145,6 +157,14 @@ class BusinessTransactionTests {
         assert(result.statusCode == HttpStatus.OK)
         val responseBody = result.body as ValidationInitializeResponse
         assert(responseBody.whenExpires == 42L + 1645951914)
+    }
+
+    private fun getEcKeyPair(): KeyPair {
+        Security.addProvider(BouncyCastleProvider())
+        val ecSpec = ECGenParameterSpec("secp256k1")
+        val g = KeyPairGenerator.getInstance("ECDSA")
+        g.initialize(ecSpec, SecureRandom())
+        return g.generateKeyPair()
     }
 }
 

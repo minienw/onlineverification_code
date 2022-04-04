@@ -1,12 +1,16 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.servicetests
 
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.VerifyDccTests
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.CheckSignatureCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.crypto.*
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.util.encoders.Base64
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
+import java.security.Security
 import java.util.*
 
 class DccEncryptionTests {
@@ -82,5 +86,15 @@ class DccEncryptionTests {
             .toString(Charsets.UTF_8)
 
         assert(decryptedDcc == dcc)
+    }
+
+    @Test
+    fun verify()
+    {
+        Security.addProvider(BouncyCastleProvider())
+        val data = Base64.decode("AAECAwQF")
+        val sig = "MEYCIQCwe5M25BzTO3eep5hL/sB8qq6v7uJDIOzdAceL73u/1AIhAPAjS0C0iV3gj6hdoPCwP1esYUkhKCzfYXmJ7rue4AP8"
+        val publicKey = "MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBA0IABOCULxUF/y0qMnG8GjQjHKX3kZx1YL/qO23X6ti7Nnx1nSSYPn2UFdHnf6+jtLcr01gHM826KeDK3C4krNmlXzg="
+        assert(CheckSignatureCommand().isValid(data, sig, "SHA256withECDSA", publicKey))
     }
 }

@@ -49,7 +49,7 @@ class HttpPostValidationV2Command(
             return ResponseEntity(HttpStatus.GONE)
         }
 
-        val parseDccResponse = parseDcc(body, session.body.nonce)
+        val parseDccResponse = parseDcc(body, session.body.nonce, session.body.walletPublicKey!!)
         if (parseDccResponse.statusCode.isError)
             return parseDccResponse
 
@@ -145,7 +145,8 @@ class HttpPostValidationV2Command(
 
     private fun parseDcc(
         body: ValidateRequestBody,
-        nonce: String?
+        nonce: String?,
+        walletPublicKey: String
     ): ResponseEntity<String> {
         //Let the demo send dcc QRs PREFIX as plaintext
         if (appSettings.demoModeOn && body.encryptedScheme == "DEMO")
@@ -169,17 +170,17 @@ class HttpPostValidationV2Command(
 
         var result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!);
 
-        //  //e.g. SHA256withECDSA
-        //  //Integrity check on decrypted DCC
-        //  val sigPrivateKey = SignatureCheckKeyProvider().find(body.EncryptedDccSignatureAlgorithm);
-        //  val checkSig = CheckSignatureCommand().isValid(
-        //      plainTextDcc,
-        //      body.EncryptedDccSignature,
-        //      body.EncryptedDccSignatureAlgorithm,
-        //      sigPublicKey //from wallet
-        //  )
-        //  if (!checkSig)
-        //      return ResponseEntity(HttpStatus.BAD_REQUEST)
+          //e.g. SHA256withECDSA
+          //Integrity check on decrypted DCC
+          //val sigPrivateKey = SignatureCheckKeyProvider().find(body.encryptedDccSignatureAlgorithm);
+          val checkSig = CheckSignatureCommand().isValid(
+              result,
+              body.encryptedDccSignature!!,
+              body.encryptedDccSignatureAlgorithm!!,
+              walletPublicKey //from wallet
+          )
+          if (!checkSig)
+              return ResponseEntity(HttpStatus.BAD_REQUEST)
 
         return ResponseEntity.ok(result.toString(Charsets.UTF_8))
     }
