@@ -1,6 +1,8 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ApplicationPropertiesFile
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.HttpRemoteAirlineSigningKeyProvider
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IAirlineSigningKeyProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.FileWriterPublicKeyProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.HttpRemoteBusinessRulesSource
@@ -37,10 +39,9 @@ fun businessRulesProvider(settings: IApplicationSettings) : IBusinessRulesProvid
 	return StringParserBusinessRulesProvider(HttpRemoteBusinessRulesSource(settings))
 }
 
+//@Profile
 @Bean
 fun publicKeysProvider(settings: IApplicationSettings) : IPublicKeysProvider
 {
 	return FileWriterPublicKeyProvider(settings, HttpRemoteBusinessRulesSource(settings))
 }
-
-

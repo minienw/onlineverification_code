@@ -13,7 +13,7 @@ class ApplicationPropertiesFile {
     lateinit var validationResultJwsSigningKey: String
     lateinit var redisHost: String //e.g. "redis" whatever the container was called in the compose.
     lateinit var verifierHost: String //e.g. "verifier" whatever the container was called in the compose.
-
+    lateinit var airlineIdentityUris: String
     lateinit var configUri: String
     lateinit var customBusinessRulesUri: String
     lateinit var businessRulesUri: String

@@ -14,7 +14,6 @@ class SessionRepositoryRedis(val appSettings: IApplicationSettings) : ISessionRe
 //            var subjectId = nextSubjectValue()
 //            while (session.get(subjectId) != null)
 //                subjectId = nextSubjectValue()
-
 //            sessionInfo.response.subjectId = subjectId
             val value = Gson().toJson(sessionInfo)
             session.set(sessionInfo.response.subjectId, value);

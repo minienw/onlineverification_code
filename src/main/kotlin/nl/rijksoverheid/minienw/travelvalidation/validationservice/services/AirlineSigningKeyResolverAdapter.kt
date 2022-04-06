@@ -9,6 +9,7 @@ import java.security.PublicKey
 
 interface IAirlineSigningKeyProvider {
     fun get(keyId: String?, algorithm: String?): PublicKeyJwk?
+    //TODO fun refresh()
 }
 
 data class AirlineKey(

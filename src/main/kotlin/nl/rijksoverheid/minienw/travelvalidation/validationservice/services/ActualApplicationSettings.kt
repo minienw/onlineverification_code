@@ -7,15 +7,22 @@ class ActualApplicationSettings(
     private val file: ApplicationPropertiesFile
 ): IApplicationSettings
 {
+    override val airlineIdentityUris: Array<String>
+        get() {
+            val result = ArrayList<String>()
+            for(i in file.airlineIdentityUris?.split(","))
+                result.add(i.trim())
+
+            return result.toTypedArray()
+        }
     override val rootUrl: String
         get() = file.rootUrl;
     override val validationResultJwsLifetimeSeconds: Long
         get() = file.resultTokenLifetimeSeconds.toLong()
     override val dccVerificationServiceUri: String
         get() = file.dccVerificationServiceUri
-    override val acceptedValidationTokenAlgorithms: Array<String>
-        get() = arrayOf("RS256", "PS256", "ES256") //TODO move to setting! https://stackoverflow.com/questions/50395985/spring-boot-read-array-from-yaml-properties-file
-
+//    override val acceptedValidationTokenAlgorithms: Array<String>
+//        get() = arrayOf("RS256", "PS256", "ES256") //TODO move to setting! https://stackoverflow.com/questions/50395985/spring-boot-read-array-from-yaml-properties-file
     override val configUri: String
         get() = file.configUri
     override val customBusinessRulesUri: String

@@ -22,6 +22,7 @@ services:
           - "6379:6379"
 
     verifier:
-        image: "now"
+        build: ../nl-covid19-coronacheck-hcert/.
+        image: "verifier"
         ports:
           - "4003"

@@ -24,6 +24,7 @@ dependencies {
 	implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor")
 
 	//Logging
 	implementation("org.apache.logging.log4j:log4j-core:2.17.2")

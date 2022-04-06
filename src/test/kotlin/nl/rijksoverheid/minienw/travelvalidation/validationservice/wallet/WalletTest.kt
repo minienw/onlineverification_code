@@ -168,6 +168,7 @@ class WalletTest
         return response.body()
     }
 
+    //TODO this is out of step - intiatingToken belongs in the header and the keys in the body.
     private fun postToken(tokenUrl: String, initiatingToken: InitiatingQrPayload): PostTokenResponse {
         try
         {
@@ -176,6 +177,7 @@ class WalletTest
             val request = HttpRequest.newBuilder()
                 .uri(URI.create(tokenUrl))
                 .POST(HttpRequest.BodyPublishers.ofString(bodyJson))
+                .headers("content-type", "application/json")
                 .build()
 
             val response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString())
