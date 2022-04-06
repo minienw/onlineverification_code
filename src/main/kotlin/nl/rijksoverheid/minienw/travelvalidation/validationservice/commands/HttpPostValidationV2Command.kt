@@ -7,6 +7,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.vali
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ResultTokenPayload
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ValidateRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IPublicKeysProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommandResult
 import org.bouncycastle.util.encoders.Base64
@@ -23,7 +24,7 @@ class HttpPostValidationV2Command(
     private val dccDecryptCommand : DccDecryptCommand,
     private val responseTokenBuilder: ValidationResponseTokenBuilder,
     private val appSettings : IApplicationSettings,
-    private val subjectIdGenerator: ValidationServicesSubjectIdGenerator
+    private val subjectIdGenerator: ValidationServicesSubjectIdGenerator,
 )
 {
     fun execute(validationAccessTokenPayload: ValidationAccessTokenPayload, body: ValidateRequestBody, subjectId: String): ResponseEntity<String>
@@ -37,10 +38,6 @@ class HttpPostValidationV2Command(
 
         if (validationAccessTokenPayload.subject != subjectId)
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
-
-        //TODO
-        //        if (validationAccessTokenPayload.validationUrl != TODO this validation endpoint + subjectId)
-        //            return ResponseEntity(HttpStatus.UNAUTHORIZED)
 
         var session = repo.find(subjectId) ?: return ResponseEntity(HttpStatus.GONE)
         if (dtp.snapshot().epochSecond > session.response.whenExpires)
@@ -75,6 +72,7 @@ class HttpPostValidationV2Command(
             verificationResult.dccWithTimes.dcc.name.givenNameTransliterated,
             verificationResult.dccWithTimes.dcc.dateOfBirth
         )
+
 
         //TODO I miss my per request injections :D
         val snapshot = dtp.snapshot()
@@ -148,9 +146,6 @@ class HttpPostValidationV2Command(
         nonce: String?,
         walletPublicKey: String
     ): ResponseEntity<String> {
-        //Let the demo send dcc QRs PREFIX as plaintext
-        if (appSettings.demoModeOn && body.encryptedScheme == "DEMO")
-            return ResponseEntity.ok(body.encryptedDcc)
 
         if(!dccDecryptCommand.canExecute(body.encryptedScheme))
             return ResponseEntity("Encryption scheme is not supported.", HttpStatus.BAD_REQUEST)

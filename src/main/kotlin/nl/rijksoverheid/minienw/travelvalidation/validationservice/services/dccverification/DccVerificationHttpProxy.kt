@@ -1,5 +1,6 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services.dccverification
 
+import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.DccDecoder
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IDccVerificationService
@@ -13,31 +14,17 @@ class DccVerificationHttpProxy(
     val appSettings: IApplicationSettings
 ) : IDccVerificationService
 {
-
-    //TODO inject instead
     override fun verify(encodedDcc: String): VerificationResponse
     {
-        if (appSettings.demoModeOn && appSettings.demoModePassAllDccs) {
-            var dcc = DccDecoder().parse(encodedDcc)
-            return VerificationResponse(
-                validSignature = true,
-                verificationError = "",
-                healthCertificate = HealthCertificate(
-                        credentialVersion = 123,
-                        issuer = "issuer...",
-                        issuedAt = Instant.now().epochSecond - 1000,
-                        expirationTime = Instant.now().epochSecond + 3600,
-                        dcc = dcc.dcc
-                )
-            )
-        }
-
         try
         {
             var postBody = "{\"credential\" : \"$encodedDcc\"}"
-            return RestTemplateBuilder().build()
-                .postForObject(appSettings.dccVerificationServiceUri , postBody, VerificationResponse::class.java)
+
+            var responseString = RestTemplateBuilder().build()
+                .postForObject(appSettings.dccVerificationServiceUri , postBody, String::class.java) //VerificationResponse::class.java
                 ?: throw DccVerificationException("Null return from POST.")
+
+            return Gson().fromJson(responseString,VerificationResponse::class.java)
         }
         catch(e: RestClientResponseException)
         {

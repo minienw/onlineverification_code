@@ -1,8 +1,12 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.FileBusinessRulesConfig
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IBusinessRulesConfig
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ApplicationPropertiesFile
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.FileWriterPublicKeyProvider
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.HttpRemoteBusinessRulesSource
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IBusinessRulesProvider
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IPublicKeysProvider
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.StringParserBusinessRulesProvider
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -26,12 +30,17 @@ fun main(args: Array<String>) {
 	runApplication<ServiceApplication>(*args)
 }
 
+//@Profile("")
 @Bean
-fun businessRulesConfig(settings: IApplicationSettings) : IBusinessRulesConfig
+fun businessRulesProvider(settings: IApplicationSettings) : IBusinessRulesProvider
 {
-	return InMemoryBusinessRulesConfig(FileBusinessRulesConfig(settings))
+	return StringParserBusinessRulesProvider(HttpRemoteBusinessRulesSource(settings))
 }
 
-
+@Bean
+fun publicKeysProvider(settings: IApplicationSettings) : IPublicKeysProvider
+{
+	return FileWriterPublicKeyProvider(settings, HttpRemoteBusinessRulesSource(settings))
+}
 
 

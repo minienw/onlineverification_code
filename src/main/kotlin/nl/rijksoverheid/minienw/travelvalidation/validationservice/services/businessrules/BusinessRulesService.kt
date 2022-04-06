@@ -25,7 +25,7 @@ import java.lang.IllegalStateException
 
 @Component
 class BusinessRulesService(
-    @Qualifier("Top") private val businessRulesConfig: IBusinessRulesConfig
+    private val businessRulesConfig: IBusinessRulesProvider
 ) {
 
     private var countryFrom: CountryRisk? = null

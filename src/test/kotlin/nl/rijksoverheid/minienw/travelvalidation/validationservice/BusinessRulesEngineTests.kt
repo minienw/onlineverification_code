@@ -6,8 +6,10 @@ import nl.rijksoverheid.dcbs.verifier.models.DCC
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.BusinessRulesService
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.BusinessRulesCommandArgs
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.TripInfo
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.FileBusinessRulesConfig
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.FileConfigProvider
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.HttpRemoteBusinessRulesSource
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.StringParserBusinessRulesProvider
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.io.File
@@ -15,19 +17,38 @@ import java.io.File
 
 class BusinessRulesEngineTests {
 
+    @Test
+    fun remoteSanityCheck() {
+        val appSettings =  Mockito.mock(IApplicationSettings::class.java)
+        Mockito.`when`(appSettings.businessRulesUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/business_rules")
+        Mockito.`when`(appSettings.customBusinessRulesUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/custom_business_rules")
+        Mockito.`when`(appSettings.configUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/config")
+        Mockito.`when`(appSettings.valueSetsUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/value_sets")
+
+        //Mockito.`when`(appSettings.publicKeysUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/public_keys")
+
+        var config = StringParserBusinessRulesProvider(HttpRemoteBusinessRulesSource(appSettings))
+
+        assert(!config.rules.isEmpty())
+        assert(!config.countryRisks.isEmpty())
+        assert(!config.valueSetsJson.isEmpty())
+    }
+
     //val public_keysContents = File(fileFolder, "public_keys.json") //For DCC check? //Trust list? Which one? or is that the DCC check?
     @Test
     fun sanityCheck()
     {
-        val folder = "D:\\Repos\\MinIenW\\validationservice\\src\\test\\kotlin\\TestData"
+        val folder = "build\\resources\\main\\test"
 
-        val configFile =  Mockito.mock(IApplicationSettings::class.java)
-        Mockito.`when`(configFile.configFileFolderPath).thenReturn(folder)
+        val appSettings =  Mockito.mock(IApplicationSettings::class.java)
+        Mockito.`when`(appSettings.configFileFolderPath).thenReturn(folder)
+
+        println(File(folder,".").absoluteFile)
 
         //For args
         var dccString = File(folder, "JeanneSpecimen.dcc.json").readText(Charsets.UTF_8)
 
-        var config = FileBusinessRulesConfig(configFile)
+        var config = StringParserBusinessRulesProvider(FileConfigProvider(appSettings))
 
 //        //For command
 //        //TODO put these directly in Redis
@@ -71,7 +92,7 @@ class BusinessRulesEngineTests {
 
         var dccJson = File(folder, "dcc.bob_bouwer.v.json").readText(Charsets.UTF_8)
 
-        var configFiles = FileBusinessRulesConfig(appSettings)
+        var config = StringParserBusinessRulesProvider(FileConfigProvider(appSettings))
 
 //        val mapper = ObjectMapper()
 //        mapper.findAndRegisterModules()
@@ -85,7 +106,7 @@ class BusinessRulesEngineTests {
             dcc = dcc,
         )
 
-        val businessRulesCommand = BusinessRulesService(configFiles)
+        val businessRulesCommand = BusinessRulesService(config)
         assert(businessRulesCommand.canExecute(args))
         val result = businessRulesCommand.execute()
         assert(result.isEmpty())

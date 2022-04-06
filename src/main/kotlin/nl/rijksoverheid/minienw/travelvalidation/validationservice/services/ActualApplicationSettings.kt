@@ -11,14 +11,24 @@ class ActualApplicationSettings(
         get() = file.rootUrl;
     override val validationResultJwsLifetimeSeconds: Long
         get() = file.resultTokenLifetimeSeconds.toLong()
-    override val demoModeOn: Boolean
-        get() = file.demoModeOn.toBoolean()
-    override val demoModePassAllDccs: Boolean
-        get() = file.demoPassAllDccs.toBoolean()
     override val dccVerificationServiceUri: String
         get() = file.dccVerificationServiceUri
     override val acceptedValidationTokenAlgorithms: Array<String>
-        get() = arrayOf("RS256", "PS256")
+        get() = arrayOf("RS256", "PS256", "ES256") //TODO move to setting! https://stackoverflow.com/questions/50395985/spring-boot-read-array-from-yaml-properties-file
+
+    override val configUri: String
+        get() = file.configUri
+    override val customBusinessRulesUri: String
+        get() = file.customBusinessRulesUri
+    override val businessRulesUri: String
+        get() = file.businessRulesUri
+    override val valueSetsUri: String
+        get() = file.valueSetsUri
+    override val publicKeysUri: String
+        get() = file.publicKeysUri
+    override val publicKeysFileName: String
+        get() = file.publicKeysFileName
+
     override val validationResultJwsSigningKey: String
         get() = file.validationResultJwsSigningKey
     override val dccEncryptionRsaPrivateKey: String

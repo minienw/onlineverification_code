@@ -11,7 +11,7 @@ import java.io.File
 // If the sig fails to verify, refresh the keys of the airline the key came from
 
 @Component
-class FileAirlineSigningKeyProvider : IAirlineSigningKeyProvider {
+class LocalFileAirlineSigningKeyProvider : IAirlineSigningKeyProvider {
     private val items: AirlineKeys
 
     constructor(appSettings: IApplicationSettings)

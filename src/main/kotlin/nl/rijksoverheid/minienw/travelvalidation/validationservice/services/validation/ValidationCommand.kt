@@ -5,17 +5,25 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.Vali
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.DccDecoder
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IDccVerificationService
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.BusinessRulesService
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IPublicKeysProvider
 import org.springframework.stereotype.Component
 
 @Component
 class ValidationCommand(
     private val dccVerificationService: IDccVerificationService,
-    private val businessRulesCommand: BusinessRulesService
+    private val businessRulesCommand: BusinessRulesService,
+    private val publicKeysProvider: IPublicKeysProvider,
 )
 {
    fun execute(args: ValidationCommandArgs) : ValidationCommandResult
     {
-        val dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
+        var dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
+
+        if (!dccVerificationResult.validSignature) {
+            //Refresh the dcc signing public keys and try again.
+            publicKeysProvider.refresh()
+            dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
+        }
 
         if (!dccVerificationResult.validSignature)
             return ValidationCommandResult.createDccVerificationFailed()

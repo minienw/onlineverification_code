@@ -33,8 +33,7 @@ public class AirlineTokenTests() {
             .compact()
 
         val appSettings = mock(IApplicationSettings::class.java)
-        `when`(appSettings.demoModeOn).thenReturn(true)
-        `when`(appSettings.demoModePassAllDccs).thenReturn(true)
+        //????
 
         val sigKeys = mock(IAirlineSigningKeyProvider::class.java)
         `when`(sigKeys.get("SsXyRIVSy4Y=","RS256"))

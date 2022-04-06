@@ -6,14 +6,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 class ApplicationPropertiesFile {
     lateinit var rootUrl: String
     lateinit var dccVerificationServiceUri: String
-    lateinit var demoPassAllDccs: String
     lateinit var dccEncryptionRsaPrivateKey: String //TODO needs to be decrypted by resolving kid
-    lateinit var dccEncryptionRsaPrivateKeyKid: String
-    lateinit var demoModeOn: String
     lateinit var resultTokenLifetimeSeconds: String
     lateinit var configFileFolderPath: String
     lateinit var sessionMaxDurationSecondsString: String
     lateinit var validationResultJwsSigningKey: String
-    lateinit var redisHost: String
-    lateinit var verifierHost: String
+    lateinit var redisHost: String //e.g. "redis" whatever the container was called in the compose.
+    lateinit var verifierHost: String //e.g. "verifier" whatever the container was called in the compose.
+
+    lateinit var configUri: String
+    lateinit var customBusinessRulesUri: String
+    lateinit var businessRulesUri: String
+    lateinit var valueSetsUri: String
+    lateinit var publicKeysUri: String
+    //And where to drop it so the verifier can see it.
+    lateinit var publicKeysFileName: String
 }

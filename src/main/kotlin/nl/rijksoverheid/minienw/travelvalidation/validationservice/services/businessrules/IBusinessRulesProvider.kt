@@ -5,8 +5,9 @@ import nl.rijksoverheid.dcbs.verifier.models.CountryRisk
 import org.springframework.stereotype.Component
 
 @Component
-interface IBusinessRulesConfig
+interface IBusinessRulesProvider
 {
+    fun refresh()
     val rules : List<Rule>
     val valueSetsJson : String
     val countryRisks : List<CountryRisk>
