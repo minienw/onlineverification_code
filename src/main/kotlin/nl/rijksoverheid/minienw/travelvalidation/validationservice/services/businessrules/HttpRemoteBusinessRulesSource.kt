@@ -3,11 +3,13 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services.bus
 import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import org.bouncycastle.util.encoders.Base64
+import org.springframework.stereotype.Component
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
+@Component
 class HttpRemoteBusinessRulesSource (
     private val appConfig: IApplicationSettings,
 ) : IStringReader

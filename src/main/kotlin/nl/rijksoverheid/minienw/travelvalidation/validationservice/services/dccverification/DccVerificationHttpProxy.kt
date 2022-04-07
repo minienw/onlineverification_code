@@ -16,19 +16,11 @@ class DccVerificationHttpProxy(
 {
     override fun verify(encodedDcc: String): VerificationResponse
     {
-        try
-        {
-            var postBody = "{\"credential\" : \"$encodedDcc\"}"
+        var postBody = "{\"credential\" : \"$encodedDcc\"}"
 
-            var responseString = RestTemplateBuilder().build()
-                .postForObject(appSettings.dccVerificationServiceUri , postBody, String::class.java) //VerificationResponse::class.java
-                ?: throw DccVerificationException("Null return from POST.")
+        var responseString = RestTemplateBuilder().build()
+            .postForObject(appSettings.dccVerificationServiceUri , postBody, String::class.java) //VerificationResponse::class.java
 
-            return Gson().fromJson(responseString,VerificationResponse::class.java)
-        }
-        catch(e: RestClientResponseException)
-        {
-            throw DccVerificationException("Wrapped exception from POST.", e)
-        }
+        return Gson().fromJson(responseString,VerificationResponse::class.java)
     }
 }

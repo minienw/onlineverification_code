@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Deprecated("Use http get instead.")
-@Component
 class FileConfigProvider : IStringReader
 {
     private val values = HashMap<String,String>()

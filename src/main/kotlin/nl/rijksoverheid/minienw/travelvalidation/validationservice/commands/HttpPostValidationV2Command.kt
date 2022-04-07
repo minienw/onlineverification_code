@@ -12,6 +12,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.vali
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommandResult
 import org.bouncycastle.util.encoders.Base64
 import org.bouncycastle.util.encoders.DecoderException
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -29,27 +30,32 @@ class HttpPostValidationV2Command(
 {
     fun execute(validationAccessTokenPayload: ValidationAccessTokenPayload, body: ValidateRequestBody, subjectId: String): ResponseEntity<String>
     {
+        var logger = LoggerFactory.getLogger(HttpPostValidationV2Command::class.java)
+
         var subjectIdValidationResult = subjectIdGenerator.validate(subjectId)
         if (subjectIdValidationResult.isNotEmpty())
         {
-            //TODO log subjectIdValidationResult
+            logger.info("Incorrect subject id format - " + subjectIdValidationResult.joinToString("\n"))
             return ResponseEntity.badRequest().body("Incorrect subject id format - " + subjectIdValidationResult.joinToString("\n"))
         }
 
-        if (validationAccessTokenPayload.subject != subjectId)
+        if (validationAccessTokenPayload.subject != subjectId) {
+            logger.info("validationAccessTokenPayload.subject and request subjectId did not match.")
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
-
+        }
         var session = repo.find(subjectId) ?: return ResponseEntity(HttpStatus.GONE)
         if (dtp.snapshot().epochSecond > session.response.whenExpires)
         {
+            logger.info("Session timed out.")
             repo.remove(subjectId)
             return ResponseEntity(HttpStatus.GONE)
         }
 
         val parseDccResponse = parseDcc(body, session.body.nonce, session.body.walletPublicKey!!)
-        if (parseDccResponse.statusCode.isError)
+        if (parseDccResponse.statusCode.isError) {
+            logger.info("DCC was either not decrypted correctly or failed sig check.")
             return parseDccResponse
-
+        }
         val args = ValidationCommandArgs(
             encodeDcc = parseDccResponse.body!!,
             trip = TripInfo(validationAccessTokenPayload.validationCondition.countryOfDeparture, validationAccessTokenPayload.validationCondition.countryOfArrival),

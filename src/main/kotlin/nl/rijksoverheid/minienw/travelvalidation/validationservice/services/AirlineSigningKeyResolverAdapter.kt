@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwsHeader
 import io.jsonwebtoken.SigningKeyResolverAdapter
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.security.PublicKey
 
@@ -25,6 +27,7 @@ data class AirlineKeys(
 class AirlineSigningKeyResolverAdapter: SigningKeyResolverAdapter {
 
     private val _airlineSigningKeyProvider :IAirlineSigningKeyProvider
+    private val logger : Logger = LoggerFactory.getLogger(AirlineSigningKeyResolverAdapter::class.java)
 
     constructor(airlineSigningKeyProvider: IAirlineSigningKeyProvider): super() {
         _airlineSigningKeyProvider = airlineSigningKeyProvider
@@ -34,6 +37,11 @@ class AirlineSigningKeyResolverAdapter: SigningKeyResolverAdapter {
     {
         val found = _airlineSigningKeyProvider.get(jwsHeader.keyId, jwsHeader.algorithm)
             ?: return null
+
+        if (found == null)
+            logger.warn("Could not find public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
+        else
+            logger.info("Found public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
 
         return CryptoKeyConverter.decodeSigningJwkX5c(found)
     }

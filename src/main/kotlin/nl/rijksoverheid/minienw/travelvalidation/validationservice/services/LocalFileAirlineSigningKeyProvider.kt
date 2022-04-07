@@ -8,32 +8,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.io.File
+import java.net.ConnectException
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 
-//TODO obtain keys by GET/identity from each airline endpoint.
-// If the sig fails to verify, refresh the keys of the airline the key came from
 
-@Qualifier("local")
-//@Component
-class LocalFileAirlineSigningKeyProvider : IAirlineSigningKeyProvider {
-    private val items: AirlineKeys
-
-    constructor(appSettings: IApplicationSettings) {
-        LoggerFactory.getLogger("argle").info("-----------> " + File(".").absolutePath)
-        val configContents = File(appSettings.configFileFolderPath, "airlinePublicKeys.json").readText(Charsets.UTF_8)
-        items = Gson().fromJson(configContents, AirlineKeys::class.java)
-    }
-
-    override fun get(keyId: String?, algorithm: String?): PublicKeyJwk? {
-        return items.keys.find { it.key.kid == keyId && it.key.alg == algorithm }?.key
-    }
-}
-
-@Qualifier("remote")
+//@Qualifier("remote")
 @Component
 class HttpRemoteAirlineSigningKeyProvider
  : IAirlineSigningKeyProvider {
@@ -53,17 +36,26 @@ class HttpRemoteAirlineSigningKeyProvider
     {
         val result = ArrayList<PublicKeyJwk>()
         for (i in appSettings.airlineIdentityUris) {
-            val request = HttpRequest.newBuilder().uri(URI.create(i)).build()
-            val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
-            if (response.statusCode() != 200) {
-                logger.warn("Failed to update airline public keys from: $i")
+            var responseBody:String
+            try {
+                val request = HttpRequest.newBuilder().uri(URI.create(i)).build()
+                val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+                responseBody = response.body()
+                if (response.statusCode() != 200) {
+                    logger.warn("Failed to GET from: $i with ${response.statusCode()} ${response.body()}")
+                    continue
+                }
+            }
+            catch (ex: ConnectException) {
+                logger.warn("Failed GET from : $i with ${ex.message} and ${ex.stackTraceToString()}")
                 continue
             }
 
             try {
-                val doc = Gson().fromJson(response.body(), IdentityResponse::class.java)
+                val doc = Gson().fromJson(responseBody, IdentityResponse::class.java)
                 for (vm in doc.verificationMethod) {
                     if (vm.publicKeyJwk?.use.equals("sig", ignoreCase = true)) {
+                        logger.info("Found public key ${vm.publicKeyJwk?.kid}.")
                         result.add(vm.publicKeyJwk!!)
                     }
                 }
@@ -72,6 +64,10 @@ class HttpRemoteAirlineSigningKeyProvider
                 continue
             }
         }
+        if (result.size == 0)
+            logger.error("Found ZERO public keys in airline identities!")
+        else
+            logger.info("Found ${result.size} public keys in airline identities.")
 
         synchronized(this)
         {

@@ -25,9 +25,8 @@ import java.lang.IllegalStateException
 
 @Component
 class BusinessRulesService(
-    private val businessRulesConfig: IBusinessRulesProvider
+    private val businessRulesProvider: IBusinessRulesProvider
 ) {
-
     private var countryFrom: CountryRisk? = null
     private var countryTo: CountryRisk? = null
     private var args: BusinessRulesCommandArgs? = null
@@ -35,8 +34,8 @@ class BusinessRulesService(
     fun canExecute(args: BusinessRulesCommandArgs): Boolean
     {
         this.args = args
-        this.countryFrom = businessRulesConfig.countryRisks.find { it.code == args.trip.countryFrom }
-        this.countryTo = businessRulesConfig.countryRisks.find { it.code == args.trip.countryTo }
+        this.countryFrom = businessRulesProvider.countryRisks.find { it.code == args.trip.countryFrom }
+        this.countryTo = businessRulesProvider.countryRisks.find { it.code == args.trip.countryTo }
         return this.countryFrom != null && this.countryTo != null
     }
 
@@ -51,7 +50,7 @@ class BusinessRulesService(
             this.args!!.dcc,
             this.countryFrom!!,
             this.countryTo!!,
-            businessRulesConfig.rules,
-            businessRulesConfig.valueSetsJson)
+            businessRulesProvider.rules,
+            businessRulesProvider.valueSetsJson)
     }
 }
