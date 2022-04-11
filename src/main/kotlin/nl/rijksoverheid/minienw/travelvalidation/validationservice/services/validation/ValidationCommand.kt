@@ -20,7 +20,7 @@ class ValidationCommand(
 {
    fun execute(args: ValidationCommandArgs) : ValidationCommandResult
     {
-        var logger = LoggerFactory.getLogger(ValidationCommand::class.java)
+        val logger = LoggerFactory.getLogger(ValidationCommand::class.java)
         var dccVerificationResult: VerificationResponse
         try {
             dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
@@ -30,6 +30,7 @@ class ValidationCommand(
             logger.error("Verification service error: ${ex.message}, ${ex.stackTraceToString()}")
             throw ex
         }
+
 
         if (!dccVerificationResult.validSignature) {
             //Refresh the dcc signing public keys and try again.
@@ -51,7 +52,7 @@ class ValidationCommand(
         //TODO use DCC returned by verification server
         val dccWithTimes = DccDecoder().parse(args.encodeDcc)
 
-        var businessRulesCommandTripArgs = BusinessRulesCommandArgs (
+        val businessRulesCommandTripArgs = BusinessRulesCommandArgs (
             trip = args.trip,
             issuedAt = dccWithTimes.issuedAt,
             expirationTime = dccWithTimes.expirationTime,
@@ -61,7 +62,7 @@ class ValidationCommand(
         if (!businessRulesCommand.canExecute(businessRulesCommandTripArgs))
             return ValidationCommandResult.createExplicitUndecidedBusinessRuleVerificationFailed()
 
-        var fails = businessRulesCommand.execute()
+        val fails = businessRulesCommand.execute()
 
         return ValidationCommandResult.createFromBusinessRuleVerificationResult(
             fails,

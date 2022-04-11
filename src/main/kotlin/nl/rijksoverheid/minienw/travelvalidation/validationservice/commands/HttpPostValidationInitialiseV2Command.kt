@@ -42,11 +42,12 @@ class HttpPostValidationInitialiseV2Command(
         var identityDoc = Gson().fromJson(content, IdentityResponse::class.java)
         var encryptionKey = findEncryptionKey(identityDoc)
         var verificationKey = findVerificationKey(identityDoc) //TODO what is this one actually used for? Is this the correct key?
+        var validationServiceValidateUri = findValidationServiceUri(identityDoc)
 
         val result = ValidationInitializeResponse(
             subjectId = subjectId,
             whenExpires = dateTimeProvider.snapshot().epochSecond + appSettings.sessionMaxDurationSeconds,
-            validationUrl = "${appSettings.rootUrl}/validate/${subjectId}",
+            validationUrl = "${validationServiceValidateUri}/${subjectId}",
             validationServiceEncryptionKey = encryptionKey,
             signKey = verificationKey
         )
@@ -64,6 +65,10 @@ class HttpPostValidationInitialiseV2Command(
 
     private fun findVerificationKey(validationIdentity: IdentityResponse): PublicKeyJwk {
         return validationIdentity.verificationMethod.find{it.publicKeyJwk?.use.equals("sig")}?.publicKeyJwk ?: throw Exception()
+    }
+
+    private fun findValidationServiceUri(validationIdentity: IdentityResponse): String {
+        return validationIdentity.service.find{it.type.equals("ValidationService", ignoreCase = true)}?.serviceEndpoint ?: throw Exception()
     }
 }
 

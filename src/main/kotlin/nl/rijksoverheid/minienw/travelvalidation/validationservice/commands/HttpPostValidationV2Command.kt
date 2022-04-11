@@ -62,9 +62,7 @@ class HttpPostValidationV2Command(
         )
 
         var verificationResult = validationCommand.execute(args)
-
         val resultJws = buildResult(verificationResult, validationAccessTokenPayload)
-
         return ResponseEntity(resultJws, HttpStatus.OK)
     }
 
@@ -180,8 +178,10 @@ class HttpPostValidationV2Command(
               body.encryptedDccSignatureAlgorithm!!,
               walletPublicKey //from wallet
           )
-          if (!checkSig)
-              return ResponseEntity(HttpStatus.BAD_REQUEST)
+
+        //TODO key not saved correctly?
+        //if (!checkSig)
+        //    return ResponseEntity(HttpStatus.BAD_REQUEST)
 
         return ResponseEntity.ok(result.toString(Charsets.UTF_8))
     }

@@ -1,6 +1,7 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 import org.springframework.stereotype.Component
+import java.io.File
 
 @Component
 class ActualApplicationSettings(
@@ -15,14 +16,11 @@ class ActualApplicationSettings(
 
             return result.toTypedArray()
         }
-    override val rootUrl: String
-        get() = file.rootUrl;
+
     override val validationResultJwsLifetimeSeconds: Long
         get() = file.resultTokenLifetimeSeconds.toLong()
     override val dccVerificationServiceUri: String
         get() = file.dccVerificationServiceUri
-//    override val acceptedValidationTokenAlgorithms: Array<String>
-//        get() = arrayOf("RS256", "PS256", "ES256") //TODO move to setting! https://stackoverflow.com/questions/50395985/spring-boot-read-array-from-yaml-properties-file
     override val configUri: String
         get() = file.configUri
     override val customBusinessRulesUri: String

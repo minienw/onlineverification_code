@@ -2,6 +2,7 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.commands
 
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
 import org.bouncycastle.util.encoders.Base64
+import org.slf4j.LoggerFactory
 import java.security.*
 import java.security.spec.ECParameterSpec
 import java.security.spec.X509EncodedKeySpec
@@ -13,9 +14,12 @@ class CheckSignatureCommand {
         signatureAlgorithm: String,
         publicKeyBase64: String
     ): Boolean {
+
+        val logger = LoggerFactory.getLogger(CheckSignatureCommand::class.java)
+
         if (!signatureAlgorithm.equals("SHA256withECDSA", ignoreCase = true ))
         {
-            //TODO log
+            logger.info("Unsupported dcc signature algorithm.")
             return false;
         }
         var publicKey: PublicKey
@@ -24,7 +28,7 @@ class CheckSignatureCommand {
         }
         catch (ex: Exception)
         {
-            //TODO log
+            logger.error("Could not parse wallet public key.")
             return false;
         }
 
@@ -35,14 +39,14 @@ class CheckSignatureCommand {
             signature.update(content)
             return signature.verify(sig)
         }
-        catch (ex: SignatureException) //TODO narrow this down
+        catch (ex: SignatureException)
         {
-            //TODO log
+            logger.warn("SignatureException while validation signature: ${ex.message}")
             return false;
         }
-        catch (ex: Exception) //TODO narrow this down
+        catch (ex: Exception)
         {
-            //TODO log
+            logger.warn("Exception while validation signature: ${ex.message}")
             return false;
         }
     }
