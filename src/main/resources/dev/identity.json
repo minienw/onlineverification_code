@@ -32,13 +32,13 @@
     {
       "id": "http://localhost:8080/identity/service/ValidationService#InitializeService",
       "type": "InitializeService",
-      "serviceEndpoint": "https://localhost:8080/initialise",
+      "serviceEndpoint": "http://localhost:8080/initialize",
       "name": "Demo Validation Service Initialise"
     },
     {
       "id": "http://localhost:8080/identity/service/ValidationService#ValidationService",
       "type": "ValidationService",
-      "serviceEndpoint": "https://83.84.212.40:8080/validate",
+      "serviceEndpoint": "http://localhost:8080/validate",
       "name": "Demo Validation Service Validate"
     }
   ]

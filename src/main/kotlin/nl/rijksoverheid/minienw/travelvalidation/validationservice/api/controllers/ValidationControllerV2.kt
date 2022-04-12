@@ -33,8 +33,8 @@ class ValidationControllerV2(
     ): ResponseEntity<Any>
     {
         println("Init >>>>>")
-        println(authorizationHeader)
-        println(Gson().toJson(body))
+//        println(authorizationHeader)
+//        println(Gson().toJson(body))
         println(subjectId)
         println("<<<<< Init")
 
@@ -55,9 +55,10 @@ class ValidationControllerV2(
         @RequestBody body: ValidateRequestBody,
         @PathVariable ("subjectId") subjectId: String
     ): ResponseEntity<String> {
+
         println("Val >>>>>")
-        println(authorizationHeader)
-        println(Gson().toJson(body))
+//        println(authorizationHeader)
+//        println(Gson().toJson(body))
         println(subjectId)
         println("<<<< Val")
 
