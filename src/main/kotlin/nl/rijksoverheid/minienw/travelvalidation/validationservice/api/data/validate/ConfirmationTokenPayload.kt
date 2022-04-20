@@ -106,5 +106,5 @@ class ConfirmationTokenPayload
     // V2 Extra
     @SerializedName("personalinfodccextract")
     @JsonProperty("personalinfodccextract")
-    var dccExtract: DccExtract
+    var dccExtract: DccExtract?
 )

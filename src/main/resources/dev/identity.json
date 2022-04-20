@@ -1,5 +1,5 @@
 {
-  "id": "http://localhost:8080/identity",
+  "id": "http://localhost:9000/identity",
   "verificationMethod": [
     {
       "id": "http://localhost:8080/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
@@ -32,13 +32,13 @@
     {
       "id": "http://localhost:8080/identity/service/ValidationService#InitializeService",
       "type": "InitializeService",
-      "serviceEndpoint": "http://localhost:8080/initialize",
+      "serviceEndpoint": "http://localhost:9000/initialize",
       "name": "Demo Validation Service Initialise"
     },
     {
       "id": "http://localhost:8080/identity/service/ValidationService#ValidationService",
       "type": "ValidationService",
-      "serviceEndpoint": "http://localhost:8080/validate",
+      "serviceEndpoint": "http://localhost:9000/validate",
       "name": "Demo Validation Service Validate"
     }
   ]

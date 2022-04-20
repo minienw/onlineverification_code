@@ -22,23 +22,10 @@ services:
     command: redis-server
     expose:
       - 6379/tcp
-  #        ports:
-  #          - 6379:6379
 
   verifier:
     image: "verifier:latest"
     expose:
-      - "4003"
-    #        ports:
-    #          - "4003"
+      - 4003/tcp
     volumes:
       - verifier_config:/var/opt/verifierconfig
-
-#  airlinestub:
-#    image: "airline_stub:latest"
-#    expose:
-#      - "8081"
-#    ports:
-#      - "8081:8081"
-#    links:
-#      - validation

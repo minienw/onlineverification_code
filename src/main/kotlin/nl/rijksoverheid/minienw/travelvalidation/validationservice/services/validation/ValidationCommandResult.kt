@@ -8,7 +8,6 @@ class ValidationCommandResult(
     //private var explicitUndecided: Boolean,
     val result: Result,
     val businessRuleFailures: List<DCCFailableItem>,
-    _dccVerificationResult: VerificationResponse?,
     _dccWithTimes: DccQrCode?
 )
 {
@@ -16,8 +15,7 @@ class ValidationCommandResult(
         Pass, DccVerificationFailed, BusinessRuleVerificationFailed
     }
 
-    val dccVerificationResult = _dccVerificationResult ?: throw Exception()
-    val dccWithTimes = _dccWithTimes ?: throw Exception()
+    val dccWithTimes = _dccWithTimes
 
     companion object
     {
@@ -25,23 +23,19 @@ class ValidationCommandResult(
         fun createDccVerificationFailed() = ValidationCommandResult(
             Result.DccVerificationFailed,
             listOf(),
-            _dccVerificationResult= null,
             _dccWithTimes = null
         )
 
         fun createFromBusinessRuleVerificationResult(
             items: List<DCCFailableItem>,
-            dccVerificationResult: VerificationResponse,
+            dccVerificationResult: VerificationResponse, //TODO confirm this text is never used in the response - currently a failed sig has to be inferred.
             dccWithTimes: DccQrCode
-        ) = ValidationCommandResult(if (items.isEmpty()) Result.Pass else Result.BusinessRuleVerificationFailed , items, dccVerificationResult, dccWithTimes)
+        ) = ValidationCommandResult(if (items.isEmpty()) Result.Pass else Result.BusinessRuleVerificationFailed , items, dccWithTimes)
 
         fun createExplicitUndecidedBusinessRuleVerificationFailed() = ValidationCommandResult(
             Result.BusinessRuleVerificationFailed,
             listOf(),
-            _dccVerificationResult= null,
             _dccWithTimes = null
         )
     }
-
-    val isExplicitBusinessRuleVerificationFailure: Boolean get() = result == Result.BusinessRuleVerificationFailed && businessRuleFailures.isEmpty()
 }

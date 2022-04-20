@@ -64,10 +64,10 @@ class ResultTokenPayload(
     /**
      * The one to send to the airline
      */
-    var confirmation: String, //JWT of ConfirmationTokenPayload
+    var confirmation: String?, //JWT of ConfirmationTokenPayload
 
     // V2 Extra
     @SerializedName("personalinfodccextract")
     @JsonProperty("personalinfodccextract")
-    var dccExtract: DccExtract
+    var dccExtract: DccExtract?
 )

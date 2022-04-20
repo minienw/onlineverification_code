@@ -1,7 +1,6 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation
 
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.BusinessRulesCommandArgs
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.ValidationCommandArgs
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.DccDecoder
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IDccVerificationService
@@ -24,6 +23,10 @@ class ValidationCommand(
         var dccVerificationResult: VerificationResponse
         try {
             dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
+            if (dccVerificationResult.validSignature)
+                logger.info("DCC Verification passed (error: ${dccVerificationResult.verificationError}).")
+            else
+                logger.info("DCC Verification failed with error: ${dccVerificationResult.verificationError}.")
         }
         catch(ex: Exception)
         {
@@ -31,23 +34,25 @@ class ValidationCommand(
             throw ex
         }
 
-
         if (!dccVerificationResult.validSignature) {
             //Refresh the dcc signing public keys and try again.
             logger.warn("Dcc with invalid signature - retrying")
             publicKeysProvider.refresh()
             try {
                 dccVerificationResult = dccVerificationService.verify(args.encodeDcc)
+                if (dccVerificationResult.validSignature)
+                    logger.info("DCC Verification (attempt 2) passed (Message: ${dccVerificationResult.verificationError}).")
+                else {
+                    logger.info("DCC Verification (attempt 2) failed with error: ${dccVerificationResult.verificationError}.")
+                    return ValidationCommandResult.createDccVerificationFailed()
+                }
             }
             catch(ex: Exception)
             {
-                logger.error("Verification service error: ${ex.message}, ${ex.stackTraceToString()}")
+                logger.error("Verification service error (attempt 2): ${ex.message}, ${ex.stackTraceToString()}")
                 throw ex
             }
         }
-
-        if (!dccVerificationResult.validSignature)
-            return ValidationCommandResult.createDccVerificationFailed()
 
         //TODO use DCC returned by verification server
         val dccWithTimes = DccDecoder().parse(args.encodeDcc)

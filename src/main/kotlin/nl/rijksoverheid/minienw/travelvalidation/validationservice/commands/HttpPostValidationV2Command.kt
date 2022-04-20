@@ -7,7 +7,6 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.vali
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ResultTokenPayload
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ValidateRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.IPublicKeysProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommandResult
 import org.bouncycastle.util.encoders.Base64
@@ -71,21 +70,34 @@ class HttpPostValidationV2Command(
         authorizationHeaderObject: ValidationAccessTokenPayload,
     ): String {
 
-        val personalInfoDccExtract = DccExtract(
-            verificationResult.dccWithTimes.dcc.name.familyNameTransliterated,
-            verificationResult.dccWithTimes.dcc.name.givenNameTransliterated,
-            verificationResult.dccWithTimes.dcc.dateOfBirth
-        )
-
 
         //TODO I miss my per request injections :D
         val snapshot = dtp.snapshot()
         val whenIssued = snapshot.epochSecond
         val whenExpires = snapshot.epochSecond + appSettings.validationResultJwsLifetimeSeconds
 
-        //This goes to the airline
         val resultCode = getResultCode(verificationResult)
+        if (verificationResult.result != ValidationCommandResult.Result.Pass)
+        {
+            var resultPayload = ResultTokenPayload(
+                confirmation = null,
+                whenIssued = whenIssued,
+                whenExpires = whenExpires,
+                serviceProviderUri = authorizationHeaderObject.issuingServiceProvider,
+                category = authorizationHeaderObject.validationCondition.categories,
+                subject = authorizationHeaderObject.subject,
+                result = resultCode,
 
+                //Business rules results
+                results = verificationResult.businessRuleFailures.toTypedArray(),
+
+                dccExtract = null
+            )
+            val resultJws = responseTokenBuilder.build(resultPayload)
+            return resultJws
+        }
+
+        val personalInfoDccExtract = safeGetDccExtract(verificationResult)
         var resultTokenPayloadConfirmation = ConfirmationTokenPayload(
             //TODO Change these terrible names!
             id = authorizationHeaderObject.subject, //TODO Might be the original subject in contradiction to the EU spec!
@@ -115,7 +127,7 @@ class HttpPostValidationV2Command(
             result = resultCode,
 
             //Business rules results
-            results = verificationResult.businessRuleFailures.toTypedArray(),
+            results = verificationResult.businessRuleFailures.toTypedArray(), //TODO Should always be empty here?
 
             //Added as convenience for the wallet
             dccExtract = personalInfoDccExtract
@@ -123,6 +135,17 @@ class HttpPostValidationV2Command(
 
         val resultJws = responseTokenBuilder.build(resultPayload)
         return resultJws
+    }
+
+    private fun safeGetDccExtract(verificationResult: ValidationCommandResult): DccExtract? {
+
+        val dcc = verificationResult.dccWithTimes?.dcc ?: return null
+
+        return DccExtract(
+            dcc.name.familyNameTransliterated,
+            dcc.name.givenNameTransliterated,
+            dcc.dateOfBirth
+        )
     }
 
     //TODO Android app maps DCCFailableType.UndecidableFrom to Undecided
@@ -135,12 +158,16 @@ class HttpPostValidationV2Command(
     //    }
 
     private fun getResultCode(verificationResult: ValidationCommandResult) : String {
-        if( verificationResult.businessRuleFailures.isNotEmpty()
-            && verificationResult.businessRuleFailures.all {t -> t.type == DCCFailableType.UndecidableFrom })
-            return "CHK"
-
-        if( verificationResult.businessRuleFailures.isNotEmpty())
+        if (verificationResult.result == ValidationCommandResult.Result.DccVerificationFailed)
             return "NOK"
+
+        if (verificationResult.result == ValidationCommandResult.Result.BusinessRuleVerificationFailed) {
+            //verificationResult.businessRuleFailures.isNotEmpty() &&
+            if (verificationResult.businessRuleFailures.all { t -> t.type == DCCFailableType.UndecidableFrom })
+                return "CHK"
+
+            return "NOK"
+        }
 
         return "OK"
     }
@@ -167,7 +194,7 @@ class HttpPostValidationV2Command(
             return ResponseEntity("Encrypted parameter format not valid.", HttpStatus.BAD_REQUEST)
         }
 
-        var result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!);
+        var result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!)
 
           //e.g. SHA256withECDSA
           //Integrity check on decrypted DCC
