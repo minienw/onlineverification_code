@@ -64,11 +64,16 @@ class ValidationCommand(
             dcc= dccWithTimes.dcc
             )
 
+        logger.info("Verifying Trip - From:${args.trip.countryFrom} To:${args.trip.countryTo}")
         if (!businessRulesCommand.canExecute(businessRulesCommandTripArgs))
+        {
+            logger.warn("Could not execute verification - From:${args.trip.countryFrom} To:${args.trip.countryTo}")
             return ValidationCommandResult.createExplicitUndecidedBusinessRuleVerificationFailed()
+        }
 
         val fails = businessRulesCommand.execute()
 
+        logger.info("Verification complete - Failed business rule count: ${fails.size}")
         return ValidationCommandResult.createFromBusinessRuleVerificationResult(
             fails,
             dccVerificationResult,
