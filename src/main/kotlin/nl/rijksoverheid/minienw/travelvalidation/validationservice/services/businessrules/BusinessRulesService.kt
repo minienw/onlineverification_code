@@ -27,16 +27,18 @@ import java.lang.IllegalStateException
 class BusinessRulesService(
     private val businessRulesProvider: IBusinessRulesProvider
 ) {
+    private var config: AllOrNothing = businessRulesProvider.allOrNothing()
     private var countryFrom: CountryRisk? = null
     private var countryTo: CountryRisk? = null
     private var args: BusinessRulesCommandArgs? = null
 
     fun canExecute(args: BusinessRulesCommandArgs): Boolean
     {
+        val config = businessRulesProvider.allOrNothing()
         this.args = args
-        this.countryFrom = businessRulesProvider.countryRisks.find { it.code == args.trip.countryFrom }
-        this.countryTo = businessRulesProvider.countryRisks.find { it.code == args.trip.countryTo }
-        return this.countryFrom != null && this.countryTo != null
+        countryFrom = config.countryRisks.find { it.code == args.trip.countryFrom }
+        countryTo = config.countryRisks.find { it.code == args.trip.countryTo }
+        return countryFrom != null && this.countryTo != null
     }
 
     fun execute() : List<DCCFailableItem> //TODO crossed the streams a bit here...
@@ -50,7 +52,7 @@ class BusinessRulesService(
             this.args!!.dcc,
             this.countryFrom!!,
             this.countryTo!!,
-            businessRulesProvider.rules,
-            businessRulesProvider.valueSetsJson)
+            config.rules,
+            config.valueSetsJson)
     }
 }

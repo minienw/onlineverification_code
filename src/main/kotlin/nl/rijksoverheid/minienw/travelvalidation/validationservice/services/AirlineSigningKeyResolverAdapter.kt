@@ -11,7 +11,7 @@ import java.security.PublicKey
 
 interface IAirlineSigningKeyProvider {
     fun get(keyId: String?, algorithm: String?): PublicKeyJwk?
-    //TODO fun refresh()
+    fun refresh()
 }
 
 data class AirlineKey(
@@ -31,6 +31,7 @@ class AirlineSigningKeyResolverAdapter: SigningKeyResolverAdapter {
 
     constructor(airlineSigningKeyProvider: IAirlineSigningKeyProvider): super() {
         _airlineSigningKeyProvider = airlineSigningKeyProvider
+        _airlineSigningKeyProvider.refresh()
     }
 
     override fun resolveSigningKey(jwsHeader: JwsHeader<*>, claims: Claims?): PublicKey?

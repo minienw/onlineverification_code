@@ -20,14 +20,14 @@ class HttpRemoteBusinessRulesSource (
 
     override fun read(name: String): String {
         val uri = getUri(name)
-        logger.debug("Updating business rules - $name from ${uri}.")
+        logger.debug("Updating configuration - $name from ${uri}.")
         val request = HttpRequest.newBuilder().uri(URI.create(uri)).build()
         val response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString()).body()!!
         val responseBody = Gson().fromJson(response, ConfigResponse::class.java)
         //TODO CMS sig check - which cert(s)? appConfig.configSignaturePublicKey - how many?
-        val result = String(Base64.decode(responseBody.payload), Charsets.UTF_8)
-        logger.info("Updated business rules - $name from ${uri}.")
-        return result
+        //val result = String(Base64.decode(responseBody.payload), Charsets.UTF_8)
+        logger.info("Updated configuration - $name from ${uri}.")
+        return responseBody.payload //decode later - easier to cache
     }
 
     private fun getUri(name: String): String {
