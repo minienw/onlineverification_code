@@ -31,7 +31,9 @@ dependencies {
 	implementation("org.apache.logging.log4j:log4j-api:2.17.2")
 
 	//Binary references
-	implementation (files("lib/certlogic-kotlin-v0.9.0-kotlin.jar"))
+	implementation (files("lib/certlogic-kotlin-v0.11.1-kotlin.jar"))
+	//implementation (files("lib/certlogic-kotlin-v0.9.0-kotlin.jar"))
+	//implementation("eu.ehn.dcc.certlogic:certlogic-kotlin:v0.11.1-kotlin")
 
 	//Platform
 	implementation("org.springframework.boot:spring-boot-starter-web:2.6.4")

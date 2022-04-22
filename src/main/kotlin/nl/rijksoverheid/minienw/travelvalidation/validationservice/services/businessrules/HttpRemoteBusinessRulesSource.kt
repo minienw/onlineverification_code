@@ -3,6 +3,8 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services.bus
 import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import org.bouncycastle.util.encoders.Base64
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.net.URI
 import java.net.http.HttpClient
@@ -14,14 +16,18 @@ class HttpRemoteBusinessRulesSource (
     private val appConfig: IApplicationSettings,
 ) : IStringReader
 {
+    private val logger: Logger = LoggerFactory.getLogger("HttpRemoteBusinessRulesSource")
 
     override fun read(name: String): String {
         val uri = getUri(name)
+        logger.debug("Updating business rules - $name from ${uri}.")
         val request = HttpRequest.newBuilder().uri(URI.create(uri)).build()
         val response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString()).body()!!
-        var responseBody = Gson().fromJson(response, ConfigResponse::class.java)
+        val responseBody = Gson().fromJson(response, ConfigResponse::class.java)
         //TODO CMS sig check - which cert(s)? appConfig.configSignaturePublicKey - how many?
-        return String(Base64.decode(responseBody.payload), Charsets.UTF_8)
+        val result = String(Base64.decode(responseBody.payload), Charsets.UTF_8)
+        logger.info("Updated business rules - $name from ${uri}.")
+        return result
     }
 
     private fun getUri(name: String): String {

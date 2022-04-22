@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.HttpRemoteAirlineSigningKeyProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.HttpRemoteBusinessRulesSource
-import org.bouncycastle.crypto.agreement.jpake.JPAKERound1Payload
 import org.bouncycastle.util.encoders.Base64
+import org.hibernate.validator.internal.util.Contracts.assertNotEmpty
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.net.URI
@@ -21,9 +21,10 @@ class ConfigTest {
         val request =
             HttpRequest.newBuilder().uri(URI.create("https://verifier-api.coronacheck.nl/v4/dcbs/config")).build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString()).body()!!
-        var responseBody = Gson().fromJson(response, HttpRemoteBusinessRulesSource.ConfigResponse::class.java)
+        val responseBody = Gson().fromJson(response, HttpRemoteBusinessRulesSource.ConfigResponse::class.java)
         //TODO sig check
-        var json = String(Base64.decode(responseBody.payload), Charsets.UTF_8)
+        val json = String(Base64.decode(responseBody.payload), Charsets.UTF_8)
+        assertNotEmpty(json, "Not empty")
     }
 
     //TODO has to have the airline stub running or change to another available endpoint

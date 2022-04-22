@@ -5,9 +5,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.Publ
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.IdentityResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import java.io.File
 import java.net.ConnectException
 import java.net.URI
 import java.net.http.HttpClient
@@ -18,24 +16,17 @@ import java.net.http.HttpResponse
 
 //@Qualifier("remote")
 @Component
-class HttpRemoteAirlineSigningKeyProvider
+class HttpRemoteAirlineSigningKeyProvider(private val appSettings: IApplicationSettings)
  : IAirlineSigningKeyProvider {
 
     private var items: ArrayList<PublicKeyJwk> = ArrayList<PublicKeyJwk>()
     private val logger: Logger = LoggerFactory.getLogger("HttpRemoteAirlineSigningKeyProvider")
-    private val appSettings: IApplicationSettings
 
-    constructor(appSettings: IApplicationSettings)
-    {
-        this.appSettings = appSettings
-        refresh()
-    }
-
-
-    fun refresh()
+    override fun refresh()
     {
         val result = ArrayList<PublicKeyJwk>()
         for (i in appSettings.airlineIdentityUris) {
+            logger.debug("Getting verification keys from $i")
             var responseBody:String
             try {
                 val request = HttpRequest.newBuilder().uri(URI.create(i)).build()
@@ -47,7 +38,7 @@ class HttpRemoteAirlineSigningKeyProvider
                 }
             }
             catch (ex: ConnectException) {
-                logger.warn("Failed GET from : $i with ${ex.message} and ${ex.stackTraceToString()}")
+                logger.warn("Failed GET from : $i with message : ${ex.message} and ${ex.stackTraceToString()}")
                 continue
             }
 
@@ -55,7 +46,7 @@ class HttpRemoteAirlineSigningKeyProvider
                 val doc = Gson().fromJson(responseBody, IdentityResponse::class.java)
                 for (vm in doc.verificationMethod) {
                     if (vm.publicKeyJwk?.use.equals("sig", ignoreCase = true)) {
-                        logger.info("Found public key ${vm.publicKeyJwk?.kid}.")
+                        logger.info("Found verification key '${vm.publicKeyJwk?.kid}' in $i.")
                         result.add(vm.publicKeyJwk!!)
                     }
                 }
@@ -71,7 +62,7 @@ class HttpRemoteAirlineSigningKeyProvider
 
         synchronized(this)
         {
-            items = result;
+            items = result
         }
     }
 

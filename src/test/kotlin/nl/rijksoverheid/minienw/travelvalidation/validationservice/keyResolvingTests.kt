@@ -15,7 +15,7 @@ class keyResolvingTests {
     fun keyResolving() {
         val appSettings: IApplicationSettings = Mockito.mock(IApplicationSettings::class.java)
         Mockito.`when`(appSettings.configFileFolderPath).thenReturn("src/main/resources/dev")
-        var stash = LocalFileAirlineSigningKeyProvider(appSettings)
+        val stash = LocalFileAirlineSigningKeyProvider(appSettings)
         assert(stash.get("argle", "ROT13") == null)
         assert(stash.get("SsXyRIVSy4Y=", "RS256") != null)
     }
@@ -35,5 +35,9 @@ class LocalFileAirlineSigningKeyProvider : IAirlineSigningKeyProvider {
 
     override fun get(keyId: String?, algorithm: String?): PublicKeyJwk? {
         return items.keys.find { it.key.kid == keyId && it.key.alg == algorithm }?.key
+    }
+
+    override fun refresh() {
+        //Nothing
     }
 }
