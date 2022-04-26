@@ -10,6 +10,7 @@ This service is Springboot REST API application in Kotlin using IntelliJ-IDEA ID
 * Docker
 * Docker Compose
 * Access to the HCERT Verifier - https://github.com/minvws/nl-covid19-travelscan-mobile-core-private
+* Overall instructions on https://github.com/minienw/onlineverification_code/blob/main/Configuration%20for%20Travel%20Validation%20Services.docx
 ## Build Validation Service
 Requires:
 * This repo
