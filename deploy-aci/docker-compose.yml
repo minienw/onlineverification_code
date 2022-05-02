@@ -1,0 +1,31 @@
+version: "3.9"
+
+volumes:
+  verifier_config:
+
+services:
+  validation:
+    image: "validation_service:aci"
+    ports:
+      - "7000:7000"
+    depends_on:
+      - redis
+      - verifier
+    links:
+      - redis
+      - verifier
+    volumes:
+      - verifier_config:/var/opt/verifierconfig
+
+  redis:
+    image: "redis:6.2.6-alpine"
+    command: redis-server
+    expose:
+      - 6379/tcp
+
+  verifier:
+    image: "verifier:latest"
+    expose:
+      - 4003/tcp
+    volumes:
+      - verifier_config:/var/opt/verifierconfig
