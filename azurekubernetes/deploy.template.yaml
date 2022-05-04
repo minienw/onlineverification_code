@@ -44,16 +44,6 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: wallet
-spec:
-  ports:
-    - port: 80
-  selector:
-    app: wallet
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -122,7 +112,7 @@ spec:
             - --from
             - {{AZ_NAME}}.{{AZ_LOCATION}}.cloudapp.azure.com
             - --to
-            - wallet:80
+            - validation:7000
           resources:
             requests:
               cpu: 0.1
@@ -204,6 +194,16 @@ spec:
           persistentVolumeClaim:
             claimName: verifier-storage
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: validation
+spec:
+  ports:
+    - port: 7000
+  selector:
+    app: validation
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -247,11 +247,13 @@ metadata:
   annotations:
     # Let azure create a DNS record for the loadbalancer on {{AZ_NAME}}.{{AZ_LOCATION}}.cloudapp.azure.com
     service.beta.kubernetes.io/azure-dns-label-name: {{AZ_NAME}}
-  name: validation-dns
+  name: ssl
 spec:
   type: LoadBalancer
   ports:
-    - port: 7000
+    - port: 80
       name: http
+    - port: 443
+      name: tls
   selector:
-    app: validation
+    app: ssl
