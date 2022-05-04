@@ -1,8 +1,8 @@
 {
-  "id": "http://192.168.178.12:7000/identity",
+  "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity",
   "verificationMethod": [
     {
-      "id": "http://192.168.178.12:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -15,7 +15,7 @@
       }
     },
     {
-      "id": "http://192.168.178.12:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -30,15 +30,15 @@
   ],
   "service": [
     {
-      "id": "http://192.168.178.12:7000/identity/service/ValidationService#InitializeService",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/service/ValidationService#InitializeService",
       "type": "InitializeService",
-      "serviceEndpoint": "http://192.168.178.12:7000/initialize",
+      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/initialize",
       "name": "Demo Validation Service Initialise"
     },
     {
-      "id": "http://192.168.178.12:7000/identity/service/ValidationService#ValidationService",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/service/ValidationService#ValidationService",
       "type": "ValidationService",
-      "serviceEndpoint": "http://192.168.178.12:7000/validate",
+      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/validate",
       "name": "Demo Validation Service Validate"
     }
   ]
