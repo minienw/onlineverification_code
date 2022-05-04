@@ -44,36 +44,6 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: wallet
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: wallet
-  template:
-    metadata:
-      labels:
-        app: wallet
-    spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
-      containers:
-        - name: wallet
-          image: stevekellaway/wallet:latest
-          resources:
-            requests:
-              cpu: 0.1
-              memory: 500Mi
-            limits:
-              cpu: 0.5
-              memory: 1Gi
-          ports:
-            - containerPort: 80
-              name: wallet
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -213,7 +183,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
         - name: validation
-          image: stevekellaway/validation_service:latest_noconfig
+          image: stevekellaway/validation_service:aks_latest
           workingDir: /service-bin
           command: ["java", "-jar", "validationservice-0.0.2-SNAPSHOT.jar", "--spring.profiles.active=default"]
           resources:
