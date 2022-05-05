@@ -11,22 +11,10 @@ parameters:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: verifier-storage
-spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: managed-premium-retain
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: ssl-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   storageClassName: managed-premium-retain
   resources:
     requests:
@@ -38,11 +26,51 @@ metadata:
   name: ssl-config
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   storageClassName: managed-premium-retain
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validationsvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: validationsvc
+  template:
+    metadata:
+      labels:
+        app: validationsvc
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: validationsvc
+          image: stevekellaway/validation_service:latest
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 500Mi
+            limits:
+              cpu: 0.5
+              memory: 1Gi
+          ports:
+            - containerPort: 7000
+              name: validationsvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: validationsvc
+spec:
+  ports:
+    - port: 7000
+  selector:
+    app: validationsvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -150,88 +178,3 @@ spec:
       name: tls
   selector:
     app: ssl
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: validationsvc
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: validationsvc
-  template:
-    metadata:
-      labels:
-        app: validationsvc
-    spec:
-      terminationGracePeriodSeconds: 31
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
-      containers:
-        - name: validationsvc
-          image: stevekellaway/validation_service:latest
-          resources:
-            requests:
-              cpu: 0.1
-              memory: 500Mi
-            limits:
-              cpu: 0.5
-              memory: 1Gi
-          ports:
-            - containerPort: 7000
-              name: validationsvc
-          volumeMounts:
-            - mountPath: "/var/opt/verifierconfig"
-              name: verifier-data
-      volumes:
-        - name: verifier-data
-          persistentVolumeClaim:
-            claimName: verifier-storage
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: validationsvc
-spec:
-  ports:
-    - port: 7000
-  selector:
-    app: validationsvc
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: verifier
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: verifier
-  template:
-    metadata:
-      labels:
-        app: verifier
-    spec:
-      nodeSelector:
-        "beta.kubernetes.io/os": linux
-      containers:
-        - name: verifier
-          image: stevekellaway/verifier:latest
-          resources:
-            requests:
-              cpu: 0.3
-              memory: 1Gi
-            limits:
-              cpu: 1
-              memory: 2Gi
-          ports:
-            - containerPort: 4003
-              name: verifier
-          volumeMounts:
-            - mountPath: "/var/opt/verifierconfig"
-              name: verifier-data
-      volumes:
-        - name: verifier-data
-          persistentVolumeClaim:
-            claimName: ssl-data
