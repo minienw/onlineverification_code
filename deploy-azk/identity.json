@@ -1,8 +1,8 @@
 {
-  "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity",
+  "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com/identity",
   "verificationMethod": [
     {
-      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceEncKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -15,7 +15,7 @@
       }
     },
     {
-      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com/identity/verificationMethod/JsonWebKey2020#ValidationServiceSignKey-1",
       "type": "JsonWebKey2020",
       "controller": "https://thisservice.com/identity",
       "publicKeyJwk": {
@@ -30,15 +30,15 @@
   ],
   "service": [
     {
-      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/service/ValidationService#InitializeService",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com/identity/service/ValidationService#InitializeService",
       "type": "InitializeService",
-      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/initialize",
+      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com/initialize",
       "name": "Demo Validation Service Initialise"
     },
     {
-      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/identity/service/ValidationService#ValidationService",
+      "id": "https://tvvalidationservice.westeurope.cloudapp.azure.com/identity/service/ValidationService#ValidationService",
       "type": "ValidationService",
-      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com:7000/validate",
+      "serviceEndpoint": "https://tvvalidationservice.westeurope.cloudapp.azure.com/validate",
       "name": "Demo Validation Service Validate"
     }
   ]
