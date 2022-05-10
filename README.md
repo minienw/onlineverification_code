@@ -28,7 +28,7 @@ Requires:
 2. Build using the command line.
 ## Airline-Stub and Demo Wallet
 This repo is one of 3 co-operating components. For development or running a demo, see the implementations at:
-* Wallet Demo - https://github.com/minienw/HTMLwallet.git
+* Wallet Demo - https://github.com/minienw/HTMLwallet2.git
 * Airline Stub - https://github.com/minienw/airlinestub
 
 
