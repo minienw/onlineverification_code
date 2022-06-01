@@ -18,6 +18,8 @@ class DccEncryptionTests {
     @Test
     fun roundTripCbcVariant()
     {
+        Security.addProvider(BouncyCastleProvider())
+
         val aesCipher = AesCbcDecryptCommand()
         val secretKeyCipher = RsaEcbOaepWithSha256DecryptCommand()
 

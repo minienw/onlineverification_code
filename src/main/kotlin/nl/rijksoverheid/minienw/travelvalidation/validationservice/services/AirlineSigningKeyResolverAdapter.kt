@@ -3,7 +3,7 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwsHeader
 import io.jsonwebtoken.SigningKeyResolverAdapter
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import nl.rijksoverheid.minienw.travelvalidation.api.data.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

@@ -1,8 +1,6 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeResponse
-
+import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.*
 
 //TODO review contents - remove unnecessary
 data class SessionInfo(

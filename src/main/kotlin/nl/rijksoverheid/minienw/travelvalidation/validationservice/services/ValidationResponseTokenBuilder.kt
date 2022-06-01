@@ -3,8 +3,8 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 import com.google.gson.Gson
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ResultTokenPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ConfirmationTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.api.data.callback.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.validate.ResultTokenPayload
 import org.springframework.stereotype.Component
 
 @Component

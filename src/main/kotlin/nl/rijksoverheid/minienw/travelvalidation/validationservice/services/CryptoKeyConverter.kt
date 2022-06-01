@@ -1,7 +1,7 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 import io.jsonwebtoken.SignatureAlgorithm
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import nl.rijksoverheid.minienw.travelvalidation.api.data.*
 import org.bouncycastle.util.encoders.Base64
 import org.bouncycastle.util.io.pem.PemObject
 import org.bouncycastle.util.io.pem.PemWriter
@@ -22,7 +22,7 @@ class CryptoKeyConverter {
             decodeAsn1DerPkcs8ToPrivateKey(algorithm, Base64.decode(base64PrivateKey))
 
         fun decodeAsn1DerPkcs8ToPrivateKey(algorithm: String, buffer: ByteArray): PrivateKey {
-            val keySpec = PKCS8EncodedKeySpec(buffer)
+            val keySpec = PKCS8EncodedKeySpec(buffer, "BC")
             val keyFactory = KeyFactory.getInstance(algorithm)
             return keyFactory.generatePrivate(keySpec)
         }
@@ -47,7 +47,7 @@ class CryptoKeyConverter {
 //        }
 
         fun decodeAsn1DerPkcs1X509ToPublicKey(algorithm: String, buffer: ByteArray): PublicKey {
-            val keyFactory: KeyFactory = KeyFactory.getInstance(algorithm)
+            val keyFactory: KeyFactory = KeyFactory.getInstance(algorithm, "BC")
             val keySpec = X509EncodedKeySpec(buffer)
             return keyFactory.generatePublic(keySpec)
         }
@@ -163,9 +163,15 @@ class CryptoKeyConverter {
          * */
         fun encodeAsn1DerPkcs8Base64(key: PrivateKey): String = Base64.toBase64String(key.encoded)
         fun encodeAsn1DerPkcs8Pem(key: PrivateKey): String = encodePem("PRIVATE KEY", key.encoded)
+
         fun decodeAsn1DerPkcs8PemPrivateKey(value: String): PrivateKey {
             var stripped = decodePem("PRIVATE KEY", value)
             return decodeAsn1DerPkcs8Base64ToPrivateKey("RSA", stripped)
+        }
+
+        fun decodeAsn1DerPkcs8PemEcPrivateKey(value: String): PrivateKey {
+            var stripped = decodePem("EC PRIVATE KEY", value)
+            return decodeAsn1DerPkcs8Base64ToPrivateKey("EC", stripped)
         }
 
         fun encodeAsn1DerPkcs1X509Base64(key: PublicKey): String = Base64.toBase64String(key.encoded)

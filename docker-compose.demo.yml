@@ -31,10 +31,13 @@ services:
         image: "verifier:latest"
         expose:
           - "4003"
-#        ports:
-#          - "4003"
         volumes:
           - verifier_config:/var/opt/verifierconfig
+
+    parser:
+      image: "parser:latest"
+      expose:
+        - 80/tcp
 
    airlinestub:
       image: "airline_stub:latest"

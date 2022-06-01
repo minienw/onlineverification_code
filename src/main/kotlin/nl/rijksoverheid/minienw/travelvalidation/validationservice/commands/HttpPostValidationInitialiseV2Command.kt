@@ -1,11 +1,9 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.commands
 
 import com.google.gson.Gson
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.ValidationAccessTokenPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.IdentityResponse
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeResponse
+import nl.rijksoverheid.minienw.travelvalidation.api.data.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.identity.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -28,7 +26,7 @@ class HttpPostValidationInitialiseV2Command(
 //            return ResponseEntity(HttpStatus.BAD_REQUEST) //TODO .body("Incorrect subject id format - " + subjectIdValidationResult.joinToString("\n")
 //        }
 
-        if (validationAccessTokenPayload.subject != subjectId)
+        if (validationAccessTokenPayload.sub != subjectId)
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
 
         var validationResult = bodyValidator.validate(body)

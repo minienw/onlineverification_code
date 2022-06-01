@@ -3,7 +3,7 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice
 import com.google.gson.Gson
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import nl.rijksoverheid.minienw.travelvalidation.api.data.PublicKeyJwk
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
 import org.bouncycastle.util.encoders.Base64
 import org.junit.jupiter.api.Test

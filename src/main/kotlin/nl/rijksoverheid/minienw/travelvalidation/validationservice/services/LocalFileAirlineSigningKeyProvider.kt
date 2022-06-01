@@ -1,8 +1,8 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 import com.google.gson.Gson
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.identity.IdentityResponse
+import nl.rijksoverheid.minienw.travelvalidation.api.data.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.identity.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

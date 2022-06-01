@@ -2,6 +2,7 @@ package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 interface IApplicationSettings
 {
+    val validationAccessTokenSignatureAlgorithms: Array<String>
     val airlineIdentityUris: Array<String>
     val validationResultJwsLifetimeSeconds: Long
     val validationResultJwsSigningKey: String
@@ -18,4 +19,6 @@ interface IApplicationSettings
     val publicKeysFileName: String
 
     val configFileFolderPath: String
+
+    val dccArtifactParsingServiceUri: String
 }

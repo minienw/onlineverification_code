@@ -1,6 +1,6 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.commands
 
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
+import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
 import org.bouncycastle.util.encoders.Base64
 import org.bouncycastle.util.encoders.DecoderException

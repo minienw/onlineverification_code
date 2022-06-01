@@ -1,8 +1,8 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.api.controllers
 
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.ValidationAccessTokenPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ConfirmationTokenPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ResultTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.api.data.ValidationAccessTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.api.data.callback.ConfirmationTokenPayload
+import nl.rijksoverheid.minienw.travelvalidation.api.data.validate.ResultTokenPayload
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component

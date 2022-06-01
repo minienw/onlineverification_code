@@ -1,17 +1,24 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services
 
 import org.springframework.stereotype.Component
-import java.io.File
 
 @Component
 class ActualApplicationSettings(
     private val file: ApplicationPropertiesFile
 ): IApplicationSettings
 {
+    override val validationAccessTokenSignatureAlgorithms: Array<String>
+        get() {
+            val result = ArrayList<String>()
+            for(i in file.validationAccessTokenSignatureAlgorithms.split(","))
+                result.add(i.trim())
+
+            return result.toTypedArray()
+        }
     override val airlineIdentityUris: Array<String>
         get() {
             val result = ArrayList<String>()
-            for(i in file.airlineIdentityUris?.split(","))
+            for(i in file.airlineIdentityUris.split(","))
                 result.add(i.trim())
 
             return result.toTypedArray()
@@ -42,6 +49,8 @@ class ActualApplicationSettings(
         get() = file.sessionMaxDurationSecondsString.toLong()
     override val configFileFolderPath: String
         get() = file.configFileFolderPath
+    override val dccArtifactParsingServiceUri: String
+        get() = file.dccArtifactParsingServiceUri
     override val redisHost: String
         get() = file.redisHost
 }

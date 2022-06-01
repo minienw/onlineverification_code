@@ -1,8 +1,9 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.api.controllers
 
 import com.google.gson.Gson
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.validate.ValidateRequestBody
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
+import nl.rijksoverheid.minienw.travelvalidation.api.Headers
+import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.ValidationInitializeRequestBody
+import nl.rijksoverheid.minienw.travelvalidation.api.data.validate.ValidateRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ValidationAccessTokenParser

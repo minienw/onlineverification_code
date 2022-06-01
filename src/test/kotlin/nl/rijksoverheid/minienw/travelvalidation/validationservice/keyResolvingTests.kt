@@ -1,7 +1,7 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
 import com.google.gson.Gson
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.PublicKeyJwk
+import nl.rijksoverheid.minienw.travelvalidation.api.data.PublicKeyJwk
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.AirlineKeys
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IAirlineSigningKeyProvider
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings

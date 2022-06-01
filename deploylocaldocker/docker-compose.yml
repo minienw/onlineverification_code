@@ -24,8 +24,13 @@ services:
       - 6379/tcp
 
   verifier:
-    image: "verifier:latest"
+    image: "ghcr.io/minienw/verifier:latest"
     expose:
       - 4003/tcp
     volumes:
       - verifier_config:/var/opt/verifierconfig
+
+  dccparser:
+    image: "ghcr.io/minienw/dccparser:latest"
+    expose:
+      - 81/tcp

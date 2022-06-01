@@ -1,4 +1,8 @@
-GET http://localhost:10009/identity/SignKey-X
+### Check airline stub identity is up
+GET http://localhost:9001/identity
+
+###
+GET http://localhost:9001/identity/verificationmethod#AccessTokenSign-1
 Accept:application/json
 X-Version:2.00
 

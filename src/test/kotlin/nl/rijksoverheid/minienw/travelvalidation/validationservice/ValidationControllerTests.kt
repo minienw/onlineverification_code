@@ -1,10 +1,8 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
-import ValidationAccessTokenConditionPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.ValidationAccessTokenPayload
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeRequestBody
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationInitializeResponse
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.initialize.ValidationType
+import nl.rijksoverheid.minienw.travelvalidation.api.data.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.*
+import nl.rijksoverheid.minienw.travelvalidation.api.data.token.ValidationType
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.ValidationInitializeRequestBodyValidatorV2
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
@@ -50,23 +48,23 @@ class ValidationControllerTests {
             subject = UUID.randomUUID().toString().replace("-", "").uppercase(),
             subjectUri = "https://subject.com",
             jsonTokenIdentifier = "0123456789abcdef0123456789abcdef",
-            ValidationCondition = ValidationAccessTokenConditionPayload(
+            ValidationCondition = ValidationAccessTokenPayloadCondition(
                 //DccHash = "sdaasdad",
-                language = "en",
-                familyNameTransliterated = "who",
-                givenNameTransliterated = "knows",
-                dateOfBirth = "1979-04-14",
-                countryOfArrival = "NL",
-                countryOfDeparture = "DE",
-                portOfArrival = "AMS",
-                portOfDeparture = "FRA",
-                regionOfArrival = "",
-                regionOfDeparture = "",
-                dccTypes = arrayOf("v"),
-                categories = arrayOf("standard"),
+                lang = "en",
+                fnt = "who",
+                gnt = "knows",
+                dob = "1979-04-14",
+                coa = "NL",
+                cod = "DE",
+                poa = "AMS",
+                pod = "FRA",
+                roa = "",
+                rod = "",
+                type = arrayOf("v"),
+                category = arrayOf("standard"),
                 validationClock = "2021-01-29T12:00:00+01:00",
-                whenValidStart = "2021-01-29T12:00:00+01:00",
-                whenValidEnd = "2021-01-29T12:00:00+01:00",
+                validfrom = "2021-01-29T12:00:00+01:00",
+                validTo = "2021-01-29T12:00:00+01:00",
             ),
             ValidationVersion =  "1.0", //TODO probably 2.0?
             ValidationType = ValidationType.Full
@@ -75,7 +73,7 @@ class ValidationControllerTests {
         var result = subject.execute(
             validationAccessTokenPayload,
             body = ValidationInitializeRequestBody(nonce = "MDEyMzQ1Njc4OWFiY2RlZg==", walletPublicKeyAlgorithm = "SHA256withECDSA", walletPublicKey = publicKeyString),
-            subjectId = validationAccessTokenPayload.subject
+            subjectId = validationAccessTokenPayload.sub
         )
 
         assert(result.statusCode.value() == 200)
@@ -129,7 +127,7 @@ class ValidationControllerTests {
                 12345,
                 ValidationType.Full,
                 "2",
-                ValidationAccessTokenConditionPayload("" +
+                ValidationAccessTokenPayloadCondition("" +
                         "hash",
                     "en",
                     "",
