@@ -29,3 +29,9 @@ services:
       - 4003/tcp
     volumes:
       - verifier_config:/var/opt/verifierconfig
+
+  parser:
+      image: "parser:latest"
+      expose:
+        - 81/tcp
+
