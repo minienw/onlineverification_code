@@ -4,7 +4,6 @@ import nl.rijksoverheid.dcbs.verifier.models.CountryRisk
 import nl.rijksoverheid.dcbs.verifier.models.DCCQR
 import nl.rijksoverheid.dcbs.verifier.models.data.DCCFailableItem
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.BusinessRulesCommandArgs
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.lang.IllegalStateException
 
@@ -27,7 +26,7 @@ import java.lang.IllegalStateException
 class BusinessRulesService(
     private val businessRulesProvider: IBusinessRulesProvider
 ) {
-    private var config: AllOrNothing = businessRulesProvider.allOrNothing()
+    private val config: AllOrNothing = businessRulesProvider.allOrNothing()
     private var countryFrom: CountryRisk? = null
     private var countryTo: CountryRisk? = null
     private var args: BusinessRulesCommandArgs? = null

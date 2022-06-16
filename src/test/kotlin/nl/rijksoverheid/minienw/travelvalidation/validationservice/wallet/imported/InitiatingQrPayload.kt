@@ -19,7 +19,7 @@
 //    /// <summary>
 //    /// Type of the requested protocol
 //    /// </summary>
-//    var protocol:String = "DCCVALIDATION",
+//    val protocol:String = "DCCVALIDATION",
 //
 //    /// <summary>
 //    /// SemVer version number

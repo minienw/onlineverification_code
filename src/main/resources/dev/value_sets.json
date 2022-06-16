@@ -3209,7 +3209,7 @@
             "validUntil": null
         },
         "2696": {
-            "display": "Cesna Biyoteknoloji Ara\u015ft\u0131rma Geli\u015ftirme Laboratuvar Sist.\u0130n\u015f.M\u00fch.Dan.San.Tic.Ltd.\u015eti., CHECK UP SARS-COV-2 NASAL ANTIGEN RAPID TEST",
+            "display": "Cesna Biyoteknoloji Ara\u015ft\u0131rma Geli\u015ftirme Laboratuval Sist.\u0130n\u015f.M\u00fch.Dan.San.Tic.Ltd.\u015eti., CHECK UP SARS-COV-2 NASAL ANTIGEN RAPID TEST",
             "lang": "en",
             "active": true,
             "system": "https://covid-19-diagnostics.jrc.ec.europa.eu/devices",
@@ -3217,7 +3217,7 @@
             "validUntil": null
         },
         "2746": {
-            "display": "Cesna Biyoteknoloji Ara\u015ft\u0131rma Geli\u015ftirme Laboratuvar Sist.\u0130n\u015f.M\u00fch.Dan.San.Tic.Ltd.\u015eti., CHECK UP SARS-COV-2 NASOPHARYNGEAL ANTIGEN TEST",
+            "display": "Cesna Biyoteknoloji Ara\u015ft\u0131rma Geli\u015ftirme Laboratuval Sist.\u0130n\u015f.M\u00fch.Dan.San.Tic.Ltd.\u015eti., CHECK UP SARS-COV-2 NASOPHARYNGEAL ANTIGEN TEST",
             "lang": "en",
             "active": true,
             "system": "https://covid-19-diagnostics.jrc.ec.europa.eu/devices",

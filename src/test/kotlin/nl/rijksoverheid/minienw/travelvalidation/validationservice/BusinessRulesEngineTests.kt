@@ -1,15 +1,9 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.gson.Gson
-import nl.rijksoverheid.dcbs.verifier.models.DCC
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.BusinessRulesCommandArgs
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.TripInfo
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.businessrules.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.io.File
 
 
 class BusinessRulesEngineTests {
@@ -23,8 +17,8 @@ class BusinessRulesEngineTests {
         Mockito.`when`(appSettings.valueSetsUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/value_sets")
         //Mockito.`when`(appSettings.publicKeysUri).thenReturn("https://verifier-api.coronacheck.nl/v4/dcbs/public_keys")
 
-        var provider = DefaultBusinessRulesProvider(RedisConfigStorage(appSettings), HttpRemoteBusinessRulesSource(appSettings))
-        var config = provider.allOrNothing()
+        val provider = DefaultBusinessRulesProvider(RedisConfigStorage(appSettings), HttpRemoteBusinessRulesSource(appSettings))
+        val config = provider.allOrNothing()
 
         assert(!config.rules.isEmpty())
         assert(!config.countryRisks.isEmpty())
@@ -43,9 +37,9 @@ class BusinessRulesEngineTests {
 //        println(File(folder,".").absoluteFile)
 //
 //        //For args
-//        var dccString = File(folder, "JeanneSpecimen.dcc.json").readText(Charsets.UTF_8)
+//        val dccString = File(folder, "JeanneSpecimen.dcc.json").readText(Charsets.UTF_8)
 //
-//        var config = DefaultBusinessRulesProvider(FileConfigProvider(appSettings))
+//        val config = DefaultBusinessRulesProvider(FileConfigProvider(appSettings))
 //
 ////        //For command
 ////        //TODO put these directly in Redis
@@ -87,9 +81,9 @@ class BusinessRulesEngineTests {
 //        val appSettings =  Mockito.mock(IApplicationSettings::class.java)
 //        Mockito.`when`(appSettings.configFileFolderPath).thenReturn(folder)
 //
-//        var dccJson = File(folder, "dcc.bob_bouwer.v.json").readText(Charsets.UTF_8)
+//        val dccJson = File(folder, "dcc.bob_bouwer.v.json").readText(Charsets.UTF_8)
 //
-//        var config = arserBusinessRulesProvider(FileConfigProvider(appSettings))
+//        val config = arserBusinessRulesProvider(FileConfigProvider(appSettings))
 //
 ////        val mapper = ObjectMapper()
 ////        mapper.findAndRegisterModules()

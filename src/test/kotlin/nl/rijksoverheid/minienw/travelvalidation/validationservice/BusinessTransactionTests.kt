@@ -7,13 +7,11 @@ import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.ValidationI
 import nl.rijksoverheid.minienw.travelvalidation.api.data.token.ValidationType
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.ValidationInitializeRequestBodyValidatorV2
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.CryptoKeyConverter
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IApplicationSettings
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.IDateTimeProvider
-import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ISessionRepository
+import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.slf4j.*
 import org.springframework.http.HttpStatus
 import java.security.KeyPair
 import java.security.KeyPairGenerator
@@ -31,7 +29,7 @@ class BusinessTransactionTests {
 
     class Argle {
         @NotNull
-        var thing: Any? = null
+        val thing: Any? = null
     }
 
     @Test
@@ -96,12 +94,15 @@ class BusinessTransactionTests {
 
         val sessionRepository  = Mockito.mock(ISessionRepository::class.java)
 
+        val l = LoggerFactory.getLogger(HttpPostValidationInitialiseV2Command::class.java) as Logger
+
         val cmd = HttpPostValidationInitialiseV2Command(
             dateTimeProvider=dateTimeProvider,
             sessionRepository = sessionRepository,
             appSettings = appSettings,
             bodyValidator = ValidationInitializeRequestBodyValidatorV2(),
-            //subjectIdGenerator = ValidationServicesSubjectIdGenerator()
+            subjectIdGenerator = ValidationServicesSubjectIdGenerator(),
+            logger = l
         )
 
         val ttt = ValidationAccessTokenPayload(
@@ -134,8 +135,8 @@ class BusinessTransactionTests {
         )
 
         //Sanity check
-//        var json = Gson().toJson(ttt)
-//        var andBack = Gson().fromJson(json, nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.ValidationAccessTokenPayload::class.java)
+//        val json = Gson().toJson(ttt)
+//        val andBack = Gson().fromJson(json, nl.rijksoverheid.minienw.travelvalidation.validationservice.api.data.ValidationAccessTokenPayload::class.java)
 
 //        val factory: ValidatorFactory = Validation.buildDefaultValidatorFactory()
 //        val validator: Validator = factory.validator
@@ -144,7 +145,7 @@ class BusinessTransactionTests {
         //assert(errors.isEmpty())
 
         val keypair = getEcKeyPair()
-        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
+        val publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public)
 
 
         val requestBody = ValidationInitializeRequestBody(

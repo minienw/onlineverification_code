@@ -32,8 +32,8 @@ dependencies {
 
 	//Binary references
 	implementation (files("lib/certlogic-kotlin-v0.11.1-kotlin.jar"))
-	implementation (files("lib/onlineverification_messages-0.0.2-SNAPSHOT.jar"))
-	testImplementation (files("lib/onlineverification_messages-0.0.2-SNAPSHOT.jar"))
+	implementation (files("lib/onlineverification_messages-0.0.3-SNAPSHOT.jar"))
+	testImplementation (files("lib/onlineverification_messages-0.0.3-SNAPSHOT.jar"))
 
 	//Platform
 	implementation("org.springframework.boot:spring-boot-starter-web:2.6.4")

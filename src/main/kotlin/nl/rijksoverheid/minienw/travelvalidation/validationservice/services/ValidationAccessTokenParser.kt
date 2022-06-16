@@ -26,7 +26,7 @@ class ValidationAccessTokenParser(
         val stripped = if (value.startsWith("bearer", true)) value.substring(6).trim() else value
 
         try{
-            var parsed = build().parse(stripped)
+            val parsed = build().parse(stripped)
             val gson = Gson()
 
             val header = gson.fromJson(gson.toJson(parsed.header), JwtHeader::class.java)
@@ -60,16 +60,16 @@ class ValidationAccessTokenParser(
             //TODO subject == url subject from url... outside...
 
             if (errors.isNotEmpty()) {
-                var sb = StringBuilder("Token is invalid:\n")
+                val sb = StringBuilder("Token is invalid:\n")
                 for(i in errors) sb.append(i)
-                logger.info(sb.toString());
+                logger.info(sb.toString())
                 return ResponseEntity(HttpStatus.UNAUTHORIZED)
             }
 
             return ResponseEntity(result,HttpStatus.OK)
 
         } catch(e: JwtException) {
-            logger.info(e.toString());
+            logger.info(e.toString())
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
     }

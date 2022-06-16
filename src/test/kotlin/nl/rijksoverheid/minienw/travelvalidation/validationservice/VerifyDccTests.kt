@@ -30,7 +30,7 @@ class VerifyDccTests
 
 //    fun Do(expectedResult:Int, hcertDcc:String)
 //    {
-////        var result = DccVerificationHttpProxy().verify(hcertDcc)
+////        val result = DccVerificationHttpProxy().verify(hcertDcc)
 ////        assert(result.Status == expectedResult)
 //    }
 }

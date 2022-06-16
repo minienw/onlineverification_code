@@ -38,8 +38,8 @@ class IdentityController(
 
     //TODO parse from settings file identity.json
 //    private fun JustTheSigningPublicKey(): ResponseEntity<PublicKeyJwk> {
-//        var keyBase64 = appSettings.validationResultJwsVerificationKey
-//        var response = PublicKeyJwk(
+//        val keyBase64 = appSettings.validationResultJwsVerificationKey
+//        val response = PublicKeyJwk(
 //            x5c = arrayOf(keyBase64),
 //            alg = "RS256",
 //            kid = CryptoKeyConverter.getKid(Base64.decode(keyBase64)),
@@ -60,8 +60,8 @@ class IdentityController(
     @ResponseStatus(HttpStatus.OK)
     fun WholeDoc(): ResponseEntity<String>
     {
-        var f = File(appSettings.configFileFolderPath, "identity.json")
-        var content = f.readText()
+        val f = File(appSettings.configFileFolderPath, "identity.json")
+        val content = f.readText()
         return ResponseEntity(content, HttpStatus.OK)
     }
 

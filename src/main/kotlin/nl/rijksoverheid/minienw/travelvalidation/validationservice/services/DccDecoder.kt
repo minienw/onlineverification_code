@@ -11,20 +11,20 @@ import java.util.zip.Inflater
 
 class DccDecoder {
     fun parse(prefix: String): DccQrCode {
-        var delimiterIndex = prefix.indexOf(":")
+        val delimiterIndex = prefix.indexOf(":")
         if (delimiterIndex == -1) //TODO || delimiterIndex > 4
             throw Exception("Delimiter missing")
 
         val base45 = prefix.substring(delimiterIndex + 1).trimStart()
         val base45Bytes = base45.toByteArray()
         val compressed = Base45.getDecoder().decode(base45Bytes)
-        val cose = decompress(compressed!!);
+        val cose = decompress(compressed!!)
         val cbor = Message.DecodeFromBytes(cose, MessageTag.Sign1)
         val cborObject: CBORObject = CBORObject.DecodeFromBytes(cbor.GetContent())
 
-        var vaccinations = ArrayList<DCCVaccine>(0)
-        var recoveries = ArrayList<DCCRecovery>(0)
-        var tests = ArrayList<DCCTest>(0)
+        val vaccinations = ArrayList<DCCVaccine>(0)
+        val recoveries = ArrayList<DCCRecovery>(0)
+        val tests = ArrayList<DCCTest>(0)
 
         val dccRoot = cborObject[-260][1]
 
@@ -85,8 +85,8 @@ class DccDecoder {
             }
         }
 
-        var nameRoot = dccRoot["nam"]
-        var nameObject = DCCNameObject(
+        val nameRoot = dccRoot["nam"]
+        val nameObject = DCCNameObject(
             givenName = getString(nameRoot, "gn"),
             familyName = getString(nameRoot, "fn"),
             familyNameTransliterated = getString(nameRoot, "fnt"),
@@ -105,9 +105,9 @@ class DccDecoder {
             to = null, //Trip parameter
         )
 
-        //var country = cborObject[1].toString()
-        var item4 = cborObject[4].AsInt64Value()
-        var item6 = cborObject[6].AsInt64Value()
+        //val country = cborObject[1].toString()
+        val item4 = cborObject[4].AsInt64Value()
+        val item6 = cborObject[6].AsInt64Value()
 
         val result = DccQrCode(dcc = dcc, expirationTime = item4, issuedAt = item6)
 

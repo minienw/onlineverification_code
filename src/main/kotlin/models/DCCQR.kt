@@ -33,10 +33,10 @@ import java.util.*
 
 class DCCQR(
 ) {
-    private fun DCC.getName(): String {
-        return this.name?.retrieveFamilyName() + " " + (this.name?.givenName
-            ?: "").capitalize(Locale.getDefault())
-    }
+//    private fun DCC.getName(): String {
+//        return this.name?.retrieveFamilyName() + " " + (this.name?.givenName
+//            ?: "").capitalize(Locale.getDefault())
+//    }
 
     //Extension
     private fun DCC.getEngineCertificateType(): CertificateType {
@@ -76,7 +76,7 @@ class DCCQR(
                 val validType =
                     rule.ruleCertificateType.name == certificateType.name || rule.ruleCertificateType == RuleCertificateType.GENERAL
                 val validCountry =
-                    rule.countryCode.toUpperCase(Locale.getDefault()) == issuanceCountryIsoCode
+                    rule.countryCode.uppercase(Locale.getDefault()) == issuanceCountryIsoCode
                 if (!validDate || !validType || !validCountry) {
                     acceptanceRules.remove(rule)
                 }
@@ -148,8 +148,8 @@ class DCCQR(
             )
         )
         val valueSetsMap = valueSets.getValueSetMap()
-        val instantExpirationTime: Instant = Instant.ofEpochMilli(this.expirationTime!!)
-        val instantIssuedAt: Instant = Instant.ofEpochMilli(this.issuedAt!!)
+        val instantExpirationTime: Instant = Instant.ofEpochMilli(this.expirationTime)
+        val instantIssuedAt: Instant = Instant.ofEpochMilli(this.issuedAt)
         val externalParameter = ExternalParameter(
             validationClock = validationClock,
             valueSets = valueSetsMap,
@@ -190,7 +190,7 @@ class DCCQR(
 
     private fun getRuleDescription(descriptions: Map<String, String>): String {
 
-        val language = Locale.getDefault().language.toLowerCase(Locale.getDefault())
+        val language = Locale.getDefault().language.lowercase(Locale.getDefault())
         descriptions[language]?.let {
             return it
         } ?: run {

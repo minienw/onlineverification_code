@@ -1,6 +1,5 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation
 
-import com.google.gson.Gson
 import nl.rijksoverheid.dcbs.verifier.models.data.DCCFailableItem
 import nl.rijksoverheid.dcbs.verifier.models.data.DCCFailableType
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.BusinessRulesCommandArgs
@@ -36,13 +35,13 @@ class ParseDccArtifactContentCommand(
 {
     fun parse(base64EncodedContent: String): String?
     {
-        var result = parsePossibleString(base64EncodedContent)
+        val result = parsePossibleString(base64EncodedContent)
         if (result != null)
             return result
 
-        var postBody = DccParseArgs(base64EncodedContent)
+        val postBody = DccParseArgs(base64EncodedContent)
 
-        var response = RestTemplateBuilder().build()
+        val response = RestTemplateBuilder().build()
             .postForObject(appSettings.dccArtifactParsingServiceUri, postBody, DccParseResponse::class.java)
 
         //return response
@@ -53,7 +52,7 @@ class ParseDccArtifactContentCommand(
     fun parsePossibleString(base64EncodedContent: String): String?
     {
         try{
-            var possible = String(Base64.decodeBase64(base64EncodedContent), Charsets.UTF_8)
+            val possible = String(Base64.decodeBase64(base64EncodedContent), Charsets.UTF_8)
             if (possible.startsWith("HC1:") /*&& TODO And all characters are Base45 compliant*/)
                 return possible
             else
@@ -105,7 +104,7 @@ class ValidationCommand(
 
         if (!dccVerificationResult.validSignature) {
             //Refresh the dcc signing public keys and try again.
-            logger.warn("Dcc with invalid signature - retrying")
+            logger.info("Dcc with invalid signature - retrying")
             publicKeysProvider.refresh()
             try {
                 dccVerificationResult = dccVerificationService.verify(dcc)

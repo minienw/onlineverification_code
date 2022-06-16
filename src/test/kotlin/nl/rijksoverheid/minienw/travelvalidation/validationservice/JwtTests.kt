@@ -8,12 +8,12 @@ class JwtTests {
     @Test
     fun roundTrip()
     {
-        var kwt = io.jsonwebtoken.Jwts.builder()
+        val kwt = io.jsonwebtoken.Jwts.builder()
             .signWith(CryptoKeyConverter.decodeAsn1DerPkcs8Base64ToPrivateKey("RSA", CryptoKeyParserTests.privateKeyPem))
             .claim("poland", "springtime")
             .compact()
 
-        var verifed = io.jsonwebtoken.Jwts.parserBuilder().setSigningKey(
+        val verifed = io.jsonwebtoken.Jwts.parserBuilder().setSigningKey(
             CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", CryptoKeyParserTests.publicKeyPem)
         ).build().parseClaimsJws(kwt)
 

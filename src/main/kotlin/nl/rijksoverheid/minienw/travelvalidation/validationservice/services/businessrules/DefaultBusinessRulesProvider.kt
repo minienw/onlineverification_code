@@ -27,7 +27,7 @@ class DefaultBusinessRulesProvider(
     fun getOrRefresh(): EncodedBusinessConfig
     {
         //Get
-        var encodedConfigJson = storage.find("allOrNothing")
+        val encodedConfigJson = storage.find("allOrNothing")
         if (encodedConfigJson != null) {
             return Gson().fromJson(encodedConfigJson, EncodedBusinessConfig::class.java)
         }
@@ -35,8 +35,8 @@ class DefaultBusinessRulesProvider(
         logger.debug("Refreshing business rules.")
         //Refresh
         val encodedConfig = refresh()
-        encodedConfigJson = Gson().toJson(encodedConfig)
-        storage.save("allOrNothing", encodedConfigJson)
+        val refreshed = Gson().toJson(encodedConfig)
+        storage.save("allOrNothing", refreshed)
         logger.info("Refreshed business rules.")
         return encodedConfig
     }
@@ -79,7 +79,7 @@ class DefaultBusinessRulesProvider(
         )
     }
 
-    private var isOtherIncluded: Boolean = true //TODO where is this set?
+    private val isOtherIncluded: Boolean = true //TODO where is this set?
 
     private fun parseCountries(configContent: String): List<CountryRisk> {
         val obj: JsonObject = Gson().fromJson(configContent, JsonObject::class.java)

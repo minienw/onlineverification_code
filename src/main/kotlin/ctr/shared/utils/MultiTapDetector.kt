@@ -10,7 +10,7 @@
 //
 //@SuppressLint("ClickableViewAccessibility")
 //class MultiTapDetector(view: View, callback: (Int, Boolean) -> Unit) {
-//    private var numberOfTaps = 0
+//    private val numberOfTaps = 0
 //    private val handler = Handler(Looper.getMainLooper())
 //
 //    private val doubleTapTimeout = ViewConfiguration.getDoubleTapTimeout().toLong()
@@ -19,10 +19,10 @@
 //
 //    private val viewConfig = ViewConfiguration.get(view.context)
 //
-//    private var downEvent = Event()
-//    private var lastTapUpEvent = Event()
+//    private val downEvent = Event()
+//    private val lastTapUpEvent = Event()
 //
-//    data class Event(var time: Long = 0, var x: Float = 0f, var y: Float = 0f) {
+//    data class Event(val time: Long = 0, val x: Float = 0f, val y: Float = 0f) {
 //        fun copyFrom(motionEvent: MotionEvent) {
 //            time = motionEvent.eventTime
 //            x = motionEvent.x

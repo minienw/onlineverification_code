@@ -21,7 +21,7 @@ class GenerateRsaKeyPair {
         println("Private Key as ASN1->DER->PKCS#8 base64:")
         println(CryptoKeyConverter.encodeAsn1DerPkcs8Base64(keyPair.private))
         println("Private Key as ASN1->DER->PKCS#8->PEM:")
-        var privateKeyPem = CryptoKeyConverter.encodeAsn1DerPkcs8Pem(keyPair.private)
+        val privateKeyPem = CryptoKeyConverter.encodeAsn1DerPkcs8Pem(keyPair.private)
         println(privateKeyPem)
         CryptoKeyConverter.decodeAsn1DerPkcs8PemPrivateKey(privateKeyPem)
 
@@ -32,7 +32,7 @@ class GenerateRsaKeyPair {
         println("Public Key as ASN.1->DER->PKCS#1 base64:")
         println(CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(publicKeyObject))
         println("Public Key as ASN.1->DER->PKCS#1->PEM:")
-        var publicKeyPem = CryptoKeyConverter.encodeAsn1DerPkcs1X509Pem(keyPair.public)
+        val publicKeyPem = CryptoKeyConverter.encodeAsn1DerPkcs1X509Pem(keyPair.public)
         println(publicKeyPem)
         CryptoKeyConverter.decodeAsn1DerPkcs1X509PemPublicKey(publicKeyPem)
         println("Public Key as RS256 JWK")
@@ -44,8 +44,8 @@ class GenerateRsaKeyPair {
     }
 
     private fun GenKeyPair(): KeyPair {
-        val kpg = KeyPairGenerator.getInstance("RSA");
-        kpg.initialize(4096);
+        val kpg = KeyPairGenerator.getInstance("RSA")
+        kpg.initialize(4096)
         val keyPair = kpg.generateKeyPair()
         return keyPair
     }

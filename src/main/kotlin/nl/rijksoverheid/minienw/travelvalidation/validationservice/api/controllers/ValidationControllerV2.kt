@@ -1,12 +1,12 @@
 package nl.rijksoverheid.minienw.travelvalidation.validationservice.api.controllers
 
-import com.google.gson.Gson
 import nl.rijksoverheid.minienw.travelvalidation.api.Headers
 import nl.rijksoverheid.minienw.travelvalidation.api.data.initialize.ValidationInitializeRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.api.data.validate.ValidateRequestBody
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.HttpPostValidationInitialiseV2Command
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.commands.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.ValidationAccessTokenParser
+import org.slf4j.Logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.*
 @Component
 @RestController
 class ValidationControllerV2(
-    val travellerTripJwsParser : ValidationAccessTokenParser, //TODO make once per request
-    val httpPostValidationInitialiseCommand : HttpPostValidationInitialiseV2Command, //TODO make once per request
-    val httpPostValidationCommand : HttpPostValidationV2Command, //TODO make once per request
+    private val logger : Logger,
+    private val travellerTripJwsParser : ValidationAccessTokenParser,
+    private val httpPostValidationInitialiseCommand : HttpPostValidationInitialiseV2Command,
+    private val httpPostValidationCommand : HttpPostValidationV2Command,
 ) {
     @PostMapping(
         "initialize/{subjectId}",
@@ -33,16 +34,12 @@ class ValidationControllerV2(
 //        @RequestHeader(Headers.SignValidationInitResponse) signResponse: Boolean, //TODO are these being honoured?
     ): ResponseEntity<Any>
     {
-        println("Init >>>>>")
-//        println(authorizationHeader)
-//        println(Gson().toJson(body))
-        println(subjectId)
-        println("<<<<< Init")
-
-        var parsed = travellerTripJwsParser.parse(authorizationHeader)
-        if(parsed.statusCode != HttpStatus.OK)
+        logger.info("POST initialize, subject Id '$subjectId'")
+        val parsed = travellerTripJwsParser.parse(authorizationHeader)
+        if(parsed.statusCode != HttpStatus.OK) {
+            logger.info("POST initialize, subject Id - '$subjectId' failed validation - ${parsed.statusCode} because '${parsed.body}'}")
             return ResponseEntity(parsed.statusCode)
-
+        }
         return httpPostValidationInitialiseCommand.execute(parsed.body!!, body, subjectId)
     }
 
@@ -57,17 +54,13 @@ class ValidationControllerV2(
         @PathVariable ("subjectId") subjectId: String
     ): ResponseEntity<String> {
 
-        println("Val >>>>>")
-//        println(authorizationHeader)
-//        println(Gson().toJson(body))
-        println(subjectId)
-        println("<<<< Val")
+        logger.info("POST validate, subject Id - '$subjectId'")
+        val parsed = travellerTripJwsParser.parse(authorizationHeader)
 
-        var parsed = travellerTripJwsParser.parse(authorizationHeader)
-
-        if(parsed.statusCode != HttpStatus.OK)
+        if(parsed.statusCode != HttpStatus.OK) {
+            logger.info("POST validate, subject Id - '$subjectId' failed validation - ${parsed.statusCode} because '${parsed.body}'}")
             return ResponseEntity(parsed.statusCode)
-
+        }
         return httpPostValidationCommand.execute(parsed.body!!, body, subjectId)
     }
 }

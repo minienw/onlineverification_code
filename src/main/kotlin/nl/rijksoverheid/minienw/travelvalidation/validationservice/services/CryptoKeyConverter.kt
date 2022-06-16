@@ -40,7 +40,7 @@ class CryptoKeyConverter {
 //
 //            val input : Reader = ByteArrayInputStream(buffer).reader()
 //            val pemParser = PEMParser(input);
-//            var pemObj = pemParser.readObject()
+//            val pemObj = pemParser.readObject()
 //            val publicKeyInfo = SubjectPublicKeyInfo.getInstance(pemObj);
 //            val converter = JcaPEMKeyConverter();
 //            return converter.getPublicKey(publicKeyInfo);
@@ -65,7 +65,7 @@ class CryptoKeyConverter {
             if (publicKey.x5c.isEmpty())
                 throw IllegalArgumentException("JWK x5c value missing.")
 
-            var sigAlg: SignatureAlgorithm
+            val sigAlg: SignatureAlgorithm
             try {
                 sigAlg = SignatureAlgorithm.valueOf(publicKey.alg)
             }
@@ -82,9 +82,9 @@ class CryptoKeyConverter {
          * */
         fun encodeRs256VerificationJwk(key: PublicKey): PublicKeyJwk {
             if (key.algorithm != "RSA")
-                throw IllegalArgumentException("Key is not RSA.");
+                throw IllegalArgumentException("Key is not RSA.")
 
-            var pemBytes = key.encoded
+            val pemBytes = key.encoded
             return PublicKeyJwk(
                 use = "sig",
                 alg = "RS256", //TODO convert?
@@ -95,9 +95,9 @@ class CryptoKeyConverter {
 
         fun encodeRsaEncryptionJwk(key: PublicKey): PublicKeyJwk {
             if (key.algorithm != "RSA")
-                throw IllegalArgumentException("Key is not RSA.");
+                throw IllegalArgumentException("Key is not RSA.")
 
-            var pemBytes = key.encoded
+            val pemBytes = key.encoded
             return PublicKeyJwk(
                 use = "enc",
                 alg = "RSA",
@@ -111,7 +111,7 @@ class CryptoKeyConverter {
          * Remove headers/footers/64 char line split
          */
         fun decodePem(type: String, pemValue: String): String {
-            var header = "-----BEGIN $type-----"
+            val header = "-----BEGIN $type-----"
 
             if (!pemValue.startsWith(header))
                 throw IllegalArgumentException("Header missing.")
@@ -138,13 +138,8 @@ class CryptoKeyConverter {
 //                return cert as X509Certificate
 //        }
 
-
-        private fun convertEncodedKeyToPemWithHeaderAndFooter(header: String, encodedKey: ByteArray): String {
-            return encodePem(header, encodedKey)
-        }
-
         fun encodePem(header: String, buffer: ByteArray): String {
-            var sw = StringWriter()
+            val sw = StringWriter()
             PemWriter(sw).use { writer ->
                 writer.writeObject(PemObject(header, buffer))
                 writer.flush()
@@ -153,9 +148,9 @@ class CryptoKeyConverter {
         }
 
         fun getKid(keyValue: ByteArray): String {
-            val hash = MessageDigest.getInstance("SHA-256").digest(keyValue);
+            val hash = MessageDigest.getInstance("SHA-256").digest(keyValue)
             val kidBytes = Arrays.copyOfRange(hash, 0, 8)
-            return Base64.toBase64String(kidBytes);
+            return Base64.toBase64String(kidBytes)
         }
 
         /**
@@ -165,20 +160,15 @@ class CryptoKeyConverter {
         fun encodeAsn1DerPkcs8Pem(key: PrivateKey): String = encodePem("PRIVATE KEY", key.encoded)
 
         fun decodeAsn1DerPkcs8PemPrivateKey(value: String): PrivateKey {
-            var stripped = decodePem("PRIVATE KEY", value)
+            val stripped = decodePem("PRIVATE KEY", value)
             return decodeAsn1DerPkcs8Base64ToPrivateKey("RSA", stripped)
-        }
-
-        fun decodeAsn1DerPkcs8PemEcPrivateKey(value: String): PrivateKey {
-            var stripped = decodePem("EC PRIVATE KEY", value)
-            return decodeAsn1DerPkcs8Base64ToPrivateKey("EC", stripped)
         }
 
         fun encodeAsn1DerPkcs1X509Base64(key: PublicKey): String = Base64.toBase64String(key.encoded)
         fun encodeAsn1DerPkcs1X509Pem(key: PublicKey): String = encodePem("PUBLIC KEY", key.encoded)
 
         fun decodeAsn1DerPkcs1X509PemPublicKey(value: String): PublicKey {
-            var stripped = decodePem("PUBLIC KEY", value)
+            val stripped = decodePem("PUBLIC KEY", value)
             return decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", stripped)
         }
 

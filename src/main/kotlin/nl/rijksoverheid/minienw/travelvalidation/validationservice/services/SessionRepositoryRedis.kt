@@ -11,12 +11,12 @@ class SessionRepositoryRedis(val appSettings: IApplicationSettings) : ISessionRe
         val session = createSession() //TODO settings
         try {
             //TODO not threadsafe/tx safe
-//            var subjectId = nextSubjectValue()
+//            val subjectId = nextSubjectValue()
 //            while (session.get(subjectId) != null)
 //                subjectId = nextSubjectValue()
 //            sessionInfo.response.subjectId = subjectId
             val value = Gson().toJson(sessionInfo)
-            session.set(sessionInfo.response.subjectId, value);
+            session.set(sessionInfo.response.subjectId, value)
             //session.expire(sessionInfo.response.subjectId, 3600); //TODO parse expiry time from sessionInfo
         } finally {
             session.client.close()

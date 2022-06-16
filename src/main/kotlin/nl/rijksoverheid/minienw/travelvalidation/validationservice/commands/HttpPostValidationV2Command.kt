@@ -7,17 +7,16 @@ import nl.rijksoverheid.minienw.travelvalidation.api.data.validate.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommand
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.validation.ValidationCommandResult
-import okio.Utf8
 import org.bouncycastle.util.encoders.Base64
 import org.bouncycastle.util.encoders.DecoderException
-import org.slf4j.LoggerFactory
+import org.slf4j.Logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import java.nio.charset.Charset
 
 @Component
 class HttpPostValidationV2Command(
+    private val logger : Logger,
     private val validationCommand: ValidationCommand,
     private val repo: ISessionRepository,
     private val dtp : IDateTimeProvider,
@@ -25,24 +24,25 @@ class HttpPostValidationV2Command(
     private val responseTokenBuilder: ValidationResponseTokenBuilder,
     private val appSettings : IApplicationSettings,
     private val subjectIdGenerator: ValidationServicesSubjectIdGenerator,
+    private val checkSignatureCommand: CheckSignatureCommand
 )
 {
     fun execute(validationAccessTokenPayload: ValidationAccessTokenPayload, body: ValidateRequestBody, subjectId: String): ResponseEntity<String>
     {
-        var logger = LoggerFactory.getLogger(HttpPostValidationV2Command::class.java)
-
-        var subjectIdValidationResult = subjectIdGenerator.validate(subjectId)
+        val subjectIdValidationResult = subjectIdGenerator.validate(subjectId)
         if (subjectIdValidationResult.isNotEmpty())
         {
-            logger.info("Incorrect subject id format - " + subjectIdValidationResult.joinToString("\n"))
-            return ResponseEntity.badRequest().body("Incorrect subject id format - " + subjectIdValidationResult.joinToString("\n"))
+            val message = subjectIdValidationResult.joinToString("\n")
+            logger.info("SubjectId is not a valid GUID - \n$message")
+            return ResponseEntity.badRequest().body(message)
         }
 
         if (validationAccessTokenPayload.sub != subjectId) {
             logger.info("validationAccessTokenPayload.subject and request subjectId did not match.")
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
-        var session = repo.find(subjectId) ?: return ResponseEntity(HttpStatus.GONE)
+
+        val session = repo.find(subjectId) ?: return ResponseEntity(HttpStatus.GONE)
         if (dtp.snapshot().epochSecond > session.response.whenExpires)
         {
             logger.info("Session timed out.")
@@ -53,7 +53,7 @@ class HttpPostValidationV2Command(
         val parseDccResponse = parseDcc(body, session.body.nonce, session.body.walletPublicKey!!)
         if (parseDccResponse.statusCode.isError) {
             logger.info("DCC was either not present, not decrypted correctly or failed sig check.")
-            return ResponseEntity( "DCC was either not present, not decrypted correctly or failed sig check.", HttpStatus.BAD_REQUEST);
+            return ResponseEntity( "DCC was either not present, not decrypted correctly or failed sig check.", HttpStatus.BAD_REQUEST)
         }
 
         val args = ValidationCommandArgs(
@@ -61,7 +61,7 @@ class HttpPostValidationV2Command(
             trip = TripInfo(validationAccessTokenPayload.vc.cod, validationAccessTokenPayload.vc.coa),
         )
 
-        var verificationResult = validationCommand.execute(args)
+        val verificationResult = validationCommand.execute(args)
         val resultJws = buildResult(verificationResult, validationAccessTokenPayload)
         return ResponseEntity(resultJws, HttpStatus.OK)
     }
@@ -116,7 +116,7 @@ class HttpPostValidationV2Command(
         val resultCode = getResultCode(verificationResult)
         if (verificationResult.result != ValidationCommandResult.Result.Pass)
         {
-            var resultPayload = ResultTokenPayload(
+            val resultPayload = ResultTokenPayload(
                 confirmation = null,
                 whenIssued = whenIssued,
                 whenExpires = whenExpires,
@@ -135,7 +135,7 @@ class HttpPostValidationV2Command(
         }
 
         val personalInfoDccExtract = getDccExtract(verificationResult)
-        var resultTokenPayloadConfirmation = ConfirmationTokenPayload(
+        val resultTokenPayloadConfirmation = ConfirmationTokenPayload(
             //TODO Change these terrible names!
             id = authorizationHeaderObject.iss, //TODO Might be the original subject in contradiction to the EU spec!
             whenIssued = whenIssued,
@@ -153,7 +153,7 @@ class HttpPostValidationV2Command(
 
         val confirmationJws = responseTokenBuilder.build(resultTokenPayloadConfirmation)
 
-        var resultPayload = ResultTokenPayload(
+        val resultPayload = ResultTokenPayload(
             confirmation = confirmationJws,
             whenIssued = whenIssued,
             whenExpires = whenExpires,
@@ -232,7 +232,7 @@ class HttpPostValidationV2Command(
             return ResponseEntity("Encrypted parameter format not valid.", HttpStatus.BAD_REQUEST)
         }
 
-        if (!CheckSignatureCommand().isValid(cipherText, body.encryptedDccSignature!!, body.encryptedDccSignatureAlgorithm!!, walletPublicKey))
+        if (!checkSignatureCommand.isValid(cipherText, body.encryptedDccSignature!!, body.encryptedDccSignatureAlgorithm!!, walletPublicKey))
             return ResponseEntity("Dcc Signature not valid.", HttpStatus.BAD_REQUEST)
 
         val result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!)

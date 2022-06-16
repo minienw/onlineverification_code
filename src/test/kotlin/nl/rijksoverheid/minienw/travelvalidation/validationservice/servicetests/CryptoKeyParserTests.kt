@@ -27,8 +27,8 @@ class CryptoKeyParserTests
     @Test
     fun verificationJwk()
     {
-        var argle = CryptoKeyConverter.encodeRs256VerificationJwk(CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", publicKeyPem))
-        var final = Gson().toJson(argle)
+        val argle = CryptoKeyConverter.encodeRs256VerificationJwk(CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey("RSA", publicKeyPem))
+        val final = Gson().toJson(argle)
         println(final)
     }
 
@@ -38,7 +38,7 @@ class CryptoKeyParserTests
 //    @Test
 //    fun pemString()
 //    {
-//        var pemString = CryptoKeyConverter.encodeAsn1Pkcs8Pem("RSA", Base64.decode(publicKeyPem))
+//        val pemString = CryptoKeyConverter.encodeAsn1Pkcs8Pem("RSA", Base64.decode(publicKeyPem))
 //        assert(pemString.startsWith("-----BEGIN RSA-----\r\n"))
 //    }
 }

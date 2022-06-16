@@ -9,6 +9,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.*
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.slf4j.*
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.SecureRandom
@@ -32,14 +33,19 @@ class ValidationControllerTests {
         val dtp =  Mockito.mock(IDateTimeProvider::class.java)
         Mockito.`when`(dtp.snapshot()).thenReturn(Instant.ofEpochSecond(1646052982))
 
-        var subject = HttpPostValidationInitialiseV2Command(
+        val l = LoggerFactory.getLogger(HttpPostValidationInitialiseV2Command::class.java) as Logger
+
+        val subject = HttpPostValidationInitialiseV2Command(
+            l,
             dtp,
             configFile,
             SessionRepositoryRedis(configFile),
-            ValidationInitializeRequestBodyValidatorV2())
+            ValidationInitializeRequestBodyValidatorV2(),
+            ValidationServicesSubjectIdGenerator()
+            )
 
         val keypair = getEcKeyPair()
-        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
+        val publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public)
 
         val validationAccessTokenPayload = ValidationAccessTokenPayload(
             whenExpires = 1645966339L,
@@ -70,14 +76,14 @@ class ValidationControllerTests {
             ValidationType = ValidationType.Full
         )
 
-        var result = subject.execute(
+        val result = subject.execute(
             validationAccessTokenPayload,
             body = ValidationInitializeRequestBody(nonce = "MDEyMzQ1Njc4OWFiY2RlZg==", walletPublicKeyAlgorithm = "SHA256withECDSA", walletPublicKey = publicKeyString),
             subjectId = validationAccessTokenPayload.sub
         )
 
         assert(result.statusCode.value() == 200)
-        var body = result.body as ValidationInitializeResponse
+        val body = result.body as ValidationInitializeResponse
         assert(body.subjectId.length == 32)
         assert(body.whenExpires > 0L)
         //TODO assert(result.body!!.DccEncryptionKey.alg == "ROT13")
@@ -116,14 +122,16 @@ class ValidationControllerTests {
         val dtp =  Mockito.mock(IDateTimeProvider::class.java)
         Mockito.`when`(dtp.snapshot()).thenReturn(Instant.ofEpochSecond(1646052982))
 
-        var testSubject = HttpPostValidationInitialiseV2Command(dtp, configFile, FakeSessionRepository(), ValidationInitializeRequestBodyValidatorV2())
+        val l = LoggerFactory.getLogger(HttpPostValidationInitialiseV2Command::class.java) as Logger
+
+        val testSubject = HttpPostValidationInitialiseV2Command(l, dtp, configFile, FakeSessionRepository(), ValidationInitializeRequestBodyValidatorV2(), ValidationServicesSubjectIdGenerator())
 
         //val sessionRepo = Mockito.mock(ISessionRepository::class.java)
         val keypair = getEcKeyPair()
-        var publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public);
+        val publicKeyString = CryptoKeyConverter.encodeAsn1DerPkcs1X509Base64(keypair.public)
 
-        var result = testSubject.execute(
-            ValidationAccessTokenPayload("id", "KLM", "1324AAAA", "uri",
+        val result = testSubject.execute(
+            ValidationAccessTokenPayload("id", "KLM", "1324AAAA1324AAAA1324AAAA1324AAAA", "uri",
                 12345,
                 ValidationType.Full,
                 "2",
@@ -147,12 +155,11 @@ class ValidationControllerTests {
                 walletPublicKeyAlgorithm = "SHA256withECDSA",
                 walletPublicKey = publicKeyString
             ),
-            subjectId = "1324AAAA"
+            subjectId = "1324AAAA1324AAAA1324AAAA1324AAAA"
         )
 
         assert(result.statusCode.value() == 200)
-        //assert(result.body!!.subjectId.length == 32)
-        var body = result.body as ValidationInitializeResponse
+        val body = result.body as ValidationInitializeResponse
         assert(body.subjectId.length > 0)
         assert(body.whenExpires > 0L)
         assert(body.validationServiceEncryptionKey != null)

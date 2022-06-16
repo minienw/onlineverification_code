@@ -5,7 +5,7 @@ import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.dccv
 import nl.rijksoverheid.minienw.travelvalidation.validationservice.services.DccQrCode
 
 class ValidationCommandResult(
-    //private var explicitUndecided: Boolean,
+    //private val explicitUndecided: Boolean,
     val result: Result,
     val businessRuleFailures: List<DCCFailableItem>,
     _dccWithTimes: DccQrCode?

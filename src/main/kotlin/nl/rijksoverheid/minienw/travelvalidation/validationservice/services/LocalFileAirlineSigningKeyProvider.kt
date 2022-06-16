@@ -27,7 +27,7 @@ class HttpRemoteAirlineSigningKeyProvider(private val appSettings: IApplicationS
         val result = ArrayList<PublicKeyJwk>()
         for (i in appSettings.airlineIdentityUris) {
             logger.debug("Getting verification keys from $i")
-            var responseBody:String
+            val responseBody:String
             try {
                 val request = HttpRequest.newBuilder().uri(URI.create(i)).build()
                 val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())

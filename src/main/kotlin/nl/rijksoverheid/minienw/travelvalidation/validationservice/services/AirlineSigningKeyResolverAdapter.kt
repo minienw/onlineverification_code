@@ -5,7 +5,6 @@ import io.jsonwebtoken.JwsHeader
 import io.jsonwebtoken.SigningKeyResolverAdapter
 import nl.rijksoverheid.minienw.travelvalidation.api.data.*
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.security.PublicKey
 
@@ -24,26 +23,23 @@ data class AirlineKeys(
 )
 
 @Service
-class AirlineSigningKeyResolverAdapter: SigningKeyResolverAdapter {
+class AirlineSigningKeyResolverAdapter(private val logger : Logger, private val airlineSigningKeyProvider: IAirlineSigningKeyProvider) :
+    SigningKeyResolverAdapter() {
 
-    private val _airlineSigningKeyProvider :IAirlineSigningKeyProvider
-    private val logger : Logger = LoggerFactory.getLogger(AirlineSigningKeyResolverAdapter::class.java)
-
-    constructor(airlineSigningKeyProvider: IAirlineSigningKeyProvider): super() {
-        _airlineSigningKeyProvider = airlineSigningKeyProvider
-        _airlineSigningKeyProvider.refresh()
+    init {
+        airlineSigningKeyProvider.refresh()
     }
 
     override fun resolveSigningKey(jwsHeader: JwsHeader<*>, claims: Claims?): PublicKey?
     {
-        val found = _airlineSigningKeyProvider.get(jwsHeader.keyId, jwsHeader.algorithm)
-            ?: return null
+        val found = airlineSigningKeyProvider.get(jwsHeader.keyId, jwsHeader.algorithm)
 
-        if (found == null)
-            logger.warn("Could not find public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
-        else
-            logger.info("Found public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
+        if (found == null) {
+            logger.info("Could not find public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
+            return null
+        }
 
+        logger.info("Found public signing key ${jwsHeader.keyId} for ${jwsHeader.algorithm}.")
         return CryptoKeyConverter.decodeSigningJwkX5c(found)
     }
 }

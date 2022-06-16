@@ -22,8 +22,8 @@ class HexEncoderTests {
         for(i in 0..1000) {
             val buffer = ByteArray(10)
             Random().nextBytes(buffer)
-            var encoded = HexStringEncoding.encode(buffer)
-            var actual = HexStringEncoding.decode(encoded)
+            val encoded = HexStringEncoding.encode(buffer)
+            val actual = HexStringEncoding.decode(encoded)
             assertArrayEquals(buffer, actual)
         }
     }

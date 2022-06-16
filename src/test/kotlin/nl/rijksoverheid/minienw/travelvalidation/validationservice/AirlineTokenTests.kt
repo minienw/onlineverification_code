@@ -13,17 +13,19 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import java.security.Security
 import java.time.Instant
 
 
-public class AirlineTokenTests() {
+class AirlineTokenTests() {
 
     @Test
     fun create() {
 
-        var ttt = BusinessTransactionTests().sanityCheckValidationAccessTokenPayload()
+        val ttt = BusinessTransactionTests().sanityCheckValidationAccessTokenPayload()
 
         val payloadJson = Gson().toJson(ttt)
         //val airlineKeys = Keys.keyPairFor(SignatureAlgorithm.PS256)
@@ -44,12 +46,12 @@ public class AirlineTokenTests() {
         `when`(sigKeys.get("SsXyRIVSy4Y=","RS256"))
             .thenReturn(PublicKeyJwk(x5c = arrayOf(publicKeyEncoded), kid="SsXyRIVSy4Y=", alg="RS256",use="sig" ))
 
-
-
         val dtp = mock(IDateTimeProvider::class.java)
         `when`(dtp.snapshot()).thenReturn(Instant.now()) //TODO test with specific time
 
-        val resolver = AirlineSigningKeyResolverAdapter(sigKeys)
+        val l = LoggerFactory.getLogger(AirlineSigningKeyResolverAdapter::class.java)
+
+        val resolver = AirlineSigningKeyResolverAdapter(l, sigKeys)
 
         val result = ValidationAccessTokenParser(appSettings, dtp, resolver).parse(jws)
 
@@ -73,7 +75,7 @@ public class AirlineTokenTests() {
         Security.addProvider(BouncyCastleProvider())
 
         @Suppress("UNUSED_VARIABLE")
-        var publicKey = CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey(getAlg(jwk.alg), jwk.x5c[0])
+        val publicKey = CryptoKeyConverter.decodeAsn1DerPkcs1X509Base64ToPublicKey(getAlg(jwk.alg), jwk.x5c[0])
 
         val appSettings = mock(IApplicationSettings::class.java)
         `when`(appSettings.validationAccessTokenSignatureAlgorithms).thenReturn(arrayOf("RS256","ES256"))
@@ -81,13 +83,15 @@ public class AirlineTokenTests() {
         val sigKeys = mock(IAirlineSigningKeyProvider::class.java)
         `when`(sigKeys.get(jwk.kid,jwk.alg)).thenReturn(jwk)
 
-        val resolver = AirlineSigningKeyResolverAdapter(sigKeys)
+        val l = LoggerFactory.getLogger(AirlineSigningKeyResolverAdapter::class.java) as Logger
+
+        val resolver = AirlineSigningKeyResolverAdapter(l, sigKeys)
 
         val snapshot = Instant.now()
         val dtp = mock(IDateTimeProvider::class.java)
         `when`(dtp.snapshot()).thenReturn(snapshot) //TODO test with specific time
 
-        var result = ValidationAccessTokenParser(appSettings, dtp, resolver).parse(vat)
+        val result = ValidationAccessTokenParser(appSettings, dtp, resolver).parse(vat)
         assert(result.statusCode == HttpStatus.OK)
         //assert(result.body!!.subject == "ABCD0123ABCD0123ABCD0123ABCD0123")
     }
@@ -132,7 +136,7 @@ public class AirlineTokenTests() {
 //    @Test
 //    fun issueWithKeyPair()
 //    {
-//        var publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEimKhErcFfmp8fCMxivRq2Tu1XXyXHYc81QhS8uBjRAGdrUL4INQyhAK17Pu9hDUwTwSaD9u3gXyiPNP/qkQqyQ=="
+//        val publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEimKhErcFfmp8fCMxivRq2Tu1XXyXHYc81QhS8uBjRAGdrUL4INQyhAK17Pu9hDUwTwSaD9u3gXyiPNP/qkQqyQ=="
 //
 //    }
 

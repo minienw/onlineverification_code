@@ -21,17 +21,17 @@ class TestAirlineSigningKeyPairGenerator
 
     private fun format(alg: SignatureAlgorithm) {
         Keys.keyPairFor(alg)
-        var kp = Keys.keyPairFor(alg)
-        var pub = PublicKeyJwk(
+        val kp = Keys.keyPairFor(alg)
+        val pub = PublicKeyJwk(
             use = "sig",
             alg = alg.name,
             kid = CryptoKeyConverter.getKid(kp.public.encoded), //TODO 8 bytes feels a bit short?
             x5c = arrayOf(Base64.toBase64String(kp.public.encoded))
         )
 
-        var pubJson = Gson().toJson(pub)
+        val pubJson = Gson().toJson(pub)
         println(pubJson)
-        var privBase64 = Base64.toBase64String(kp.private.encoded)
+        val privBase64 = Base64.toBase64String(kp.private.encoded)
         println(privBase64)
     }
 

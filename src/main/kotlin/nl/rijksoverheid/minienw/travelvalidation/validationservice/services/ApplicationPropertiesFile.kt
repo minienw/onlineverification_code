@@ -18,7 +18,6 @@ class ApplicationPropertiesFile {
     lateinit var businessRulesUri: String
     lateinit var valueSetsUri: String
     lateinit var publicKeysUri: String
-    //And where to drop it so the verifier can see it.
     lateinit var publicKeysFileName: String
-    lateinit var  dccArtifactParsingServiceUri: String
+    lateinit var dccArtifactParsingServiceUri: String
 }
