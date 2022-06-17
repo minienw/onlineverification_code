@@ -52,8 +52,9 @@ class HttpPostValidationV2Command(
 
         val parseDccResponse = parseDcc(body, session.body.nonce, session.body.walletPublicKey!!)
         if (parseDccResponse.statusCode.isError) {
-            logger.info("DCC was either not present, not decrypted correctly or failed sig check.")
-            return ResponseEntity( "DCC was either not present, not decrypted correctly or failed sig check.", HttpStatus.BAD_REQUEST)
+            val message = "DCC was either not present, not decrypted correctly or failed sig check - ${parseDccResponse.body}"
+            logger.info(message)
+            return ResponseEntity(message, HttpStatus.BAD_REQUEST)
         }
 
         val args = ValidationCommandArgs(
@@ -235,7 +236,14 @@ class HttpPostValidationV2Command(
         if (!checkSignatureCommand.isValid(cipherText, body.encryptedDccSignature!!, body.encryptedDccSignatureAlgorithm!!, walletPublicKey))
             return ResponseEntity("Dcc Signature not valid.", HttpStatus.BAD_REQUEST)
 
-        val result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!)
+        val result: ByteArray
+        try {
+            result = dccDecryptCommand.execute(body.encryptedScheme, cipherText!!, secretKey!!, iv!!)
+        }
+        catch(ex: Exception) //TODO more specific!
+        {
+            return ResponseEntity("Unexpected error decrypting DCC.", HttpStatus.BAD_REQUEST)
+        }
 
         return ResponseEntity.ok(Base64.toBase64String(result))
     }
