@@ -57,9 +57,6 @@ class ValidationControllerTests {
             ValidationCondition = ValidationAccessTokenPayloadCondition(
                 //DccHash = "sdaasdad",
                 lang = "en",
-                fnt = "who",
-                gnt = "knows",
-                dob = "1979-04-14",
                 coa = "NL",
                 cod = "DE",
                 poa = "AMS",
@@ -138,9 +135,9 @@ class ValidationControllerTests {
                 ValidationAccessTokenPayloadCondition("" +
                         "hash",
                     "en",
-                    "",
-                    "",
-                    "",
+//                    "",
+//                    "",
+//                    "",
                     "NL",
                     "DE",
                     "",

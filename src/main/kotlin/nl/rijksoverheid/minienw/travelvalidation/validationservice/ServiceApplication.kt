@@ -23,20 +23,6 @@ fun main(args: Array<String>) {
 	runApplication<ServiceApplication>(*args)
 }
 
-//@Bean
-//fun iBusinessRulesProvider(settings: IApplicationSettings) : IBusinessRulesProvider
-//{
-//	return DefaultBusinessRulesProvider(
-//		RedisConfigStorage(settings),
-//		HttpRemoteBusinessRulesSource(settings))
-//}
-
-//@Bean
-//fun stringReader(settings: IApplicationSettings) : IStringReader
-//{
-//	return HttpRemoteBusinessRulesSource(settings)
-//}
-
 @Bean
 fun publicKeysProvider(settings: IApplicationSettings) : IPublicKeysProvider
 {

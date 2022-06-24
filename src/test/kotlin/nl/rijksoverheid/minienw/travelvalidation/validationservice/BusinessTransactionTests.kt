@@ -52,9 +52,6 @@ class BusinessTransactionTests {
             ValidationCondition = ValidationAccessTokenPayloadCondition(
                 //DccHash = "sdaasdad",
                 lang = "en",
-                gnt = "s",
-                fnt = "k",
-                dob = "1944",
                 poa = "AMS",
                 pod = "FRA",
                 coa = "NL",
@@ -115,9 +112,6 @@ class BusinessTransactionTests {
             ValidationCondition = ValidationAccessTokenPayloadCondition(
                 //DccHash = "sdaasdad",
                 lang = "en",
-                fnt = "",
-                gnt = "",
-                dob = "1979-04-14",
                 coa = "NL",
                 cod = "DE",
                 roa = "sdasd",
