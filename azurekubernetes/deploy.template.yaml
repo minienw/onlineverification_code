@@ -170,7 +170,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
         - name: validationsvc
-          image: stevekellaway/validation_service:azk_latest
+          image: ghcr.io/minienw/validation_service:azk_latest
           resources:
             requests:
               cpu: 0.1
@@ -228,7 +228,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
         - name: verifier
-          image: stevekellaway/verifier:azk_latest
+          image: ghcr.io/minienw/verifier:latest
           resources:
             requests:
               cpu: 0.3
@@ -275,7 +275,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
         - name: dccparser
-          image: "ghcr.io/minienw/dccparser:latest"
+          image: ghcr.io/minienw/dccparser:latest
           resources:
             requests:
               cpu: 0.3
