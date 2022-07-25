@@ -1,4 +1,4 @@
-FROM stevekellaway/validation_service:latest_noconfig
+FROM ghcr.io/minienw/validation_service:latest_noconfig
 WORKDIR /service-bin
 COPY application.properties .
 COPY identity.json .
