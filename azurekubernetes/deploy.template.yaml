@@ -246,3 +246,44 @@ spec:
         - name: verifier-data
           persistentVolumeClaim:
             claimName: verifier-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dccparser
+spec:
+  ports:
+    - port: 81
+  selector:
+    app: dccparser
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dccparser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dccparser
+  template:
+    metadata:
+      labels:
+        app: dccparser
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: dccparser
+          image: "ghcr.io/minienw/dccparser:latest"
+          resources:
+            requests:
+              cpu: 0.3
+              memory: 1Gi
+            limits:
+              cpu: 1
+              memory: 2Gi
+          ports:
+            - containerPort: 81
+              name: dccparser
+
