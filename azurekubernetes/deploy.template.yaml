@@ -250,31 +250,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dccparser
+  name: parser
 spec:
   ports:
     - port: 81
+    - targetPort: 80
   selector:
-    app: dccparser
+    app: parser
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dccparser
+  name: parser
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dccparser
+      app: parser
   template:
     metadata:
       labels:
-        app: dccparser
+        app: parser
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-        - name: dccparser
+        - name: parser
           image: ghcr.io/minienw/dccparser:latest
           resources:
             requests:
@@ -284,6 +285,6 @@ spec:
               cpu: 1
               memory: 2Gi
           ports:
-            - containerPort: 81
-              name: dccparser
+            - containerPort: 80
+              name: parser
 
