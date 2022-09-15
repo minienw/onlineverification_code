@@ -6,6 +6,7 @@ interface IApplicationSettings
     val airlineIdentityUris: Array<String>
     val validationResultJwsLifetimeSeconds: Long
     val validationResultJwsSigningKey: String
+    val validationResultJwsVerificationKid: String
     val dccEncryptionRsaPrivateKey: String
     val sessionMaxDurationSeconds: Long
     val redisHost: String

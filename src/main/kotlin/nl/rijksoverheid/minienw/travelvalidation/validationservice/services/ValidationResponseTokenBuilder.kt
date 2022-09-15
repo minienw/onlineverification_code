@@ -19,25 +19,9 @@ class ValidationResponseTokenBuilder(
         val payloadJson = Gson().toJson(resultPayload) //NB have to add to  @SerializedName("insert output name here") to the properties
         return Jwts.builder()
             .setPayload(payloadJson)
-            .setHeaderParam("kid", "SsXyRIVSy4Y=") //TODO from settings which should be a jwk
-            .setHeaderParam("alg", "RS256") //TODO from settings which should be a jwk
-            .signWith(CryptoKeyConverter.decodeAsn1DerPkcs8Base64ToPrivateKey("RSA", appSettings.validationResultJwsSigningKey), SignatureAlgorithm.RS256)//TODO from settings which should be a jwk
+            .setHeaderParam("kid", appSettings.validationResultJwsVerificationKid)
+            .setHeaderParam("alg", "RS256")
+            .signWith(CryptoKeyConverter.decodeAsn1DerPkcs8Base64ToPrivateKey("RSA", appSettings.validationResultJwsSigningKey), SignatureAlgorithm.RS256)
             .compact()
     }
 }
-
-//@Component
-//class ConfirmationTokenBuilder(
-//    private val config: IApplicationSettings
-//)
-//{
-//    fun build(resultPayload: ConfirmationTokenPayload, whenIssued: Date, whenExpires: Date): String
-//    {
-//
-//        if (whenIssued > whenExpires)
-//            throw IllegalArgumentException()
-//
-//
-//        return result
-//    }
-//}

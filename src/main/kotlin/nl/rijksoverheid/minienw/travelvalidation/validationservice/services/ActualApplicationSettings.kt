@@ -43,6 +43,8 @@ class ActualApplicationSettings(
 
     override val validationResultJwsSigningKey: String
         get() = file.validationResultJwsSigningKey
+    override val validationResultJwsVerificationKid: String
+        get() = file.validationResultJwsVerificationKid
     override val dccEncryptionRsaPrivateKey: String
         get() = file.dccEncryptionRsaPrivateKey
     override val sessionMaxDurationSeconds: Long

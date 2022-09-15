@@ -27,8 +27,8 @@ dependencies {
 	annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor")
 
 	//Logging
-	implementation("org.apache.logging.log4j:log4j-core:2.17.2")
-	implementation("org.apache.logging.log4j:log4j-api:2.17.2")
+	implementation("org.apache.logging.log4j:log4j-core:2.18.0")
+	implementation("org.apache.logging.log4j:log4j-api:2.18.0")
 
 	//Binary references
 	implementation (files("lib/certlogic-kotlin-v0.11.1-kotlin.jar"))
@@ -51,8 +51,8 @@ dependencies {
 	implementation ("com.google.code.gson:gson:2.9.0")
 	//implementation ("org.json:json:20211205")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.13.1")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
 //	compileOnly ("org.projectlombok:lombok:1.18.22")
 
 	//crypto
@@ -64,11 +64,11 @@ dependencies {
 	testImplementation ("org.bouncycastle:bcprov-ext-jdk15on:1.70")
 	testImplementation ("org.bouncycastle:bcpkix-jdk15on:1.70")
 
-	implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
-	runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.2")
+	implementation ("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.5")
 	//runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.11.2")
 	//-OR-
-	runtimeOnly ("io.jsonwebtoken:jjwt-gson:0.11.2")// for gson
+	runtimeOnly ("io.jsonwebtoken:jjwt-gson:0.11.5")// for gson
 
 	//Backend/imported projects
 	implementation ("com.squareup.okio:okio:3.0.0")

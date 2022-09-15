@@ -217,9 +217,11 @@ class HttpPostValidationV2Command(
         walletPublicKey: String
     ): ResponseEntity<Any> {
 
-        if(!dccDecryptCommand.canExecute(body.encryptedScheme))
+        if(!dccDecryptCommand.canExecute(body.encryptedScheme)) {
+            logger.info("Encrypted parameter format not valid.");
             return ResponseEntity("Encryption scheme is not supported.", HttpStatus.BAD_REQUEST)
-
+        }
+        
         val cipherText: ByteArray?
         val secretKey: ByteArray?
         val iv: ByteArray?
@@ -230,11 +232,9 @@ class HttpPostValidationV2Command(
         }
         catch (_: DecoderException)
         {
+            logger.info("Encrypted parameter format not valid.");
             return ResponseEntity("Encrypted parameter format not valid.", HttpStatus.BAD_REQUEST)
         }
-
-        if (!checkSignatureCommand.isValid(cipherText, body.encryptedDccSignature!!, body.encryptedDccSignatureAlgorithm!!, walletPublicKey))
-            return ResponseEntity("Dcc Signature not valid.", HttpStatus.BAD_REQUEST)
 
         val result: ByteArray
         try {
@@ -242,7 +242,14 @@ class HttpPostValidationV2Command(
         }
         catch(ex: Exception) //TODO more specific!
         {
-            return ResponseEntity("Unexpected error decrypting DCC.", HttpStatus.BAD_REQUEST)
+            logger.info("Unexpected error decrypting DCC: $ex");
+            return ResponseEntity("Error decrypting DCC.", HttpStatus.BAD_REQUEST)
+        }
+
+        if (!checkSignatureCommand.isValid(result, body.encryptedDccSignature!!, body.encryptedDccSignatureAlgorithm!!, walletPublicKey))
+        {
+            logger.info("Dcc Signature not valid.");
+            return ResponseEntity("Error decrypting DCC.", HttpStatus.BAD_REQUEST)
         }
 
         return ResponseEntity.ok(Base64.toBase64String(result))

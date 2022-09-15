@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("validation-service")
 class ApplicationPropertiesFile {
+    lateinit var validationResultJwsVerificationKid: String
     lateinit var validationAccessTokenSignatureAlgorithms: String
     lateinit var dccVerificationServiceUri: String
     lateinit var dccEncryptionRsaPrivateKey: String //TODO needs to be decrypted by resolving kid
