@@ -1,5 +1,5 @@
 FROM stevekellaway/validation_service:latest_noconfig
-RUN adduser -S validator -H -D
+RUN adduser validator -H -D
 USER validator
 WORKDIR /service-bin
 COPY application.properties .
