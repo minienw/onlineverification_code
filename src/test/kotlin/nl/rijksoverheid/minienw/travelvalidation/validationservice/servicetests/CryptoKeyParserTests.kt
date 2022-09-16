@@ -31,14 +31,4 @@ class CryptoKeyParserTests
         val final = Gson().toJson(argle)
         println(final)
     }
-
-    //dWikdAbpdoI=
-    //{"kid":"dWikdAbpdoI\u003d","alg":"RS512","use":"sig", "x5c":["MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArCRwFFoxKmxHbmd6o65sGawUI+ck6qTQvVhn+iTn6HG6CcQ7g02bOLi/sx+0x7UGLpBI7w94ma8r172joqlTjWme6LCyhxwTD2OdOn39btWI86BDN+rUkekit1gDQAcesOKC4EhUJX4xUOfnBukKPZ7nIgljAcSOCYbTHdgxrMt+uifVXDUjkeJOwiYetpNabAjfcAXpMlhcgn6eGJ5Cnm6GdXqup19HH+9zlA0RozY82EkabqvnM6+tQ4RUvaUdChwtCJ+VUqTo9XfhoIyIFjYn6wJrC1rZdyP9lrMiFeNxuhwoZLPkxCe3TVQkykjOkF8ktcUBJz40fjI006XrkOA/VGT9GBN3e6t2rqFPq460fBkpWEcJCgVi7+yMT8Fna2H/kUU3GvWCsZs75HdY4EfZhxkwULyocgmdg/2uWYYE9sF0Z6mEKcZyg5h+n1Lp8Sz6veOFlLX/mAd/K7N5W/Id4CiBkg7bF0jiUh0ZgjZdlWHk3POoQ/Glt1UkWI67Cg47BliJikuFILURUhxu/MT9Gth+RYMO3TQc0VlhBxx3Z19xn1Xoof1v2vA2uQPPczckupPmzNLEsty3vtmHz0QUzB09J/JtS2XdlQQfhrFw49EroYKHj0D/zXkd+Bhqqp4sDggJFdidFmJgnUTEqW3HnWLyXkX3sNhwgUYWpY0CAwEAAQ=="]}
-
-//    @Test
-//    fun pemString()
-//    {
-//        val pemString = CryptoKeyConverter.encodeAsn1Pkcs8Pem("RSA", Base64.decode(publicKeyPem))
-//        assert(pemString.startsWith("-----BEGIN RSA-----\r\n"))
-//    }
 }
